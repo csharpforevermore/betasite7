@@ -1,0 +1,141 @@
+﻿@inherits UmbracoViewPage<Usn_Ac_FormText_AN>
+
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+
+    USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+
+    string backgroundImageStyle = USNViewTemplateHelper.GetBackgroundImageStyle(Model.BackgroundImage, Model.BackgroundImageOptions);
+
+    string firstDivClass = "col-md-6 col-xs-12 pull-left";
+    string secondDivClass = "col-md-4 col-xs-12 pull-right";
+    string textFadeInDirection = "fadeInLeft";
+    string formFadeInDirection = "fadeInRight";
+    string animateClass = String.Empty;
+
+    if (Model.TextPosition == USNOptions.TextPosition_After)
+    {
+        firstDivClass = "col-md-6 col-xs-12 pull-right";
+        secondDivClass = "col-md-4 col-xs-12 pull-left";
+        textFadeInDirection = "fadeInRight";
+        formFadeInDirection = "fadeInLeft";
+    }
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    string textAlignment;
+
+    switch (Model.TextAlignment)
+    {
+        case USNOptions.TextAlignment_Left:
+            textAlignment = "text-left";
+            break;
+        case USNOptions.TextAlignment_Center:
+            textAlignment = "text-center";
+            break;
+        case USNOptions.TextAlignment_Right:
+            textAlignment = "text-right";
+            break;
+        default:
+            textAlignment = "text-left";
+            break;
+    }
+
+    <section class="content apc text-with-form @settings.BackGroundStyle @Model.CustomComponentClasses" @Html.Raw(backgroundImageStyle) id="pos_@Model.Id">
+        <div class="container">
+
+            <!-- ROW -->
+            <div class="row">
+
+                <div class="text-side @firstDivClass @animateClass" data-os-animation="@textFadeInDirection" data-os-animation-delay="0">
+                    <!-- INFO -->
+                    <div class="info @textAlignment">
+
+                        @if (Model.SecondaryHeading.HasValue())
+                        {
+                            <p class="secondary-heading @settings.SecondaryHeadingStyle">@Model.SecondaryHeading</p>
+                        }
+
+                        @if (Model.Heading != null)
+                        {
+                            @Html.Raw(String.Format("<{0} class=\"heading main {1}\">{2}</{0}>", Model.Heading.HeadingTag, settings.HeadingStyle, Model.Heading.Text))
+                        }
+
+                        @if (Model.Text.HasValue())
+                        {
+                            <div class="text @settings.TextStyle">
+                                @Html.Raw(Model.Text)
+                            </div>
+                        }
+                        @{
+                            USNLink link = USNUrlHelper.GetLinkFromRelatedLinks(Model.Link);
+
+                            if (link != null)
+                            {
+                                <p class="link"><a class="btn @settings.ButtonStyle" href="@link.LinkURL" @Html.Raw(link.LinkTarget) @Html.Raw(link.LinkTitle)>@link.LinkCaption@Html.Raw(link.LinkIcon)</a></p>
+                            }
+                        }
+                    </div>
+                    <!--// INFO -->
+                </div>
+
+                <div class="form-side @secondDivClass @animateClass" data-os-animation="@formFadeInDirection" data-os-animation-delay="0">
+                    @switch (Model.FormType)
+                    {
+                        case "contactForm":
+                            <div class="contact form ajax-wrap">
+                                <div class="inner c5-bg base-text has-borders c6-borders">
+                                    @Html.Action("Index", "USNContactFormSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId })
+                                </div>
+                            </div>
+                            break;
+                        case "newsletterForm":
+                            <div class="newsletter form ajax-wrap">
+                                <div class="inner c4-bg base-text has-borders c6-borders">
+                                    @Html.Action("Index", "USNNewsletterSignupSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "normal" })
+                                </div>
+                            </div>
+                            break;
+                        case "umbracoForm":
+                            <div class="umbraco-forms form ajax-wrap">
+                                <div class="inner c5-bg base-text has-borders c6-borders">
+                                    @if (Model.UmbracoForm.HasValue())
+                                    {
+                                        var formGuid = Model.UmbracoForm;
+
+                                        if (Model.SubmitViaAjax)
+                                        {
+                                            @:<div class="umbraco-ajax-form">
+                                        }
+
+                                        @Umbraco.RenderMacro("renderUmbracoForm", new { FormGuid = formGuid, FormTheme = "uSkinned", CurrentNodeID = Model.Id })
+
+                                        if (Model.SubmitViaAjax)
+                                        {
+                                            @:</div>
+                                        }
+
+
+                                    }
+                                </div>
+                            </div>
+                            break;
+                    }
+                </div>
+
+            </div>
+            <!--// ROW -->
+
+        </div>
+    </section>
+
+}

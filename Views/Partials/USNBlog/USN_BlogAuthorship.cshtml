@@ -1,0 +1,147 @@
+﻿@inherits UmbracoViewPage
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    // get landing node
+    UsnblogLandingPage landing = (UsnblogLandingPage)Model.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+
+    UsnblogAuthor authorNode = null;
+
+    if (Model.HasValue("postAuthor"))
+    {
+        authorNode = (UsnblogAuthor)Model.GetPropertyValue<IEnumerable<IPublishedContent>>("postAuthor").FirstOrDefault();
+    }
+    else if (landing.DefaultAuthor != null)
+    {
+        authorNode = (UsnblogAuthor)landing.DefaultAuthor.FirstOrDefault();
+    }
+
+    if (authorNode != null)
+    {
+        USNLink authorPage = USNUrlHelper.GetLinkFromRelatedLinks(authorNode.AuthorPage);
+
+        <!-- PAGE COMPONENT AUTHOR BIO -->
+        <div class="spc author-bio">
+            <div class="inner c4-bg has-borders c6-borders">
+                <p class="heading main">@umbraco.library.GetDictionaryItem("USN Blog About The Author")</p>
+
+                <div class="row">
+
+                    @if (authorNode.AuthorImage != null)
+                    {
+                        int imageWidthSmall = 8;
+                        int imageHeightSmall = 6;
+                        string cropAlias = "Landscape";
+                        string circleClass = String.Empty;
+
+                        switch (authorNode.AuthorImageStyle)
+                        {
+                            case USNOptions.ImageStyle_Square:
+                                imageWidthSmall = 8;
+                                imageHeightSmall = 8;
+                                cropAlias = "Square/Circle";
+                                break;
+                            case USNOptions.ImageStyle_Landscape:
+                                imageWidthSmall = 8;
+                                imageHeightSmall = 6;
+                                cropAlias = "Landscape";
+                                break;
+                            case USNOptions.ImageStyle_Portrait:
+                                imageWidthSmall = 6;
+                                imageHeightSmall = 8;
+                                cropAlias = "Portrait";
+                                break;
+                            case USNOptions.ImageStyle_Circle:
+                                imageWidthSmall = 8;
+                                imageHeightSmall = 8;
+                                cropAlias = "Square/Circle";
+                                circleClass = "img-circle";
+                                break;
+                        }
+
+                        <div class="image-wrap col-sm-4 col-xs-12">
+                            <div class="image @circleClass">
+                                <img class="@circleClass lazyload" src="@(authorNode.AuthorImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall))" data-src="@(authorNode.AuthorImage.GetCropUrl(cropAlias: cropAlias))" alt="@authorNode.Name" />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="@(authorNode.AuthorImage != null ? "col-sm-8" : "") col-xs-12">
+
+                        <div class="info">
+                            <p class="heading">
+                                @if (authorPage != null)
+                                {
+                                    <a href="@authorPage.LinkURL" @Html.Raw(authorPage.LinkTarget) @Html.Raw(authorPage.LinkTitle)>@authorNode.Name@Html.Raw(authorPage.LinkIcon)</a>
+                                }
+                                else
+                                {
+                                    @authorNode.Name
+                                }
+                            </p>
+                            @if (authorNode.AuthorBio.HasValue())
+                            {
+                                <div class="text">
+                                    @Html.Raw(authorNode.AuthorBio)
+                                </div>
+                            }
+                        </div>
+
+                        @if (authorNode.SocialLinks != null && authorNode.SocialLinks.Any())
+                        {
+                            string iconClass = String.Empty;
+
+                            switch (authorNode.IconShape)
+                            {
+                                case USNOptions.IconShape_Circle:
+                                    iconClass = "img-circle";
+                                    break;
+                                case USNOptions.IconShape_Rounded:
+                                    iconClass = "img-rounded";
+                                    break;
+                                case USNOptions.IconShape_Square:
+                                    iconClass = String.Empty;
+                                    break;
+                                default:
+                                    iconClass = String.Empty;
+                                    break;
+                            }
+
+                            <!-- SOCIAL -->
+                            <nav class="social">
+                                <ul>
+                                    @foreach (Usn_SocialLink socialLink in authorNode.SocialLinks)
+                                    {
+                                        USNLink link = USNUrlHelper.GetLinkFromRelatedLinks(socialLink.Link);
+
+                                        if (link != null)
+                                        {
+                                            <li>
+                                                <a href="@link.LinkURL" @Html.Raw(link.LinkTitle) @Html.Raw(link.LinkTarget)>
+                                                    @if (socialLink.Icon != null)
+                                                    {
+                                                        <img class="lazyload @iconClass" src="@socialLink.Icon.GetCropUrl(cropAlias: "Icon", width: 4, height: 4)" data-src="@socialLink.Icon.GetCropUrl(cropAlias: "Icon", width: 40, height: 40)" alt="@socialLink.LinkName">
+                                                    }
+                                                    <span class="hidden">@socialLink.LinkName</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </nav>
+                            <!--// SOCIAL -->
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// PAGE COMPONENT AUTHOR BIO -->
+
+    }
+
+}

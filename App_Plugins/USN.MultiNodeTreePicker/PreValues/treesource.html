@@ -1,0 +1,20 @@
+﻿<div ng-controller="USN.TreeSourceController" class="umb-editor umb-contentpicker">
+    <select ng-model="model.value.type" class="umb-editor">
+        <option value="content">Content</option>
+        <option value="config">Website configuration</option>
+    </select>
+    <div ng-show="model.value.type === 'content'">
+        <input type="text"
+               ng-model="model.value.homePageDocType"
+               class="umb-editor umb-textstring"
+               placeholder="Enter Homepage DocumentType Alias" style="margin-top: 30px">
+        <input type="text"
+               ng-model="model.value.websiteConfigPropertyAlias"
+               class="umb-editor umb-textstring"
+               placeholder="Enter Website Configuration Node Field Alias" style="margin-top: 30px">
+    </div>
+    <input type="text"
+        ng-model="model.value.pickerStartDocType"
+        class="umb-editor umb-textstring"
+        placeholder="Enter Picker Start DocumentTypeAlias" style="margin-top: 30px">
+</div>

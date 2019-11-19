@@ -1,0 +1,46 @@
+﻿<div ng-controller="USN.Heading.Controller">
+    <section class="usn-cms headings">
+        <div class="input-field">
+            <div class="form-group">
+                <input type="text" class="umb-editor umb-textstring textstring" placeholder="Heading goes here" ng-model="model.value.text">
+            </div>
+        </div>
+        <div class="heading-picker">
+            <label class="item layout-1">
+                <input value="h1" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H1</div>
+            </label>
+            <label class="item layout-2">
+                <input value="h2" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H2</div>
+            </label>
+            <label class="item layout-3">
+                <input value="h3" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H3</div>
+            </label>
+            <label class="item layout-4">
+                <input value="h4" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H4</div>
+            </label>
+            <label class="item layout-5">
+                <input value="h5" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H5</div>
+            </label>
+            <label class="item layout-6">
+                <input value="h6" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">H6</div>
+            </label>
+            <label class="item layout-7">
+                <input value="p" name="headings" type="radio" ng-model="model.value.headingtag" ng-click="check($event)">
+                <span></span>
+                <div class="name">P</div>
+            </label>
+        </div>
+    </section>
+</div>

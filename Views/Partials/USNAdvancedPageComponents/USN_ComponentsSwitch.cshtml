@@ -1,0 +1,125 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+
+@using USNStarterKit.USNBackgroundOptions.Models
+@using USN.USNTemplate;
+
+@{
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+
+    USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.GetPropertyValue<string>("backgroundColor"), Model.GetPropertyValue<string>("buttonColor"));
+
+    string backgroundImageStyle = USNViewTemplateHelper.GetBackgroundImageStyle(Model.GetPropertyValue<IPublishedContent>("backgroundImage"), Model.GetPropertyValue<USNBackgroundOption>("backgroundImageOptions"));
+
+    string animateClass = String.Empty;
+
+    if (Model.GetPropertyValue<bool>("animate"))
+    {
+        animateClass = "os-animation";
+    }
+
+    switch (Model.DocumentTypeAlias)
+    {
+        case Usn_Ac_Banner_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_Banner", (Usn_Ac_Banner_AN)Model)
+            break;
+        case Usn_Ac_FormText_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_FormText", (Usn_Ac_FormText_AN)Model, new ViewDataDictionary { { "globalSettingsID", globalSettingsId } })
+            break;
+        case Usn_Ac_FormListing_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_FormListing", (Usn_Ac_FormListing_AN)Model, new ViewDataDictionary { { "globalSettingsID", globalSettingsId } })
+            break;
+        case Usn_Ac_TextSlideshow_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/Usn_AC_TextSlideshow", (Usn_Ac_TextSlideshow_AN)Model)
+            break;
+        case Usn_Ac_Ctastrip_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_CTAStrip", (Usn_Ac_Ctastrip_AN)Model)
+            break;
+        case Usn_Ac_Window_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_Window", (Usn_Ac_Window_AN)Model)
+            break;
+        case Usn_Ac_ReusableComponents_AN.ModelTypeAlias:
+            @Html.Partial("USNAdvancedPageComponents/USN_AC_ReusableComponents", (Usn_Ac_ReusableComponents_AN)Model, new ViewDataDictionary { { "globalSettingsID", globalSettingsId } })
+            break;
+        case Usn_Sc_AccordionTab_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_AccordionTab", (Usn_Sc_AccordionTab_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Resources_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Resources", (Usn_Sc_Resources_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Text_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Text", (Usn_Sc_Text_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Alert_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Alert", (Usn_Sc_Alert_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Links_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Links", (Usn_Sc_Links_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Gallery_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Gallery", (Usn_Sc_Gallery_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Quotes_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Quotes", (Usn_Sc_Quotes_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Code_AN.ModelTypeAlias:
+            <section class="content apc standard-components code-block @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Code", (Usn_Sc_Code_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_Form_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Form", (Usn_Sc_Form_AN)Model, new ViewDataDictionary { { "globalSettingsID", globalSettingsId }, { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_PriceList_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_PriceList", (Usn_Sc_PriceList_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_GridLayout_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_GridLayout", (Usn_Sc_GridLayout_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_SubpageListing_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_SubpageListing", (Usn_Sc_SubpageListing_AN)Model, new ViewDataDictionary { { "pageType", "advanced" }, { "globalSettingsID", globalSettingsId } })
+            </section>
+            break;
+        case Usn_Sc_Pods_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+            @Html.Partial("USNStandardPageComponents/USN_SC_Pods", (Usn_Sc_Pods_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+        case Usn_Sc_ReusablePods_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle ignore-bg" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_ReusablePods", (Usn_Sc_ReusablePods_AN)Model, new ViewDataDictionary { { "pageType", "advanced" }, { "globalSettingsID", globalSettingsId } })
+            </section>
+            break;
+        case Usn_Sc_RelatedContent_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_RelatedContent", (Usn_Sc_RelatedContent_AN)Model, new ViewDataDictionary { { "pageType", "advanced" }, { "globalSettingsID", globalSettingsId } })
+            </section>
+            break;
+        case Usn_Sc_Sitemap_AN.ModelTypeAlias:
+            <section class="content apc standard-components @(Model.GetPropertyValue<string>("customComponentClasses")) @settings.BackGroundStyle" @Html.Raw(backgroundImageStyle) id="@Html.Raw("pos_" + Model.Id)">
+                @Html.Partial("USNStandardPageComponents/USN_SC_Sitemap", (Usn_Sc_Sitemap_AN)Model, new ViewDataDictionary { { "pageType", "advanced" } })
+            </section>
+            break;
+    }
+}
+

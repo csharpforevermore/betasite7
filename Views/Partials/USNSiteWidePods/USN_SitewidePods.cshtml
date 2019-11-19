@@ -1,0 +1,73 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNStarterKit.USNHelpers;
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+
+    string podStyle = ViewData["podstyle"].ToString();
+    string pageType = ViewData["pagetype"] != null ? ViewData["pagetype"].ToString() : String.Empty;
+
+    IEnumerable<IPublishedContent> pods = null;
+    USNOptions pageLayout;
+    Boolean addPodContainer = false;
+
+    if (!Model.Content.HasValue("pageLayout"))
+    {
+        pageLayout = globalSettings.DefaultPageLayout.HasValue() ? (USNOptions)globalSettings.DefaultPageLayout : USNOptions.PageLayout_Left;
+    }
+    else
+    {
+        pageLayout = Model.Content.GetPropertyValue<USNOptions>("pageLayout");
+    }
+
+    if ((podStyle == "vertical" && pageLayout != USNOptions.PageLayout_Wide) || (podStyle == "horizontal" && pageLayout == USNOptions.PageLayout_Wide) || pageType == "advanced")
+    {
+        if (Model.Content.GetPropertyValue<bool>("overrideDefaultPods"))
+        {
+            if (Model.Content.HasValue("pagePods") && Model.Content.HasValue("pagePods"))
+            {
+                pods = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("pagePods");
+            }
+        }
+        else
+        {
+            if (globalSettings.DefaultSitewidePods.HasValue())
+            {
+                pods = globalSettings.DefaultSitewidePods;
+            }
+        }
+
+
+        if(pods != null)
+        {
+            var publishedContents = pods as IList<IPublishedContent> ?? pods.ToList();
+            if (publishedContents.Any())
+            {
+                if (pageLayout == USNOptions.PageLayout_Wide || pageType == "advanced")
+                {
+                    @:<section class="content swp-wide"><div class="container"><div class="row">
+
+                    addPodContainer = true;
+                }
+
+                <div class="swp">
+                    @foreach (var pod in publishedContents)
+                    {
+                        if (pod != null)
+                        {
+                            @Html.Partial("USNSiteWidePods/USN_PodsSwitch", pod, new ViewDataDictionary { { "globalSettingsID", Model.GlobalSettings.Id }, { "addPodContainer", addPodContainer } })
+                        }
+
+                    }
+                </div>
+
+                if (pageLayout == USNOptions.PageLayout_Wide || pageType == "advanced")
+                {
+                    @:</div></div></section>
+                }
+            }
+        }
+    }
+}

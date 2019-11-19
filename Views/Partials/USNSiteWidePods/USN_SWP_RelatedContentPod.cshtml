@@ -1,0 +1,101 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_RelatedContentPod>
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNBlog;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+
+    IEnumerable<IPublishedContent> relatedContent = null;
+
+    if (Model.RelatedContent.HasValue())
+    {
+        relatedContent = Model.RelatedContent.Where(x => x.IsDocumentType(UsnadvancedPageBlogPost.ModelTypeAlias) ||
+                    x.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias) || x.IsDocumentType(UsnstandardPage.ModelTypeAlias)
+                    || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias));
+    }
+
+    if (relatedContent != null && relatedContent.Any())
+    {
+
+        string textAlignment;
+
+        switch (Model.TextAlignment)
+        {
+            case USNOptions.TextAlignment_Left:
+                textAlignment = "text-left";
+                break;
+            case USNOptions.TextAlignment_Center:
+                textAlignment = "text-center";
+                break;
+            case USNOptions.TextAlignment_Right:
+                textAlignment = "text-right";
+                break;
+            default:
+                textAlignment = "text-left";
+                break;
+        }
+
+        <div class="item listing-pod c4-bg has-borders c6-borders">
+            <div class="inner @textAlignment">
+                @if (Model.PodSecondaryHeading.HasValue())
+                {
+                    <p class="secondary-heading c1-text">@Model.PodSecondaryHeading</p>
+                }
+                @if (Model.PodHeading.HasValue())
+                {
+                    <p class="heading">@Model.PodHeading</p>
+                }
+                
+                <div class="listing short">
+                    @foreach (var item in relatedContent)
+                    {
+                        <div class="item"> 
+                            <p class="heading c3-text">
+                                <a class="c3-text" href="@item.Url">
+                                    @if (item.IsDocumentType(UsnadvancedPageBlogPost.ModelTypeAlias) || item.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+                                    {
+                                        if (item.HasValue("onPageTitle"))
+                                        {
+                                            @(item.GetPropertyValue<string>("onPageTitle"))
+                                        }
+                                        else
+                                        {
+                                            @item.Name
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.HasValue("subPageListingLinkText"))
+                                        {
+                                            @(item.GetPropertyValue<string>("subPageListingLinkText"))
+                                        }
+                                        else
+                                        {
+                                            @item.Name
+                                        }
+                                    }
+                                </a>
+                            </p>
+                            
+                            @if (item.IsDocumentType(UsnadvancedPageBlogPost.ModelTypeAlias) || item.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+                            {
+                                <div class="meta base-text">
+                                    <div>
+                                        <time><span class="date">@(item.GetPropertyValue<DateTime>("postDate").ToString("dd MMM yyyy"))</span></time>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+                

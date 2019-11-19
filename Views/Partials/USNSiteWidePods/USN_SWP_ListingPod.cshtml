@@ -1,0 +1,140 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_ListingPod>
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNBlog;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+
+    USNLink linkToListing = USNUrlHelper.GetLinkFromRelatedLinks(Model.LinkToListing);
+
+    if (linkToListing != null && Model.PagesToDisplay.HasValue())
+    {
+        int pagesDisplayCount = Model.PagesToDisplay;
+
+        string textAlignment;
+
+        switch (Model.TextAlignment)
+        {
+            case USNOptions.TextAlignment_Left:
+                textAlignment = "text-left";
+                break;
+            case USNOptions.TextAlignment_Center:
+                textAlignment = "text-center";
+                break;
+            case USNOptions.TextAlignment_Right:
+                textAlignment = "text-right";
+                break;
+            default:
+                textAlignment = "text-left";
+                break;
+        }
+
+        if (linkToListing.InternalNode != null && (linkToListing.InternalNode.IsDocumentType(UsnblogLandingPage.ModelTypeAlias) || linkToListing.InternalNode.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias)))
+        {
+            string category = null;
+            IPublishedContent blogLandingPage;
+
+            if (linkToListing.InternalNode.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias))
+            {
+                category = linkToListing.InternalNode.Id.ToString();
+                blogLandingPage = linkToListing.InternalNode.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+            }
+            else
+            {
+                blogLandingPage = linkToListing.InternalNode;
+            }
+
+            USNSearchResults searchResult = USNBlogPostService.Instance.GetPostItems(blogLandingPage, null, null, category, 1, pagesDisplayCount);
+
+            <div class="item listing-pod c4-bg has-borders c6-borders">
+                <div class="inner @textAlignment">
+
+                    @if (Model.PodSecondaryHeading.HasValue())
+                    {
+                        <p class="secondary-heading c1-text">@Model.PodSecondaryHeading</p>
+                    }
+
+                    @if (Model.PodHeading.HasValue())
+                    {
+                        <p class="heading c3-text">@Model.PodHeading</p>
+                    }
+
+                    @if (searchResult.SearchResults.Any())
+                    {
+                    <div class="listing blog short">
+                            
+                        @foreach (var node in searchResult.SearchResults)
+                        {
+                            <div class="item">
+                                @{
+                                    string postName = node.HasValue("onPageTitle") ? node.GetPropertyValue<string>("onPageTitle") : node.Name;
+                                }
+                                <p class="heading c3-text"><a class="c3-text" href="@node.Url">@postName</a></p>
+                                    
+                                <div class="meta base-text">
+                                    <div>
+                                        <time><span class="date">@(node.GetPropertyValue<DateTime>("postDate").ToString("dd MMM yyyy"))</span></time>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    }
+                    else
+                    {
+                        <p>@umbraco.library.GetDictionaryItem("USN Blog Nothing Found")</p>
+                    }
+                    <p class="link"><a class="btn btn-xs c1-borders c1-text" href="@linkToListing.LinkURL" @Html.Raw(linkToListing.LinkTarget) @Html.Raw(linkToListing.LinkTitle)>@linkToListing.LinkCaption@Html.Raw(linkToListing.LinkIcon)</a></p>
+                </div>
+            </div>
+ 
+        }
+        else if (linkToListing.InternalNode != null && (linkToListing.InternalNode.Children.Where(x => x.IsDocumentType(UsnstandardPage.ModelTypeAlias) || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias)).Any()))
+        {
+            <div class="item listing-pod c4-bg has-borders c6-borders">
+                <div class="inner @textAlignment">
+                    @if (Model.PodSecondaryHeading.HasValue())
+                    {
+                        <p class="secondary-heading c1-text">@Model.PodSecondaryHeading</p>
+                    }
+                    @if (Model.PodHeading.HasValue())
+                    {
+                        <p class="heading">@Model.PodHeading</p>
+                    }
+                    <div class="listing short">
+                        @{ 
+                            IEnumerable<IPublishedContent> pages = linkToListing.InternalNode.Children.Where(x => x.IsDocumentType(UsnstandardPage.ModelTypeAlias) || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias));
+
+                            if (Model.PagesToDisplay.HasValue() && Model.PagesToDisplay != 0)
+                            {
+                                pages = pages.Take(Model.PagesToDisplay).ToList();
+                            }
+
+                            foreach (var item in pages)
+                            {
+                                <div class="item"> 
+                                    <p class="heading c3-text">
+                                        <a class="c3-text" href="@item.Url">
+                                            @if (item.HasValue("subPageListingLinkText"))
+                                            {
+                                                @(item.GetPropertyValue<string>("subPageListingLinkText"))
+                                            }
+                                            else
+                                            {
+                                                @item.Name
+                                            }
+                                        </a>
+                                    </p>      
+                                </div>
+                            }
+                        }
+                    </div>
+                    <p class="link"><a class="btn btn-xs c1-borders c1-text" href="@linkToListing.LinkURL" @Html.Raw(linkToListing.LinkTarget) @Html.Raw(linkToListing.LinkTitle)>@linkToListing.LinkCaption@Html.Raw(linkToListing.LinkIcon)</a></p>
+                </div>
+            </div>
+        }
+    }
+}

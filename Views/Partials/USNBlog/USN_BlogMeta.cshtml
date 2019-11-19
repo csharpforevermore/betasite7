@@ -1,0 +1,59 @@
+﻿@inherits UmbracoViewPage
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@{
+    // get landing node
+    UsnblogLandingPage landing = (UsnblogLandingPage)Model.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Umbraco.TypedContent(globalSettingsId);
+
+    string textStyle = ViewData["textStyle"] != null ? ViewData["textStyle"].ToString() : String.Empty;
+
+    <div class="meta @textStyle">
+        <div class="author-date">
+            @{                
+                UsnblogAuthor authorNode = null;
+
+                if (Model.HasValue("postAuthor"))
+                {
+                    authorNode = (UsnblogAuthor)Model.GetPropertyValue<IEnumerable<IPublishedContent>>("postAuthor").FirstOrDefault();
+                }
+                else if (landing.DefaultAuthor != null)
+                {
+                    authorNode = (UsnblogAuthor)landing.DefaultAuthor.FirstOrDefault();
+                }
+
+                if (authorNode != null)
+                {
+
+                    USNLink authorPage = USNUrlHelper.GetLinkFromRelatedLinks(authorNode.AuthorPage);
+
+                    <span class="author">
+                        @umbraco.library.GetDictionaryItem("USN Blog Meta Posted By")
+                        @if (authorPage != null)
+                        {
+                            <a href="@authorPage.LinkURL" @Html.Raw(authorPage.LinkTarget) @Html.Raw(authorPage.LinkTitle)>@authorNode.Name@Html.Raw(authorPage.LinkIcon)</a>
+                        }
+                        else
+                        {
+                            @authorNode.Name
+                        }
+                        @umbraco.library.GetDictionaryItem("USN Blog Meta On")
+                    </span>
+                }
+            }
+            <time><span class="date">@(Model.GetPropertyValue<DateTime>("postDate").ToString("dd MMM yyyy"))</span></time>
+        </div>
+        <div class="row">
+            @if (globalSettings.DisqusUsername.HasValue() && !Model.GetPropertyValue<bool>("disableComments"))
+            {
+                <span class="comments col-xs-12"><a href="@Model.Url#disqus_thread">0 @umbraco.library.GetDictionaryItem("USN Blog Meta Comments")</a></span>
+            }
+
+            @Html.Partial("USNBlog/USN_BlogPostCategories", Model)
+        </div>
+    </div>
+}

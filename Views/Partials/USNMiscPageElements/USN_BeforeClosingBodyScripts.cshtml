@@ -1,0 +1,12 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+    
+	@Html.Raw(globalSettings.BeforeClosingBodyScripts)
+
+    if (Model.Content.HasValue("pageBeforeClosingBodyScripts"))
+    {
+        @Html.Raw(Model.Content.GetPropertyValue<string>("pageBeforeClosingBodyScripts"))
+    }
+}

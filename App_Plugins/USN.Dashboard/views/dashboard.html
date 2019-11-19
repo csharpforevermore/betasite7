@@ -1,0 +1,314 @@
+﻿<div ng-controller="USN.Dashboard.Controller">
+
+    <section class="usn-cms-dashboard">
+        <div class="container-fluid">
+
+            <!-- ROW -->
+            <div class="row">
+
+                <!-- COL -->
+                <div class="col-md-6 col-xs-12">
+
+                    <section class="your-website">
+
+                        <p class="heading">Your website</p>
+
+                        <!-- ITEM -->
+                        <div class="item big-item">
+                            <div class="inner">
+
+                                <div class="info-line node-stat">
+                                    Published content nodes 
+                                    <span class="label label-success pull-right" ng-show="isPublishedNodesLoaded">{{publishedNodesCount}}</span>
+                                    <span class="pull-right" ng-show="isPublishedNodesError">-</span>
+                                </div>
+                                <hr />
+                                <div class="info-line node-stat">
+                                    Nodes in recycle bin 
+                                    <span class="label label-danger pull-right" ng-show="isRecycleBinLoaded">{{recycleBinCount}}</span>
+                                    <span class="pull-right" ng-show="isRecycleBinError">-</span>
+                                </div>
+                                <hr />
+                                <div class="info-line umbraco-version">Umbraco version <span class="pull-right">{{vm.umbracoVersion}}</span></div>
+
+                            </div>
+                        </div>
+                        <!--// ITEM -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+                <!-- COL -->
+                <div class="col-md-6 col-xs-12">
+
+                    <section class="your-details">
+
+                        <p class="heading">Your details</p>
+
+                        <!-- ITEM -->
+                        <div class="item big-item">
+                            <div class="inner">
+
+                                <div class="info-line">
+                                    User <span class="pull-right">{{vm.currentUser}}</span>
+                                </div>
+                                <hr />
+                                <div class="info-line">
+                                    Last login <span class="pull-right">{{vm.lastLogin}}</span>
+                                </div>
+                                <hr />
+                                <div class="info-line">
+                                    Password last changed <span class="pull-right">{{vm.passwordLastChanged}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--// ITEM -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+
+            </div>
+            <!--// ROW -->
+            <!-- ROW -->
+            <div class="row">
+
+                <!-- COL -->
+                <div class="col-lg-3 col-md-6 col-xs-12">
+
+                    <section class="activities">
+
+                        <p class="heading">Your recent Activity</p>
+
+                        <p ng-show="isRecentActivityError">Issue getting your recent activity</p>
+
+                        <!-- WRAP -->
+                        <div class="activity-wrap">
+
+                            <div class="usn-dashboard-loading" ng-show="!isRecentActivityLoaded">
+                                <div class="loading">
+                                    <div class="message">
+                                        Loading, please wait ...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="isRecentActivityLoaded">
+
+                                <div class="item" ng-show="RecentActivity.usersRecentActivity.length === 0">
+                                    <div class="inner">
+                                        No recent activity.
+                                    </div>
+                                </div>
+
+                                <!-- ITEM -->
+                                <div class="item with-thumb" ng-repeat="item in RecentActivity.usersRecentActivity" ng-show="RecentActivity.usersRecentActivity.length > 0">
+                                    <a ng-href="{{item.nodeLink}}">
+                                        <span class="wrap"></span>
+                                        <div class="inner">
+                                            <div class="node"><i class="icon umb-tree-icon sprTree {{item.documentTypeIcon}}"></i>{{item.nodeName}}</div>
+                                            <div class="image">
+                                                <img class="img-circle" ng-src="{{vm.currentUserAvatarUrl}}" alt="{{item.displayName}}" width="60" height="60">
+                                            </div>
+                                            <div class="date">{{item.timestamp | date:'dd MMM yyyy HH:mm'}}</div>
+                                            <div class="status">
+                                                <span class="label label-success" ng-show="item.logItemType =='Publish'">Saved and published</span>
+                                                <span class="label label-warning" ng-show="item.logItemType =='Save'">Saved / not published</span>
+                                                <span ng-show="item.logItemType =='SavedAndScheduled'"><span class="label label-info">Scheduled to publish:</span><br><span class="label label-info">{{item.scheduledPublishDate | date:'dd MMM yyyy HH:mm'}}</span></span>
+                                                <span class="label label-danger" ng-show="item.logItemType =='Delete'">Moved to recycle bin</span>
+                                                <span class="label label-warning" ng-show="item.logItemType =='UnPublish'">Unpublished</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--// ITEM -->
+
+                            </div>
+
+                        </div>
+                        <!--// WRAP -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+                <!-- COL -->
+                <div class="col-lg-3 col-md-6 col-xs-12">
+
+                    <section class="activities">
+
+                        <p class="heading">All Recent Activity</p>
+
+                        <p ng-show="isRecentActivityError">Issue getting all recent activity</p>
+
+                        <!-- WRAP -->
+                        <div class="activity-wrap">
+
+                            <div class="usn-dashboard-loading" ng-show="!isRecentActivityLoaded">
+                                <div class="loading">
+                                    <div class="message">
+                                        Loading, please wait ...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="isRecentActivityLoaded">
+
+                                <div class="item" ng-show="RecentActivity.allUsersRecentActivity.length === 0">
+                                    <div class="inner">
+                                        No recent activity.
+                                    </div>
+                                </div>
+
+                                <!-- ITEM -->
+                                <div class="item with-thumb" ng-repeat="item in RecentActivity.allUsersRecentActivity" ng-show="RecentActivity.allUsersRecentActivity.length > 0">
+                                    <a ng-href="{{item.nodeLink}}">
+                                        <span class="wrap"></span>
+                                        <div class="inner">
+                                            <div class="node"><i class="icon umb-tree-icon sprTree {{item.documentTypeIcon}}"></i>{{item.nodeName}}</div>
+                                            <div class="image">
+                                                <img class="img-circle" ng-src="{{item.avatarUrl}}" alt="{{item.displayName}}" width="60" height="60">
+                                            </div>
+                                            <div class="date">{{item.timestamp | date:'dd MMM yyyy HH:mm'}} by {{item.displayName}}</div>
+                                            <div class="status">
+                                                <span class="label label-success" ng-show="item.logItemType =='Publish'">Saved and published</span>
+                                                <span class="label label-warning" ng-show="item.logItemType =='Save'">Saved / not published</span>
+                                                <span ng-show="item.logItemType =='SavedAndScheduled'"><span class="label label-info">Scheduled to publish:</span><br><span class="label label-info">{{item.scheduledPublishDate | date:'dd MMM yyyy HH:mm'}}</span></span>
+                                                <span class="label label-danger" ng-show="item.logItemType =='Delete'">Moved to recycle bin</span>
+                                                <span class="label label-warning" ng-show="item.logItemType =='UnPublish'">Unpublished</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--// ITEM -->
+
+                            </div>
+
+                        </div>
+                        <!--// WRAP -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+                <!-- COL -->
+                <div class="col-lg-3 col-md-6 col-xs-12">
+
+                    <section class="activities">
+
+                        <p class="heading">Unpublished content</p>
+
+                        <p ng-show="isContentError">Issue getting unpublished content</p>
+
+                        <!-- WRAP -->
+                        <div class="activity-wrap">
+
+                            <div class="usn-dashboard-loading" ng-show="!isContentLoaded">
+                                <div class="loading">
+                                    <div class="message">
+                                        Loading, please wait ...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="isContentLoaded">
+
+                                <div class="item" ng-show="ContentActivity.unpublishedContent.length === 0">
+                                    <div class="inner">
+                                        No unpublished content.
+                                    </div>
+                                </div>
+
+                                <!-- ITEM -->
+                                <div class="item with-thumb" ng-repeat="item in ContentActivity.unpublishedContent" ng-show="ContentActivity.unpublishedContent.length > 0">
+                                    <a ng-href="{{item.nodeLink}}">
+                                        <span class="wrap"></span>
+                                        <div class="inner">
+                                            <div class="node"><i class="icon umb-tree-icon sprTree {{item.documentTypeIcon}}"></i>{{item.nodeName}}</div>
+                                            <div class="image">
+                                                <img class="img-circle" ng-src="{{item.avatarUrl}}" alt="{{item.displayName}}" width="60" height="60">
+                                            </div>
+                                            <div class="date">{{item.timestamp | date:'dd MMM yyyy HH:mm'}} by {{item.displayName}}</div>
+                                            <div class="status">
+                                                <span class="label label-warning">Unpublished</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--// ITEM -->
+
+                            </div>
+
+                        </div>
+                        <!--// WRAP -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+                <!-- COL -->
+                <div class="col-lg-3 col-md-6 col-xs-12">
+
+                    <section class="activities">
+
+                        <p class="heading">Scheduled content</p>
+
+                        <p ng-show="isContentError">Issue getting scheduled content</p>
+
+                        <!-- WRAP -->
+                        <div class="activity-wrap">
+
+                            <div class="usn-dashboard-loading" ng-show="!isContentLoaded">
+                                <div class="loading">
+                                    <div class="message">
+                                        Loading Dashboard, please wait ...
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="isContentLoaded">
+
+                                <div class="item" ng-show="ContentActivity.scheduledContent.length == 0">
+                                    <div class="inner">
+                                        No scheduled content.
+                                    </div>
+                                </div>
+
+                                <!-- ITEM -->
+                                <div class="item with-thumb" ng-repeat="item in ContentActivity.scheduledContent" ng-show="ContentActivity.scheduledContent.length > 0">
+                                    <a ng-href="{{item.nodeLink}}">
+                                        <span class="wrap"></span>
+                                        <div class="inner">
+                                            <div class="node"><i class="icon umb-tree-icon sprTree {{item.documentTypeIcon}}"></i>{{item.nodeName}}</div>
+                                            <div class="image">
+                                                <img class="img-circle" ng-src="{{item.avatarUrl}}" alt="{{item.displayName}}" width="60" height="60">
+                                            </div>
+                                            <div class="date">{{item.timestamp | date:'dd MMM yyyy HH:mm'}} by {{item.displayName}}</div>
+                                            <div class="status">
+                                                <span class="label label-info">Scheduled to publish:</span><br><span class="label label-info">{{item.scheduledPublishDate | date:'dd MMM yyyy HH:mm'}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--// ITEM -->
+
+                            </div>
+
+                        </div>
+                        <!--// WRAP -->
+
+                    </section>
+
+                </div>
+                <!--// COL -->
+
+            </div>
+            <!--// ROW -->
+
+        </div>
+
+    </section>
+</div>

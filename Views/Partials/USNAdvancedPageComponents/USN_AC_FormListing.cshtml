@@ -1,0 +1,265 @@
+﻿@inherits UmbracoViewPage<Usn_Ac_FormListing_AN>
+
+@using USNStarterKit.USNBlog;
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+
+    USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+
+    string backgroundImageStyle = USNViewTemplateHelper.GetBackgroundImageStyle(Model.BackgroundImage, Model.BackgroundImageOptions);
+
+    string firstDivClass = "col-md-6 col-xs-12 pull-left";
+    string secondDivClass = "col-md-4 col-xs-12 pull-right";
+    string formFadeInDirection = "fadeInRight";
+    string listingFadeInDirection = "fadeInLeft";
+
+    if (Model.ListingPosition == USNOptions.TextPosition_After)
+    {
+        firstDivClass = "col-md-6 col-xs-12 pull-right";
+        secondDivClass = "col-md-4 col-xs-12 pull-left";
+        formFadeInDirection = "fadeInLeft";
+        listingFadeInDirection = "fadeInRight";
+    }
+
+    string animateClass = String.Empty;
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    <section class="content apc listing-with-form @settings.BackGroundStyle @Model.CustomComponentClasses" @Html.Raw(backgroundImageStyle) id="pos_@Model.Id">
+        <div class="container">
+            <!-- ROW -->
+            <div class="row">
+                <div class="listing-side @firstDivClass @animateClass" data-os-animation="@listingFadeInDirection" data-os-animation-delay="0">
+                    <!-- LISTING - BLOG -->
+                    @{
+
+                        USNLink linkToListing = USNUrlHelper.GetLinkFromRelatedLinks(Model.LinkToListing);
+
+                        if (linkToListing != null && Model.PagesToDisplay.HasValue())
+                        {
+                            int pagesDisplayCount = Model.PagesToDisplay;
+
+                            if (linkToListing.InternalNode != null && (linkToListing.InternalNode.IsDocumentType(UsnblogLandingPage.ModelTypeAlias) || linkToListing.InternalNode.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias)))
+                            {
+                                string category = null;
+                                IPublishedContent blogLandingPage;
+
+                                if (linkToListing.InternalNode.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias))
+                                {
+                                    category = linkToListing.InternalNode.Id.ToString();
+                                    blogLandingPage = linkToListing.InternalNode.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+                                }
+                                else
+                                {
+                                    blogLandingPage = linkToListing.InternalNode;
+                                }
+
+                                USNSearchResults searchResult = USNBlogPostService.Instance.GetPostItems(blogLandingPage, null,null, category,1, pagesDisplayCount);
+
+                                if (searchResult.SearchResults.Any())
+                                {
+                                    <div class="listing blog vertical">
+
+                                        @if (Model.ListingSectionSecondaryHeading.HasValue())
+                                        {
+                                            <p class="secondary-heading @settings.SecondaryHeadingStyle">@Model.ListingSectionSecondaryHeading</p>
+                                        }
+
+                                        @if (Model.ListingSectionHeading != null)
+                                        {
+                                            @Html.Raw(String.Format("<{0} class=\"heading main {1}\">{2}</{0}>", Model.ListingSectionHeading.HeadingTag, settings.HeadingStyle, Model.ListingSectionHeading.Text))
+                                        }
+
+                                        @foreach (var node in searchResult.SearchResults)
+                                        {
+                                            Boolean displaySummaryText = false;
+                                            string introText = String.Empty;
+
+                                            if (node.HasValue("pageSummary"))
+                                            {
+                                                introText = node.GetPropertyValue<string>("pageSummary");
+                                                displaySummaryText = true;
+                                            }
+                                            else if (Model.SummaryTextCharacterCount.HasValue() && node.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+                                            {
+                                                introText = library.StripHtml(node.GetPropertyValue<string>("bodyText"));
+
+                                                displaySummaryText = true;
+
+                                                int summaryTextLength = Model.SummaryTextCharacterCount;
+
+                                                if (introText.Length >= summaryTextLength)
+                                                {
+                                                    introText = introText.Substring(0, summaryTextLength);
+                                                }
+
+                                                if (introText.Length > 0)
+                                                {
+                                                    introText = "<p>" + introText + " ...</p>";
+                                                }
+                                            }
+
+
+                                            <div class="item">
+
+                                                <a href="@node.Url">
+
+                                                    @{
+                                                        string postName = node.HasValue("onPageTitle") ? node.GetPropertyValue<string>("onPageTitle") : node.Name;
+                                                    }
+                                                    <p class="heading @settings.HeadingStyle">
+                                                        @postName
+                                                    </p>
+                                                </a>
+                                                @if (displaySummaryText)
+                                                {
+                                                    <div class="info">
+                                                        <div class="text @settings.TextStyle">@Html.Raw(introText)</div>
+                                                    </div>
+                                                }
+
+                                                @Html.Partial("USNBlog/USN_BlogMeta", node, new ViewDataDictionary { { "textStyle", settings.TextStyle }, { "globalSettingsID", globalSettingsId } })
+
+                                            </div>
+                                        }
+                                        <p class="link"><a class="btn btn-sm @settings.ButtonStyle" href="@linkToListing.LinkURL" @Html.Raw(linkToListing.LinkTarget) @Html.Raw(linkToListing.LinkTitle)>@linkToListing.LinkCaption@Html.Raw(linkToListing.LinkIcon)</a></p>
+                                    </div>
+                                }
+
+                            }
+                            else if (linkToListing.InternalNode != null && (linkToListing.InternalNode.Children.Where(x => x.IsDocumentType(UsnstandardPage.ModelTypeAlias) || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias)).Any()))
+                            {
+                                <div class="listing vertical">
+
+                                    @if (Model.ListingSectionSecondaryHeading.HasValue())
+                                    {
+                                        <p class="secondary-heading @settings.SecondaryHeadingStyle">@Model.ListingSectionSecondaryHeading</p>
+                                    }
+                                    
+                                    @if (Model.ListingSectionHeading != null)
+                                    {
+                                        @Html.Raw(String.Format("<{0} class=\"heading main {1}\">{2}</{0}>", Model.ListingSectionHeading.HeadingTag, settings.HeadingStyle, Model.ListingSectionHeading.Text))
+                                    }
+
+                                    @foreach (var item in linkToListing.InternalNode.Children.Where(x => x.IsDocumentType(UsnstandardPage.ModelTypeAlias) || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias)).Take(pagesDisplayCount))
+                                    {
+                                        Boolean displaySummaryText = false;
+                                        string introText = String.Empty;
+
+                                        if (item.HasValue("pageSummary"))
+                                        {
+                                            introText = item.GetPropertyValue<string>("pageSummary");
+                                            displaySummaryText = true;
+                                        }
+                                        else
+                                        {
+                                            if (Model.SummaryTextCharacterCount.HasValue())
+                                            {
+                                                int summaryTextLength = Model.SummaryTextCharacterCount;
+
+                                                if (summaryTextLength > 0)
+                                                {
+                                                    introText = item.GetPropertyValue<string>("bodyText").StripHtml().Trim();
+
+                                                    displaySummaryText = true;
+
+                                                    if (introText.Length >= summaryTextLength)
+                                                    {
+                                                        introText = introText.Substring(0, summaryTextLength);
+                                                    }
+
+                                                    if (introText.Length > 0)
+                                                    {
+                                                        introText = "<p>" + introText + " ...</p>";
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        <div class="item">
+
+                                            <a href="@item.Url">
+                                                <p class="heading @settings.HeadingStyle">
+                                                    @if (item.HasValue("subPageListingLinkText"))
+                                                    {
+                                                        @Html.Raw(item.GetPropertyValue<string>("subPageListingLinkText"))
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Name
+                                                    }
+                                                </p>
+                                            </a>
+                                            @if (displaySummaryText && introText != String.Empty)
+                                            {
+                                                <div class="info">
+                                                    <div class="text @settings.TextStyle">@Html.Raw(introText)</div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    }
+                                    <p class="link"><a class="btn btn-xs @settings.ButtonStyle" href="@linkToListing.LinkURL" @Html.Raw(linkToListing.LinkTarget) @Html.Raw(linkToListing.LinkTitle)>@linkToListing.LinkCaption@Html.Raw(linkToListing.LinkIcon)</a></p>
+                                </div>
+                            }
+                        }
+                    }
+                    <!--// LISTING - BLOG -->
+                </div>
+
+                <div class="form-side @secondDivClass @animateClass" data-os-animation="@formFadeInDirection" data-os-animation-delay="0">
+                    @switch (Model.FormType)
+                    {
+                        case "contactForm":
+                            <div class="contact form ajax-wrap">
+                                <div class="inner c5-bg base-text has-borders c6-borders">
+                                    @Html.Action("Index", "USNContactFormSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId })
+                                </div>
+                            </div>
+                            break;
+                        case "newsletterForm":
+                            <div class="newsletter form ajax-wrap">
+                                <div class="inner c4-bg base-text has-borders c6-borders">
+                                    @Html.Action("Index", "USNNewsletterSignupSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "normal" })
+                                </div>
+                            </div>
+                            break;
+                        case "umbracoForm":
+                            <div class="umbraco-forms form ajax-wrap">
+                                <div class="inner c5-bg base-text has-borders c6-borders">
+                                    @if (Model.UmbracoForm.HasValue())
+                                    {
+                                        var formGuid = Model.UmbracoForm;
+
+                                        if (Model.SubmitViaAjax)
+                                        {
+                                            @:<div class="umbraco-ajax-form">
+                                        }
+
+                                        @Umbraco.RenderMacro("renderUmbracoForm", new { FormGuid = formGuid, FormTheme = "uSkinned", CurrentNodeID = Model.Id })
+
+                                        if (Model.SubmitViaAjax)
+                                        {
+                                            @:</div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            break;
+                    }
+                </div>
+            </div>
+            <!--// ROW -->
+        </div>
+    </section>
+
+}

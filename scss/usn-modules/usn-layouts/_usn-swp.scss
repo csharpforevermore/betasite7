@@ -1,0 +1,161 @@
+/*  
+----------------------------------------------------------------------------------------------------
+8.0 SITE WIDE PODS
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp {
+    margin-bottom: $base-spacing;
+}
+
+.swp .item {
+    position: relative;
+    margin-bottom: $base-spacing;
+}
+
+.swp .item:last-child {
+    margin-bottom: 0;
+}
+
+.swp .item .heading a {
+    text-decoration: none;
+}
+
+.swp .item .heading i {
+    font-size: 15px;
+    display: none;
+}
+
+.swp .item .link {
+    margin-bottom: 0;
+}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.1 BLOCKQUOTE POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.blockquote-pod {}
+
+.swp .item.blockquote-pod blockquote {
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.swp blockquote p {
+    font-size: 20px;
+}
+
+@media (min-width:992px) {
+    .swp blockquote p {
+        font-size: 24px;
+    }
+}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.2 CODEPOD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.code-pod {}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.3 GENERAL POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.general-pod {}
+
+
+/* 
+----------------------------------------------------------------------------------------------------
+8.4 IMAGE POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.image-pod {}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.5 LISTING POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.listing-pod {}
+
+.swp .item.listing-pod .inner>.heading {
+    margin-bottom: $base-spacing;
+}
+
+.swp .item.listing-pod .link {
+    margin: $base-half-spacing 0 0;
+}
+
+.swp .listing {
+    margin: 0;
+    padding: 0;
+}
+
+.swp .listing .item {
+    margin: 0;
+    padding: 0;
+}
+
+.swp .listing .item::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: $base-border-width;
+    margin: 10px 0 $base-half-spacing;
+    background-color: rgba($c6, 1);
+}
+
+.swp .listing .item:last-of-type::after {
+    background: none;
+}
+
+.swp .listing .item .heading {
+    font-size: 16px;
+}
+
+.swp .listing .item .meta {
+    margin: 0;
+    padding: 10px 0 0;
+    font-size: 12px;
+    border: 0 none;
+}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.6 FORM POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.form-pod {}
+
+.swp .item.form-pod .heading.main {
+    font-size: 16px;
+}
+
+@media (min-width:992px) {
+    .swp .item.form-pod .heading.main {
+        font-size: 20px;
+    }
+}
+
+
+/*  
+----------------------------------------------------------------------------------------------------
+8.7 VIDEO POD
+---------------------------------------------------------------------------------------------------- 
+*/
+
+.swp .item.video-pod {}

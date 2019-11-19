@@ -1,0 +1,189 @@
+﻿@inherits UmbracoViewPage<Usn_Ac_Banner_AN>
+
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    if (Model.Banners != null)
+    {
+        decimal autoRotateSpeed = 0;
+        string slickAttributes = "data-slick='{{{0}{1}{2}}}'";
+        string autoRotateAttribute = String.Empty;
+        string dotsAttribute = Model.ShowDots ? "\"dots\": true " : "\"dots\": false ";
+        string arrowsAttribute = Model.ShowArrows ? "\"arrows\": true " : "\"arrows\": false ";
+
+        if (Model.AutoRotateSpeed.HasValue())
+        {
+            autoRotateSpeed = Model.AutoRotateSpeed;
+            if (autoRotateSpeed > 0)
+            {
+                autoRotateSpeed = autoRotateSpeed * 1000;
+                autoRotateAttribute = "\"autoplay\": true, \"autoplaySpeed\": " + Convert.ToInt32(autoRotateSpeed);
+            }
+        }
+
+        //Add commas
+        dotsAttribute = autoRotateAttribute != String.Empty ? dotsAttribute = "," + dotsAttribute : dotsAttribute;
+        arrowsAttribute = autoRotateAttribute != String.Empty || dotsAttribute != String.Empty ? "," + arrowsAttribute : arrowsAttribute;
+
+        slickAttributes = String.Format(slickAttributes, autoRotateAttribute, dotsAttribute, arrowsAttribute);
+
+        <section class="content apc banner no-padding @Model.CustomComponentClasses" id="pos_@Model.Id">
+            <div class="slides" @Html.Raw(slickAttributes)>
+                @foreach (Usn_Ac_Banner banner in Model.Banners)
+                {
+                    string parallaxClass = String.Empty;
+
+                    if (banner.Parallax)
+                    {
+                        parallaxClass = "parallax";
+                    }
+
+                    string colorOverlayClass = String.Empty;
+
+                    if(banner.AddColorOverlay)
+                    {
+                        colorOverlayClass = "overlay";
+                    }
+
+                    string animateClass = String.Empty;
+
+                    if (banner.Animate)
+                    {
+                        animateClass = "os-animation";
+                    }
+
+                    string bannerStyle = "medium";
+                    int imageHeightSmall = 65;
+                    string cropAlias = "Medium Banner";
+
+                    switch (banner.BannerStyle)
+                    {
+                        case USNOptions.BannerSize_Short:
+                            bannerStyle = "short";
+                            cropAlias = "Short Banner";
+                            imageHeightSmall = parallaxClass != String.Empty ? 110 : 45;
+                            break;
+                        case USNOptions.BannerSize_Medium:
+                            bannerStyle = "medium";
+                            cropAlias = "Medium Banner";
+                            imageHeightSmall = parallaxClass != String.Empty ? 110 : 65;
+                            break;
+                        case USNOptions.BannerSize_Takeover:
+                            bannerStyle = "takeover";
+                            imageHeightSmall = 110;
+                            cropAlias = "Takeover Banner";
+                            break;
+                    }
+
+                    string bgImage = String.Empty;
+                    string bgImageSmall = String.Empty;
+
+                    if (banner.BannerImage != null)
+                    {
+                        bgImage = banner.BannerImage.GetCropUrl(cropAlias: cropAlias);
+                        bgImageSmall = "style=\"background-image:url('" + banner.BannerImage.GetCropUrl(cropAlias: cropAlias, width: 150, height: imageHeightSmall) + "')\"";
+                    }
+
+                    USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(banner.BackgroundColor, banner.ButtonColor);
+
+                    USNLink bannerLink = USNUrlHelper.GetLinkFromRelatedLinks(banner.BannerLink);
+
+                    <div class="item @colorOverlayClass @bannerStyle @parallaxClass @settings.BackGroundStyle">
+	                    
+                        @if (banner.BannerImage != null)
+                        {
+						<!-- IMAGE -->
+						<div class="image lazyload" @Html.Raw(bgImageSmall) data-bg="@bgImage">
+							
+						</div>
+						<!--// IMAGE -->
+                        }
+
+                        @if (banner.Video != null)
+                        {
+                        <!-- VIDEO -->
+                        <div class="video">
+
+                            <video playsinline autoplay muted loop preload width="640" height="360" class="video-player">
+                                <source src="@banner.Video.Url" type="video/mp4">
+                            </video>
+
+                        </div>
+                        <!--// VIDEO -->
+                        }
+
+                        @if (banner.BannerHeading != null || banner.BannerText.HasValue() || bannerLink != null || banner.BannerSecondaryHeading.HasValue())
+                        {
+							string textAlignment;
+
+                            switch (banner.BannerTextAlignment)
+		                    {
+		                        case USNOptions.TextAlignment_Left:
+		                            textAlignment = "col-md-8 col-xs-12 text-left";
+		                            break;
+		                        case USNOptions.TextAlignment_Center:
+		                            textAlignment = "col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 text-center";
+		                            break;
+		                        case USNOptions.TextAlignment_Right:
+		                            textAlignment = "col-md-8 col-sm-10 col-xs-12 pull-right text-right";
+		                            break;
+		                        default:
+		                            textAlignment = "col-md-8 col-xs-12 text-left";
+		                            break;
+		                    }
+                            <div class="info">
+                                <div class="container">
+                                    <!-- ROW -->
+                                    <div class="row">
+
+                                        <div class="table">
+				                            <div class="table-cell">
+
+                                                <div class="@textAlignment">
+                                                    @if(banner.BannerSecondaryHeading.HasValue())
+                                                    {
+                                                        <p class="secondary-heading @settings.SecondaryHeadingStyle @animateClass" data-os-animation="fadeInUp" data-os-animation-delay="0.1s">@banner.BannerSecondaryHeading</p>
+                                                    }
+                                                    @if (banner.BannerHeading != null)
+                                                    {
+                                                        @Html.Raw(String.Format("<{0} class=\"heading main {1} {2}\" data-os-animation=\"fadeInUp\" data-os-animation-delay=\"0.1s\">{3}</{0}>", banner.BannerHeading.HeadingTag, settings.HeadingStyle, animateClass, banner.BannerHeading.Text))
+                                                    }
+                                                    @if (banner.BannerText.HasValue())
+                                                    {
+                                                        <div class="text @settings.TextStyle @animateClass" data-os-animation="fadeInUp" data-os-animation-delay="0.2s">
+                                                            @Html.Raw(banner.BannerText)
+                                                        </div>
+                                                    }
+                                                    @if (bannerLink != null)
+                                                    {
+                                                        <p class="link @animateClass" data-os-animation="fadeInUp" data-os-animation-delay="0.3s">
+                                                            <a class="btn @settings.ButtonStyle" href="@bannerLink.LinkURL" @Html.Raw(bannerLink.LinkTarget) @Html.Raw(bannerLink.LinkTitle)>@bannerLink.LinkCaption@Html.Raw(bannerLink.LinkIcon)</a>
+                                                        </p>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--// ROW -->
+                                </div>
+                            </div>
+                        }
+                        @if (banner.ScrollPrompt)
+                        {
+                                <!-- SCROLL PROMPT -->
+                            <div class="scroll-prompt text-center">
+                                <a class="c5-text hidden-lg"><i class="ion-ios-arrow-down"></i></a>
+                                <a class="c5-text hidden-md hidden-sm hidden-xs"><div class="mouse-scroll"></div><span>@umbraco.library.GetDictionaryItem("USN Banner Component Scroll Prompt")</span></a>
+                            </div>
+                                <!--// SCROLL PROMPT -->
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+    }
+}

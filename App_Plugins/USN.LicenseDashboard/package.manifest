@@ -1,0 +1,11 @@
+﻿{
+  "javascript": [
+    "~/App_Plugins/USN.LicenseDashboard/js/dashboard.controller.js",
+    "~/App_Plugins/USN.LicenseDashboard/js/file.upload.api.service.js",
+    "~/App_Plugins/USN.LicenseDashboard/js/ng-file-upload-all.min.js"
+  ],
+    "css" : [ 
+        "~/App_Plugins/USN.LicenseDashboard/css/style.css"
+    ]
+
+}

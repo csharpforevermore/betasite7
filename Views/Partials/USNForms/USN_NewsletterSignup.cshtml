@@ -1,0 +1,96 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNNewsletterFormViewModel>
+
+@using USNStarterKit.USNHeading.Models;
+@using USNStarterKit.USNHelpers;
+	
+@using (Ajax.BeginForm("HandleNewsletterSubmit", "USNNewsletterSignupSurface", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "NewsletterSignupContainer" + Model.CurrentNodeID,
+    LoadingElementId = "NewsletterAjaxLoading" + Model.CurrentNodeID
+}))
+{
+    IUsn_Cmp_NewsletterForm currentNode = (IUsn_Cmp_NewsletterForm)Umbraco.TypedContent(Model.CurrentNodeID);
+
+    var containerId = "NewsletterSignupContainer" + Model.CurrentNodeID;
+    var errorId = "NewsletterError" + Model.CurrentNodeID;
+    var ajaxLoadingId = "NewsletterAjaxLoading" + Model.CurrentNodeID;
+
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Umbraco.TypedContent(Model.GlobalSettingsID);
+
+
+    if (globalSettings.EmailMarketingPlatform.HasValue() && globalSettings.NewsletterApikey.HasValue() && (currentNode.HasValue("newsletterSubscriberListID") || globalSettings.DefaultNewsletterSubscriberListID.HasValue()))
+    {
+        @Html.Hidden("CurrentNodeID", Model.CurrentNodeID)
+        @Html.Hidden("GlobalSettingsID", Model.GlobalSettingsID)
+        @Html.AntiForgeryToken()
+
+
+        if (currentNode.NewsletterHeading != null || currentNode.NewsletterIntroduction.HasValue() || currentNode.NewsletterSecondaryHeading.HasValue())
+        {
+        <div class="info short-margin-bottom">
+
+        @if (currentNode.NewsletterSecondaryHeading.HasValue())
+        {
+            <p class="secondary-heading c1-text">@currentNode.NewsletterSecondaryHeading</p>
+        }
+
+        @if (currentNode.NewsletterHeading != null)
+        {
+            @Html.Raw(String.Format("<{0} class=\"heading main c3-text\">{1}</{0}>", currentNode.NewsletterHeading.HeadingTag, currentNode.NewsletterHeading.Text))
+        }
+
+        @if (currentNode.NewsletterIntroduction.HasValue())
+        {
+        <div class="text base-text">
+            @Html.Raw(currentNode.NewsletterIntroduction)
+        </div>
+        }
+
+        </div>
+        }
+
+        <div id="@containerId">
+            <div class="alert alert-danger alert-dismissible fade in" id="@errorId" style="display:none">
+            </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="FirstName" class="control-label">
+                        @umbraco.library.GetDictionaryItem("USN Form First Name Label") <em class="req">*</em>
+                    </label>
+                    @Html.TextBoxFor(x => Model.FirstName, new { @class = "form-control", placeholder = umbraco.library.GetDictionaryItem("USN Form First Name Label") })
+                    @Html.ValidationMessageFor(x => Model.FirstName, @umbraco.library.GetDictionaryItem("USN Form First Name Validation"))
+                </div>
+                <div class="form-group">
+                    <label for="LastName" class="control-label">
+                        @umbraco.library.GetDictionaryItem("USN Form Last Name Label") <em class="req">*</em>
+                    </label>
+                    @Html.TextBoxFor(x => Model.LastName, new { @class = "form-control", placeholder = umbraco.library.GetDictionaryItem("USN Form Last Name Label") })
+                    @Html.ValidationMessageFor(x => Model.LastName, @umbraco.library.GetDictionaryItem("USN Form Last Name Validation"))
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="control-label">
+                        @umbraco.library.GetDictionaryItem("USN Form Email Address Label") <em class="req">*</em>
+                    </label>
+                    @Html.TextBoxFor(x => Model.Email, new { autocapitalize = "off", @class = "form-control", placeholder = umbraco.library.GetDictionaryItem("USN Form Email Address Label") })
+                    @Html.ValidationMessageFor(x => Model.Email, @umbraco.library.GetDictionaryItem("USN Form Email Address Validation"))
+                </div>
+                @if (globalSettings.GoogleReCaptchasiteKey.HasValue() && globalSettings.GoogleReCaptchasecretKey.HasValue())
+                {
+                    <div class="g-recaptcha" data-sitekey="@globalSettings.GoogleReCaptchasiteKey" data-size="@Model.CaptchaDataSize"></div>
+                }
+            </fieldset>
+            <fieldset class="buttons">
+                <button class="btn c1-borders c1-text" type="submit">
+                    <span>@(currentNode.GetPropertyValue<string>("newsletterButtonText"))</span>
+                </button>
+            </fieldset>
+            <div class="ajax-loading" id="@ajaxLoadingId" style="display:none">
+                <div class="loading">
+                    <span class="message">@umbraco.library.GetDictionaryItem("USN Newsletter Form Sending Message")</span>
+                </div>
+            </div>
+        </div>
+    }
+}

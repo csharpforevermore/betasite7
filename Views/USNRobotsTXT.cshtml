@@ -1,0 +1,16 @@
+﻿@inherits UmbracoViewPage<Usn_RobotsTxt>
+
+@using USNStarterKit.USNHelpers;
+@{
+    Layout = null;
+    Response.AddHeader("Content-Type", "text/plain");      
+}
+@Model.CrawlInstructions
+
+@if(Model.SitemapXmllocation.HasValue())
+{
+     @("Sitemap: " + Model.SitemapXmllocation.UrlWithDomain())
+}
+
+
+

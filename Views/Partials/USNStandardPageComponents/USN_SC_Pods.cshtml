@@ -1,0 +1,241 @@
+﻿@inherits UmbracoViewPage<Usn_Sc_Pods_AN>
+
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    string anchorId = String.Empty;
+    string customComponentClasses = String.Empty;
+
+    USNTemplateStyleSettings settings;
+    string animateClass = String.Empty;
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    string pageType = ViewData["pageType"] != null ? ViewData["pageType"].ToString() : "standard";
+
+    if (pageType == "standard")
+    {
+        settings = USNViewTemplateHelper.GetDefaultTemplateStyleSettings();
+    }
+    else
+    {
+        settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+    }
+
+    @* Add div for column width on Advanced Pages *@
+    if (pageType == "advanced")
+    {
+        if (Model.Width == USNOptions.ComponentWidth_Center)
+        {
+            @:<div class="container"><div class="row"><div class="mid-col col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        }
+        else if(Model.Width == USNOptions.ComponentWidth_Full)
+        {
+            @:<div class="container-fluid"><div class="row"><div class="wide-col col-xs-12">
+        }
+        else
+        {
+            @:<div class="container"><div class="row"><div class="wide-col col-xs-12">
+        }
+
+}
+else
+{
+    anchorId = "id=\"pos_" + Model.Id + "\" ";
+    customComponentClasses = Model.CustomComponentClasses;
+}
+
+int imageWidthSmall = 8;
+int imageHeightSmall = 6;
+string cropAlias = "Landscape";
+string circleClass = String.Empty;
+
+switch (Model.ImageStyle)
+{
+    case USNOptions.ImageStyle_Square:
+        imageWidthSmall = 8;
+        imageHeightSmall = 8;
+        cropAlias = "Square/Circle";
+        break;
+    case USNOptions.ImageStyle_Landscape:
+        imageWidthSmall = 8;
+        imageHeightSmall = 6;
+        cropAlias = "Landscape";
+        break;
+    case USNOptions.ImageStyle_Portrait:
+        imageWidthSmall = 6;
+        imageHeightSmall = 8;
+        cropAlias = "Portrait";
+        break;
+    case USNOptions.ImageStyle_Circle:
+        imageWidthSmall = 8;
+        imageHeightSmall = 8;
+        cropAlias = "Square/Circle";
+        circleClass = "img-circle";
+        break;
+    case USNOptions.ImageStyle_Wide:
+        imageWidthSmall = 120;
+        imageHeightSmall = 63;
+        cropAlias = "Wide";
+        break;
+}
+
+    string podTextAlignment;
+
+    switch (Model.PodTextAlignment)
+    {
+        case USNOptions.TextAlignment_Left:
+            podTextAlignment = "text-left";
+            break;
+        case USNOptions.TextAlignment_Center:
+            podTextAlignment = "text-center";
+            break;
+        case USNOptions.TextAlignment_Right:
+            podTextAlignment = "text-right";
+            break;
+        default:
+            podTextAlignment = "text-left";
+            break;
+    }
+
+    <div class="spc promo-pods @animateClass @Model.CustomComponentClasses" data-os-animation="fadeIn" data-os-animation-delay="0s" @Html.Raw(anchorId)>
+                       
+        @Html.Partial("USNMiscPageElements/USN_ComponentIntro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle } })
+
+        @if (Model.Pods != null)
+        {
+            string rowStyle = String.Empty;
+
+            if (Model.PodStyle == USNOptions.Layouts_Boxed)
+            {
+                rowStyle = "alt ";
+            }
+
+            string itemsPerRow = String.Empty;
+
+            switch (Model.ItemsPerRow)
+            {
+                case USNOptions.ItemsPerRow_1:
+                    itemsPerRow = "items-1";
+                    break;
+                case USNOptions.ItemsPerRow_2:
+                    itemsPerRow = "items-2";
+                    break;
+                case USNOptions.ItemsPerRow_3:
+                    itemsPerRow = "items-3";
+                    break;
+                case USNOptions.ItemsPerRow_4:
+                    itemsPerRow = "items-4";
+                    break;
+                default:
+                    itemsPerRow = "items-4";
+                    break;
+            }
+
+            <div class="row @podTextAlignment @rowStyle">
+                @foreach (Usn_Sc_Pod pod in Model.Pods)
+                {
+                    USNLink podLink = USNUrlHelper.GetLinkFromRelatedLinks(pod.PodLink);
+
+                    if (rowStyle == String.Empty)
+                    {
+
+                    <div class="item @circleClass @itemsPerRow col-xs-12 @animateClass" data-os-animation="fadeIn" data-os-animation-delay="0.1s">
+                        @if (podLink != null)
+                        {
+                            @:<a href="@podLink.LinkURL" @Html.Raw(podLink.LinkTitle)  @Html.Raw(podLink.LinkTarget)>
+                        }
+
+                        @if (pod.PodImage != null)
+                        {
+                            <div class="image @circleClass">
+                                <img class="@circleClass lazyload" src="@pod.PodImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall)" data-src="@pod.PodImage.GetCropUrl(cropAlias: cropAlias)" alt="@pod.PodImageAltText">
+                            </div>
+                        }
+
+                        @if (pod.PodTitle.HasValue())
+                        {
+                            <p class="heading @settings.HeadingStyle">@pod.PodTitle</p>
+                        }
+
+                        @if (podLink != null)
+                        {
+                            @:</a>
+                        }
+
+                        @if (pod.PodText.HasValue())
+                        {
+                            <div class="text @settings.TextStyle">@Html.Raw(pod.PodText)</div>
+                        }
+                        @if (podLink != null)
+                        {
+                            <p class="link"><a role="button" class="btn btn-sm @settings.ButtonStyle" href="@podLink.LinkURL" @Html.Raw(podLink.LinkTarget) @Html.Raw(podLink.LinkTitle)>@podLink.LinkCaption@Html.Raw(podLink.LinkIcon)</a></p>
+                        }
+                    </div>
+                    }
+                    else
+                    {
+                    <div class="item @circleClass @itemsPerRow col-xs-12 @animateClass" data-os-animation="fadeIn" data-os-animation-delay="0.1s">
+
+                        @if (podLink != null)
+                        {
+                            @:<a href="@podLink.LinkURL" @Html.Raw(podLink.LinkTitle) @Html.Raw(podLink.LinkTarget)>
+                        }
+
+                        @if (pod.PodImage != null)
+                        {
+                            <!-- IMAGE -->
+                            <div class="image @circleClass">
+                                <img class="@circleClass lazyload" src="@pod.PodImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall)" data-src="@pod.PodImage.GetCropUrl(cropAlias: cropAlias)" alt="@pod.PodImageAltText">
+                            </div>
+                            <!--// IMAGE -->
+                        }
+
+                        <!-- INFO -->
+                        <div class="info @circleClass">
+                            <div class="table">
+                                <div class="table-cell">
+                                    <div class="inner">
+                                    @if (pod.PodTitle.HasValue())
+                                    {
+                                        <p class="heading c5-text">@pod.PodTitle</p>
+                                    }
+                                    @if (pod.PodText.HasValue())
+                                    {
+                                        <div class="text c5-text">@Html.Raw(pod.PodText)</div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// INFO -->
+
+                        @if (podLink != null)
+                        {
+                            @:</a>
+                        }
+
+                    </div>
+                    }
+                }
+            </div>
+        }
+
+        @Html.Partial("USNMiscPageElements/USN_ComponentOutro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle } })
+
+    </div>
+
+    @* Close div for column width on Advanced Pages *@
+    if (!Model.Parent.Parent.IsDocumentType(UsnstandardPage.ModelTypeAlias) && !Model.Parent.Parent.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+    {
+        @:</div></div></div>
+    }
+
+}

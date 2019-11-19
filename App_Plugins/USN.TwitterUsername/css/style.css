@@ -1,0 +1,43 @@
+﻿.twitter-username {
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    margin: 0 5px 5px 0;
+    cursor: pointer;
+    background: #f3f3f5;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(65, 54, 89, 0.25);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}
+
+.twitter-username img {
+    margin: 0 auto 30px;
+    height: 120px;
+    width: 120px;
+}
+
+.twitter-username img.selected {
+    border-color: #0080ff
+}
+
+.twitter-username input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 15px;
+    background: #ffffff;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(65, 54, 89, 0.25);
+    border-radius: 3px;
+    outline: 0 none !important;
+}
+
+.twitter-username input:focus {
+    border-color: rgba(0, 174, 162, 1);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}

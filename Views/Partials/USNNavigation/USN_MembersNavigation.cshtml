@@ -1,0 +1,63 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using Umbraco.Web.Models;
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+
+@{
+    Usnnavigation navigation = (Usnnavigation)Model.Navigation;
+
+    if (navigation.LoginPage != null)
+    {
+        string navigationHeading = umbraco.library.GetDictionaryItem("USN Members Navigation Default Heading");
+
+        if (navigation.MembersNavigationHeading.HasValue())
+        {
+            navigationHeading = navigation.MembersNavigationHeading;
+        }
+
+        <nav class="quick-links">
+
+            <p class="heading">@navigationHeading</p>
+
+            <ul class="row">
+
+
+                @if (navigation.LoginPage != null)
+                {
+                    IPublishedContent loginPage = navigation.LoginPage;
+
+                    if (Umbraco.MemberIsLoggedOn())
+                    {
+                        RelatedLinks loggedInMembersNavigation = navigation.LoggedInMembersNavigation;
+
+                        <li><i class="fa fa-user c1-text"></i>@Context.User.Identity.Name</li>
+
+                        if (loggedInMembersNavigation != null)
+                        {
+                            foreach (RelatedLink link in loggedInMembersNavigation)
+                            {
+                                USNLink memberLink = USNUrlHelper.GetLinkFromRelatedLink(link);
+
+                                if ((memberLink.InternalNode != null && memberLink.InternalNode.IsVisible()) || (memberLink.LinkURL != String.Empty))
+                                {
+                                    <li>
+                                        <a href="@memberLink.LinkURL" @Html.Raw(memberLink.LinkTarget) @Html.Raw(memberLink.LinkTitle)>@memberLink.LinkCaption@Html.Raw(memberLink.LinkIcon)</a>
+                                    </li>
+                                }
+                            }
+                        }
+
+                        <li><a href="@loginPage.Url?signout=true">@umbraco.library.GetDictionaryItem("USN Members Navigation Logout")<i class="fa fa-sign-out c1-text after"></i></a></li>
+
+                    }
+                    else
+                    {
+                        <li><a href="@loginPage.Url"><i class="fa fa-sign-in c1-text"></i>@umbraco.library.GetDictionaryItem("USN Members Navigation Login")</a></li>
+                    }
+                }
+
+            </ul>
+        </nav>
+    }
+}

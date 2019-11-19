@@ -1,0 +1,122 @@
+﻿<div ng-controller="USN.BackgroundOptions.Controller">
+
+    <section class="usn-cms backgrounds">
+
+        <section class="background-style">
+            <label class="item layout-1">
+                <input value="BG_Cover" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Cover</div>
+            </label>
+            <label class="item layout-2">
+                <input value="BG_FullWidth" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Full-width</div>
+            </label>
+            <label class="item layout-3">
+                <input value="BG_Auto" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Auto</div>
+            </label>
+            <label class="item layout-4">
+                <input value="BG_Repeat" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Repeat</div>
+            </label>
+            <label class="item layout-5">
+                <input value="BG_RepeatX" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Repeat Horizontal</div>
+            </label>
+            <label class="item layout-6">
+                <input value="BG_RepeatY" name="background-styles" type="radio" ng-model="model.value.style" ng-click="checkStyle($event)">
+                <span></span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+                </svg>
+                <div class="name">Repeat Vertical</div>
+            </label>
+        </section>
+
+        <section class="background-position">
+            <label class="item layout-1">
+                <input value="BG_TopLeft" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-2">
+                <input value="BG_TopCenter" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-3">
+                <input value="BG_TopRight" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-4">
+                <input value="BG_CenterLeft" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-5">
+                <input value="BG_CenterCenter" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <div class="middle"></div>
+            </label>
+            <label class="item layout-6">
+                <input value="BG_CenterRight" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-7">
+                <input value="BG_BottomLeft" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-8">
+                <input value="BG_BottomCenter" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+            <label class="item layout-9">
+                <input value="BG_BottomRight" name="background-positions" type="radio" ng-model="model.value.position" ng-click="checkPosition($event)">
+                <span></span>
+                <svg enable-background="new 0 0 34 45" height="31px" id="Layer_1" version="1.1" viewBox="0 0 34 45" width="23px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <polygon fill="#000000" points="31.516,20.006 20,8.092 20,45 15,45 15,8.092 2.816,20.006 -0.012,17.178 17.166,0 34.344,17.178   "/>
+                </svg>
+            </label>
+        </section>
+
+    </section>
+
+</div>

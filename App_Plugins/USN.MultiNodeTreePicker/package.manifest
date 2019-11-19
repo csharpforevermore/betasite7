@@ -1,0 +1,55 @@
+﻿{
+    propertyEditors:[
+        {
+            alias: "USN.MultiNodeTreePicker",
+            name: "USN MultiNode TreePicker",
+			icon: "icon-page-add",
+			group: "pickers",
+            editor: {
+				valueType: "TEXT",
+                view: "~/App_Plugins/USN.MultiNodeTreePicker/PropertyEditor/editor.html"
+            },
+			prevalues : {
+				fields: [
+					{
+					    label: "Picker location",
+					    key: "pickerLocation",
+						view: "~/App_Plugins/USN.MultiNodeTreePicker/Prevalues/treesource.html"
+					}
+					,
+					{
+						label: "Allow items of type",
+						key: "filter",
+						view: "textstring",
+						description: "Seperate with comma"
+					}
+					,
+					{
+						label: "Minimum number of items",
+						key: "minNumber",
+						view: "number"
+					}
+					,
+					{
+						label: "Maximum number of items",
+						key: "maxNumber",
+						view: "number"
+					}
+					,
+					{
+						label: "Show open button (this feature is in preview!)",
+						key: "showOpenButton",
+						view: "boolean",
+						description: "Opens the node in a dialog"
+					}
+				]
+			}
+        }
+    ],
+	javascript: [
+		"~/App_Plugins/USN.MultiNodeTreePicker/js/contentpicker.controller.js",
+		"~/App_Plugins/USN.MultiNodeTreePicker/js/treesource.controller.js"
+	],
+    css: [
+    ]
+}

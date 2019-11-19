@@ -1,0 +1,81 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using System.Globalization;
+@using USNStarterKit.USNHelpers;
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+
+    string metaTitle;
+    string openGraphImage = String.Empty;
+
+    var siteName = globalSettings.WebsiteName;
+
+    var canonical = Request.Url.Scheme + "://" + Request.Url.Host + Model.Content.Url;
+
+    if (Model.Content.HasValue("pageTitle"))
+    {
+        metaTitle = Model.Content.GetPropertyValue<string>("pageTitle");
+    }
+    else
+    {
+        metaTitle = Model.Content.Name + " | " + siteName;
+    }
+
+    var metaDescription = Model.Content.GetPropertyValue<string>("metaDescription");
+
+    if (Model.Content.HasValue("openGraphImage") && Model.Content.GetPropertyValue<IPublishedContent>("openGraphImage") != null)
+    {
+        openGraphImage = Request.Url.Scheme + "://" + Request.Url.Host + Model.Content.GetPropertyValue<IPublishedContent>("openGraphImage").Url;
+    }
+    else if (globalSettings.OpenGraphDefaultImage != null)
+    {
+        openGraphImage = Request.Url.Scheme + "://" + Request.Url.Host + globalSettings.OpenGraphDefaultImage.Url;
+    }
+
+    if (Model.Content.IsDocumentType(UsnblogLandingPage.ModelTypeAlias))
+    {
+        int year = int.TryParse(Request.QueryString["year"], out year) ? year : 0;
+        int month = int.TryParse(Request.QueryString["month"], out month) ? month : 0;
+
+        if (year != 0 && month == 0)
+        {
+            metaTitle = year + " | " + metaTitle + " | " + siteName;
+        }
+        else if (year != 0 && month != 0)
+        {
+            metaTitle = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + " | " + year + " | " + metaTitle + " | " + siteName;
+        }
+
+    }
+    
+    <link rel="canonical" href="@canonical"/>
+    <title>@metaTitle</title>
+    <meta name="description" content="@metaDescription">
+	<meta property="og:type" content="website">
+    <meta property="og:title" content="@metaTitle" />
+    <meta property="og:image" content="@openGraphImage" />
+    <meta property="og:url" content="@canonical" />
+    <meta property="og:description" content="@metaDescription" />
+    <meta property="og:site_name" content="@siteName" />
+
+    if (globalSettings.HasValue("twitterSiteUsername") || Model.Content.HasValue("twitterCreatorUsername") )
+    {
+        <meta name="twitter:card" content="summary" />
+    }
+
+    if (globalSettings.HasValue("twitterSiteUsername"))
+    {
+        <meta name="twitter:site" content="@("@" + globalSettings.GetPropertyValue<string>("twitterSiteUsername"))" />
+    }
+
+    if (Model.Content.HasValue("twitterCreatorUsername"))
+    {
+        <meta name="twitter:creator" content="@("@" + Model.Content.GetPropertyValue<string>("twitterCreatorUsername"))" />
+    }
+
+    if (Model.Content.GetPropertyValue<bool>("hideFromSearchEngines"))
+    {
+        <meta name="robots" content="noindex">
+    }
+}

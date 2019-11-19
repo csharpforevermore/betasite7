@@ -1,0 +1,9 @@
+﻿{
+    "javascript" : [
+        "~/App_Plugins/USN.Dashboard/js/dashboard.controller.js",
+    ],
+    "css" : [ 
+        "~/App_Plugins/USN.Dashboard/css/style.css?v=11"
+    ]
+
+}

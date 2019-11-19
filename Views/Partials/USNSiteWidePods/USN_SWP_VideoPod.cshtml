@@ -1,0 +1,82 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_VideoPod>
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    if (Model.PodVideo.HasValue())
+    {
+        string title = String.Empty;
+        string footer = String.Empty;
+        string videoImageSrc;
+        string videoImageDataSrc;
+
+        string videoUrlOriginal = Model.PodVideo;
+
+        if (Model.LightWindowTitle.HasValue())
+        {
+            title = "data-title=\"" + Model.LightWindowTitle + "\"";
+        }
+
+        if (Model.LightWindowFooter.HasValue())
+        {
+            footer = "data-footer=\"" + Model.LightWindowFooter + "\"";
+        }
+
+        USNVideo video = USNVideoHelper.GetVideoInfo(videoUrlOriginal);
+
+        int imageWidthSmall = 8;
+        int imageHeightSmall = 6;
+        string cropAlias = "Landscape";
+        string circleClass = String.Empty;
+
+        switch (Model.ImageStyle)
+        {
+            case USNOptions.ImageStyle_Square:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                break;
+            case USNOptions.ImageStyle_Landscape:
+                imageWidthSmall = 8;
+                imageHeightSmall = 6;
+                cropAlias = "Landscape";
+                break;
+            case USNOptions.ImageStyle_Portrait:
+                imageWidthSmall = 6;
+                imageHeightSmall = 8;
+                cropAlias = "Portrait";
+                break;
+            case USNOptions.ImageStyle_Circle:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                circleClass = "img-circle";
+                break;
+            case USNOptions.ImageStyle_Wide:
+                imageWidthSmall = 120;
+                imageHeightSmall = 63;
+                cropAlias = "Wide";
+                break;
+        }
+
+        videoImageSrc = Model.PodThumbnailImage != null ? Model.PodThumbnailImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall) : video.VideoImage;
+        videoImageDataSrc = Model.PodThumbnailImage != null ? Model.PodThumbnailImage.GetCropUrl(cropAlias: cropAlias) : video.VideoImage;
+
+        <div class="item @circleClass video-pod">
+            <div class="image @circleClass video">
+                <a href="@video.VideoURLModified" @Html.Raw(title) @Html.Raw(footer) data-toggle="lightbox" @Html.Raw(video.VideoDataRemote)>
+                    <img class="@circleClass lazyload" src="@videoImageSrc" data-src="@videoImageDataSrc"  alt="@Model.ThumbnailImageAltText">
+                    <div class="overlayicon ion-ios-play c5-text"></div>
+                </a>
+                @if (Model.VideoCaption.HasValue())
+                {
+                    <div class="caption">@Model.VideoCaption</div>
+                }
+            </div>
+        </div>
+    }
+
+}

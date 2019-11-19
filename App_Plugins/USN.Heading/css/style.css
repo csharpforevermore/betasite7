@@ -1,0 +1,138 @@
+﻿.usn-cms.headings *,
+.usn-cms.headings ::after,
+.usn-cms.headings ::before {
+    box-sizing: border-box;
+}
+
+.usn-cms.headings {
+    font-family: 'Lato', sans-serif;
+}
+
+.usn-cms.headings p.heading {
+    margin-bottom: 30px;
+    display: block;
+    margin: 20px 0 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    clear: both;
+}
+
+.usn-cms.headings .item {
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    height: 120px;
+    padding: 15px;
+    margin: 0 5px 5px 0;
+    cursor: pointer;
+    background: #f3f3f5;
+    border-radius: 5px;
+}
+
+.usn-cms.headings .item input {
+    display: none;
+}
+
+.usn-cms.headings .item span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(0, 174, 162, 0);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0);
+    transition: border 0.3s ease-in-out 0s, box-shadow 0.3s ease-in-out 0s;
+    border-radius: 5px;
+}
+
+.usn-cms.headings .item span:hover {
+    border-color: rgba(65, 54, 89, 0.25);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}
+
+.usn-cms.headings .item input[type="radio"]:checked+span,
+.usn-cms.headings .item input[type="checkbox"]:checked+span {
+    border-color: rgba(0, 174, 162, 1);
+    box-shadow: 0 0 10px rgba(0, 174, 162, 0.1);
+    opacity: 1;
+}
+
+.usn-cms.headings .item .inner {
+    position: relative;
+    width: 50px;
+    height: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.usn-cms.headings .item .image {
+    width: 50px;
+    height: 40px;
+    border: 2px solid rgba(65, 54, 89, 1);
+    border-radius: 3px;
+}
+
+.usn-cms.headings .item .name {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    left: 0;
+    z-index: 12;
+    font-size: 10px;
+    line-height: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-align: center;
+    color: rgba(65, 54, 89, 1);
+}
+
+
+/* HEADINGS */
+
+.usn-cms.headings .item {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+}
+
+.usn-cms.headings .input-field input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    font-size: 15px;
+    background: #f3f3f5;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(65, 54, 89, 0.25);
+    border-radius: 3px;
+    outline: 0 none !important;
+}
+
+.usn-cms.headings .input-field {
+    margin-bottom: 10px;
+}
+
+.usn-cms.headings .input-field input:focus {
+    border-color: rgba(0, 174, 162, 1);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}
+
+@media (min-width:992px) {
+    .usn-cms.headings .input-field,
+    .usn-cms.headings .heading-picker {
+        width: 60%;
+        display: block;
+        float: left;
+    }
+    .usn-cms.headings .heading-picker {
+        width: 35%;
+        margin-left: 10px;
+    }
+}

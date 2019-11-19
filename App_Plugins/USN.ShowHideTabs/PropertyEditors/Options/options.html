@@ -1,0 +1,19 @@
+<div ng-controller="USN.OptionTabsController">
+
+    <div class="usn-Loading" ng-show="!isLoaded">Loading ...</div>
+
+    <div ng-show="isLoaded && !items.length">There are no items to display.</div>
+
+    <section class="usn-cms forms-option" ng-show="isLoaded && items.length">
+
+        <label class="item" ng-repeat="item in items">
+            <input value="{{item.key}}" name="taboptions" type="radio" ng-model="model.value" ng-change="click()">
+            <span></span>
+            <div class="inner" ng-bind-html-unsafe="item.svg">
+            </div>
+            <div class="name">{{item.text}}</div>
+        </label>
+
+    </section>
+
+</div>

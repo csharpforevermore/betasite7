@@ -1,0 +1,75 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_GeneralPod>
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    USNLink podLink = USNUrlHelper.GetLinkFromRelatedLinks(Model.PodLink);
+
+    IHtmlString podText = Model.PodText;
+
+    string textAlignment;
+
+    switch (Model.PodTextAlignment)
+    {
+        case USNOptions.TextAlignment_Left:
+            textAlignment = "text-left";
+            break;
+        case USNOptions.TextAlignment_Center:
+            textAlignment = "text-center";
+            break;
+        case USNOptions.TextAlignment_Right:
+            textAlignment = "text-right";
+            break;
+        default:
+            textAlignment = "text-left";
+            break;
+    }
+
+    <div class="item general-pod c5-bg has-borders c6-borders">
+        <div class="inner @textAlignment">
+
+        @if (Model.PodSecondaryHeading.HasValue())
+        {
+            <p class="secondary-heading c1-text">@Model.PodSecondaryHeading</p>
+        }
+        @if (Model.PodHeading.HasValue())
+        {
+            <p class="heading c3-text">
+                @if (podLink != null)
+                {
+                    @:<a class="c3-text" href="@podLink.LinkURL" @Html.Raw(podLink.LinkTitle) @Html.Raw(podLink.LinkTarget)>
+                }
+                @Html.Raw(Model.PodHeading)
+                @if (podLink != null)
+                {
+                    @:</a>
+                }
+            </p>
+        }
+
+        @if (podText.HasValue() || podLink != null)
+        {
+            @:<div class="info">
+        }
+
+        @if (podText.HasValue())
+        {
+            <div class="text base-text">@Html.Raw(podText)</div>
+        }
+
+        @if (podLink != null)
+        {
+            <p class="link"><a href="@podLink.LinkURL" @Html.Raw(podLink.LinkTitle) @Html.Raw(podLink.LinkTarget) class="btn c1-bg c5-text">@podLink.LinkCaption@Html.Raw(podLink.LinkIcon)</a></p>
+        }
+
+        @if (podText.HasValue() || podLink != null)
+        {
+            @:</div>
+        }
+        </div>
+    </div>
+    
+}

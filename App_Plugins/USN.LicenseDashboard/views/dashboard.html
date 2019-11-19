@@ -1,0 +1,165 @@
+﻿<div ng-controller="USN.LicenseDashboard.Controller">
+
+    <div class="usn-license-dashboard-loading" ng-show="!isLoaded">
+        <div class="loading">
+            <div class="message">
+                Loading License Dashboard, please wait ...
+            </div>
+        </div>
+    </div>
+
+    <section class="usn-cms-licenses" ng-show="isLoaded">
+
+        <section class="your-license">
+
+            <p class="heading main">uSkinned Website License</p>
+
+            <!--No Exception has occured. Code has been able to check for license file-->
+            <div ng-show="!vm.exceptionOccurred">
+
+                <!--Website is running on localhost-->
+                <div ng-show="vm.isLocal">
+
+                    <div class="alert alert-warning">
+                        <p>
+                            <strong>You are currently viewing your website on localhost.</strong> No uSkinned license is required, however, you will require a valid license to run your website on a live domain.
+                        </p>
+                    </div>
+
+                    <!--Website is running on localhost and the license file has been found-->
+                    <div ng-show="vm.licenseFound  && vm.licensedDomainsOrIPs.length > 0">
+
+                        <div class="alert alert-success">
+                            <p><strong>Your license file has been found for this website.</strong></p>
+                        </div>
+                        <div class="item">
+                            <p class="heading">Registered Domains</p>
+                            <ul class="list">
+                                <li ng-repeat="item in vm.licensedDomainsOrIPs">
+                                    <i class="umb-healthcheck-status-icon icon-check color-green"></i> {{item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Website is running on localhost, license has been found however license is corrupted -->
+                    <div ng-show="vm.licenseFound && vm.licensedDomainsOrIPs.length <= 0">
+                        <div class="alert alert-danger">
+                            <p>
+                                <strong>An issue has been found with your license.</strong> Please download your license from your uSkinned Members Area and either upload the file below or add manually to the /bin directory of this Umbraco installation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!--Website is running on localhost however no license file has been found -->
+                    <div ng-show="!vm.licenseFound">
+                        <div class="alert alert-danger">
+                            <p>
+                                <strong>No license file has been detected.</strong> Please download your license from your uSkinned Members Area and either upload the file below or add manually to the /bin directory of this Umbraco installation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website is running on a live domain -->
+                <div ng-show="!vm.isLocal">
+
+                    <!-- Website is running on a live domain however no license file has been found -->
+                    <div ng-show="!vm.licenseFound">
+                        <div class="alert alert-danger">
+                            <p>
+                                <strong>No license file has been detected.</strong> Please download your license from your uSkinned Members Area and either upload the file below or add manually to the /bin directory of this Umbraco installation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Website is running on a live domain, license has been found and license is valid -->
+                    <div ng-show="vm.licenseFound && vm.licenseValid">
+                        <div class="alert alert-success">
+                            <p><strong>Your license file has been found and is valid for your current domain.</strong> You can replace this license by either uploading a new license file below or by manually adding your new license file to the /bin directory
+                                of this Umbraco installation.
+                            </p>
+                        </div>
+                        <div class="item">
+                            <p class="heading">Registered Domains</p>
+                            <ul class="list">
+                                <li ng-repeat="item in vm.licensedDomainsOrIPs">
+                                    <i class="umb-healthcheck-status-icon icon-check color-green"></i> {{item}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Website is running on a live domain, license has been found however license is invalid. -->
+                    <div ng-show="vm.licenseFound && !vm.licenseValid && vm.licenseMessage != ''">
+
+                        <div class="alert alert-danger">
+                            <div ng-bind-html-unsafe="vm.licenseMessage"></div>
+                        </div>
+                    </div>
+
+                    <!-- Website is running on a live domain, license has been found however license is corrupted -->
+                    <div ng-show="vm.licenseFound && !vm.licenseValid && vm.licenseMessage == ''">
+
+                        <div class="alert alert-danger">
+                            <p><strong>Your license file has been found, however, there is an issue.</strong> Please download your license from your uSkinned Members Area and either upload the file below or add manually to the /bin directory of this Umbraco
+                                installation.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+        </section>
+
+        <!-- Exception has occured and code has not been able to check license file -->
+        <div ng-show="vm.exceptionOccurred">
+
+            <div class="alert alert-warning" ng-show="vm.isLocal">
+                <p>
+                    <strong>You are currently viewing your website on localhost.</strong> No uSkinned license is required, however, you will require a valid license to run your website on a live domain.
+                </p>
+            </div>
+
+            <div class="alert alert-danger">
+                <p>{{vm.exceptionMessage}}</p>
+            </div>
+        </div>
+
+        <section class="upload-license">
+            <div class="item">
+                <p class="heading" ng-show="vm.licenseFound">Upload a new license</p>
+                <p class="heading" ng-show="!vm.licenseFound">Upload your license</p>
+                <div class="alert alert-danger" ng-show="file && file.name != 'uskinned-victorious-theme.lic'">
+                    <p>
+                        <strong>Only select a license file named 'uskinned-victorious-theme.lic'</strong>
+                    </p>
+                </div>
+                <div class="form-group upload-field">
+                    <label>
+                        <input type="file" ngf-select="" ng-model="files" ng-multiple="false" ngf-change="fileSelected(files)" required no-dirty-check accept=".lic"/>
+                        <span></span>
+                    </label>
+                </div>
+
+                <button type="button" class="btn btn-success upload" data-hotkey="ctrl+s" ng-click="uploadFile()" ng-disabled="file && file.name != 'uskinned-victorious-theme.lic'">Upload</button>
+
+                <div ng-show="showInstallingMessage">
+                    <div class="usn-alert-loader">
+                        <div class="loading">
+                            <div class="message">Uploading and installing license file. Please wait...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="alert alert-warning">
+            <p>
+                <strong>IMPORTANT</strong> If your website is hit via an invalid domain the invalid license message will appear on your website and will remain until your website is restarted and then hit via a valid domain. Please refer to the installation
+                guide available via your uSkinned Members Area when choosing the option to download your theme. In this guide you will find instructions on setting up domain redirects correctly so that your website can only be served via a single domain.
+            </p>
+        </div>
+
+    </section>
+    </div>

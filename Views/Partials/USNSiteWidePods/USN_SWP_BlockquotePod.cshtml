@@ -1,0 +1,38 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_BlockquotePod>
+
+@using USNStarterKit.USNHelpers;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+
+    string textAlignment;
+
+    switch (Model.TextAlignment)
+    {
+        case USNOptions.TextAlignment_Left:
+            textAlignment = "text-left";
+            break;
+        case USNOptions.TextAlignment_Center:
+            textAlignment = "text-center";
+            break;
+        case USNOptions.TextAlignment_Right:
+            textAlignment = "text-right";
+            break;
+        default:
+            textAlignment = "text-left";
+            break;
+    }
+
+    <div class="item blockquote-pod c3-bg inner @textAlignment">
+        <blockquote class="c5-text">
+            <p>@Html.Raw(umbraco.library.ReplaceLineBreaks(Model.Quote))</p>
+            @if (Model.Cite.HasValue())
+            {
+                <cite>
+                    <span class="who c4-text">@Model.Cite</span>
+                </cite>
+            }
+        </blockquote>
+    </div>
+}

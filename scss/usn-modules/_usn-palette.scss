@@ -1,0 +1,1044 @@
+/* 	
+--------------------------------------------------
+uSkinned.net
+PALETTE
+-------------------------------------------------- 
+*/
+
+
+/* 	
+--------------------------------------------------
+TABLE OF CONTENTS
+-------------------------------------------------- 
+
+1.0 BACKGROUNDS
+2.0 TEXT
+3.0 BORDERS
+4.0 BUTTONS
+	
+*/
+
+
+/*	
+--------------------------------------------------
+1.0 BACKGROUNDS
+-------------------------------------------------- 
+*/
+
+.c1-bg {
+    background-color: rgba($c1, 1);
+}
+
+.c1-bg.bg-perc_90 {
+    background-color: rgba($c1, 0.9);
+}
+
+.c1-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c1-bg:hover::before {
+    background-color: rgba($c1, 0.8);
+}
+
+.c1-bg.bg-perc_70 {
+    background-color: rgba($c1, 0.7);
+}
+
+.c1-bg.bg-perc_60 {
+    background-color: rgba($c1, 0.6);
+}
+
+.c1-bg.bg-perc_50,
+.apc.banner .item.overlay.c1-bg::before,
+.apc.pod-windows .item.overlay .info.c1-bg::before {
+    background-color: rgba($c1, 0.5);
+}
+
+.c1-bg.bg-perc_40 {
+    background-color: rgba($c1, 0.4);
+}
+
+.c1-bg.bg-perc_30 {
+    background-color: rgba($c1, 0.3);
+}
+
+.c1-bg.bg-perc_20 {
+    background-color: rgba($c1, 0.2);
+}
+
+.c1-bg.bg-perc_10 {
+    background-color: rgba($c1, 0.1);
+}
+
+.c2-bg {
+    background-color: rgba($c2, 1);
+}
+
+.c2-bg.bg-perc_90 {
+    background-color: rgba($c2, 0.9);
+}
+
+.c2-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c2-bg:hover::before {
+    background-color: rgba($c2, 0.8);
+}
+
+.c2-bg.bg-perc_70 {
+    background-color: rgba($c2, 0.7);
+}
+
+.c2-bg.bg-perc_60 {
+    background-color: rgba($c2, 0.6);
+}
+
+.c2-bg.bg-perc_50,
+.apc.banner .item.overlay.c2-bg::before,
+.apc.pod-windows .item.overlay .info.c2-bg::before {
+    background-color: rgba($c2, 0.5);
+}
+
+.c2-bg.bg-perc_40 {
+    background-color: rgba($c2, 0.4);
+}
+
+.c2-bg.bg-perc_30 {
+    background-color: rgba($c2, 0.3);
+}
+
+.c2-bg.bg-perc_20 {
+    background-color: rgba($c2, 0.2);
+}
+
+.c2-bg.bg-perc_10 {
+    background-color: rgba($c2, 0.1);
+}
+
+.c3-bg {
+    background-color: rgba($c3, 1);
+}
+
+.c3-bg.bg-perc_90 {
+    background-color: rgba($c3, 0.9);
+}
+
+.c3-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c3-bg:hover::before {
+    background-color: rgba($c3, 0.8);
+}
+
+.c3-bg.bg-perc_70 {
+    background-color: rgba($c3, 0.7);
+}
+
+.c3-bg.bg-perc_60 {
+    background-color: rgba($c3, 0.6);
+}
+
+.c3-bg.bg-perc_50,
+.apc.banner .item.overlay.c3-bg::before,
+.apc.pod-windows .item.overlay .info.c3-bg::before {
+    background-color: rgba($c3, 0.5);
+}
+
+.c3-bg.bg-perc_40 {
+    background-color: rgba($c3, 0.4);
+}
+
+.c3-bg.bg-perc_30 {
+    background-color: rgba($c3, 0.3);
+}
+
+.c3-bg.bg-perc_20 {
+    background-color: rgba($c3, 0.2);
+}
+
+.c3-bg.bg-perc_10 {
+    background-color: rgba($c3, 0.1);
+}
+
+.c4-bg {
+    background-color: rgba($c4, 1);
+}
+
+.c4-bg.bg-perc_90 {
+    background-color: rgba($c4, 0.9);
+}
+
+.c4-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c4-bg:hover::before {
+    background-color: rgba($c4, 0.8);
+}
+
+.c4-bg.bg-perc_70 {
+    background-color: rgba($c4, 0.7);
+}
+
+.c4-bg.bg-perc_60 {
+    background-color: rgba($c4, 0.6);
+}
+
+.c4-bg.bg-perc_50,
+.apc.banner .item.overlay.c4-bg::before,
+.apc.pod-windows .item.overlay .info.c4-bg::before {
+    background-color: rgba($c4, 0.5);
+}
+
+.c4-bg.bg-perc_40 {
+    background-color: rgba($c4, 0.4);
+}
+
+.c4-bg.bg-perc_30 {
+    background-color: rgba($c4, 0.3);
+}
+
+.c4-bg.bg-perc_20 {
+    background-color: rgba($c4, 0.2);
+}
+
+.c4-bg.bg-perc_10 {
+    background-color: rgba($c4, 0.1);
+}
+
+.c5-bg,
+#site {
+    background-color: rgba($c5, 1);
+}
+
+.c5-bg.bg-perc_90 {
+    background-color: rgba($c5, 0.9);
+}
+
+.c5-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c5-bg:hover::before {
+    background-color: rgba($c5, 0.8);
+}
+
+.c5-bg.bg-perc_70 {
+    background-color: rgba($c5, 0.7);
+}
+
+.c5-bg.bg-perc_60 {
+    background-color: rgba($c5, 0.6);
+}
+
+.c5-bg.bg-perc_50,
+.apc.banner .item.overlay.c5-bg::before,
+.apc.pod-windows .item.overlay .info.c5-bg::before {
+    background-color: rgba($c5, 0.5);
+}
+
+.c5-bg.bg-perc_40 {
+    background-color: rgba($c5, 0.4);
+}
+
+.c5-bg.bg-perc_30 {
+    background-color: rgba($c5, 0.3);
+}
+
+.c5-bg.bg-perc_20 {
+    background-color: rgba($c5, 0.2);
+}
+
+.c5-bg.bg-perc_10 {
+    background-color: rgba($c5, 0.1);
+}
+
+.c6-bg {
+    background-color: rgba($c6, 1);
+}
+
+.c6-bg.bg-perc_90 {
+    background-color: rgba($c6, 0.9);
+}
+
+.c6-bg.bg-perc_80,
+html.no-touch .apc.pod-windows .item a.info.c6-bg:hover::before {
+    background-color: rgba($c6, 0.8);
+}
+
+.c6-bg.bg-perc_70 {
+    background-color: rgba($c6, 0.7);
+}
+
+.c6-bg.bg-perc_60 {
+    background-color: rgba($c6, 0.6);
+}
+
+.c6-bg.bg-perc_50,
+.apc.banner .item.overlay.c6-bg::before,
+.apc.pod-windows .item.overlay .info.c6-bg::before {
+    background-color: rgba($c6, 0.5);
+}
+
+.c6-bg.bg-perc_40 {
+    background-color: rgba($c6, 0.4);
+}
+
+.c6-bg.bg-perc_30 {
+    background-color: rgba($c6, 0.3);
+}
+
+.c6-bg.bg-perc_20 {
+    background-color: rgba($c6, 0.2);
+}
+
+.c6-bg.bg-perc_10 {
+    background-color: rgba($c6, 0.1);
+}
+
+.modal-backdrop,
+.modal-backdrop.in {
+    background-color: rgba($true-black, 1);
+}
+
+
+/*	
+-------------------------------------------------- 
+2.0 TEXT
+-------------------------------------------------- 
+*/
+
+body,
+.base-text {
+    color: rgba($base-text, 1);
+}
+
+body .c1-bg:not(.ignore-bg) {
+    color: rgba($c5, 1);
+}
+
+body .c2-bg:not(.ignore-bg),
+body .c3-bg:not(.ignore-bg) {
+    color: rgba($c6, 1);
+}
+
+body .c1-bg .base-text,
+body .c2-bg .base-text,
+body .c3-bg .base-text {
+    color: rgba($base-text, 1);
+}
+
+
+/* LINKS */
+
+a,
+a:focus,
+a:active {
+    color: rgba($c1, 1);
+}
+
+html.no-touch a:hover {
+    color: darken($c1, 10%);
+}
+
+.c1-bg:not(.ignore-bg) a:not(.btn):not(.heading):not(.c1-text):not(.c2-text):not(.c3-text) {
+    color: rgba($c5, 1);
+    font-weight: 500;
+}
+
+html.no-touch .c1-bg:not(.ignore-bg) a:not(.btn):not(.c1-text):not(.c2-text):not(.c3-text):hover,
+.c1-bg:not(.ignore-bg) a:not(.btn):not(.c1-text):not(.c2-text):not(.c3-text):active,
+.c1-bg:not(.ignore-bg) a:not(.btn):not(.c1-text):not(.c2-text):not(.c3-text):focus {
+    color: darken($c5, 10%);
+}
+
+.base-text a,
+.base-text a:focus,
+.base-text a:active {
+    color: rgba($c1, 1)!important;
+}
+
+html.no-touch .base-text a:hover {
+    color: darken($c1, 10%)!important;
+}
+
+
+/* HEADINGS */
+
+.heading,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body .base-text h1,
+body .base-text h2,
+body .base-text h3,
+body .base-text h4,
+body .base-text h5,
+body .base-text h6,
+body .base-text .heading,
+.tables .head {
+    color: rgba($base-heading, 1);
+}
+
+.c1-bg:not(.ignore-bg) h1:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) h2:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) h3:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) h4:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) h5:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) h6:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) .heading:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) .secondary-heading:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h1:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h2:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h3:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h4:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h5:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) h6:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) .heading:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) .secondary-heading:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h1:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h2:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h3:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h4:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h5:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) h6:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) .heading:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) .secondary-heading:not(.c1-text):not(.c2-text):not(.c3-text) {
+    color: rgba($c5, 1);
+}
+
+
+/* COLOURS */
+
+.c1-text,
+html.no-touch .btn.c1-text:hover,
+.btn.c1-text:focus,
+.btn.c1-text:active,
+blockquote::before {
+    color: rgba($c1, 1);
+}
+
+html.no-touch a.c1-text:not(.btn):hover,
+a.c1-text:not(.btn):focus,
+a.c1-text:not(.btn):active,
+html.no-touch footer a:hover {
+    color: darken($c1, 10%);
+}
+
+.c1-text.text-perc_90 {
+    color: rgba($c1, 0.9);
+}
+
+.c1-text.text-perc_80 {
+    color: rgba($c1, 0.8);
+}
+
+.c1-text.text-perc_70 {
+    color: rgba($c1, 0.7);
+}
+
+.c1-text.text-perc_60 {
+    color: rgba($c1, 0.6);
+}
+
+.c1-text.text-perc_50 {
+    color: rgba($c1, 0.5);
+}
+
+.c1-text.text-perc_40 {
+    color: rgba($c1, 0.4);
+}
+
+.c1-text.text-perc_30 {
+    color: rgba($c1, 0.3);
+}
+
+.c1-text.text-perc_20 {
+    color: rgba($c1, 0.2);
+}
+
+.c1-text.text-perc_10 {
+    color: rgba($c1, 0.1);
+}
+
+.c2-text,
+html.no-touch .btn.c2-text:hover,
+.btn.c2-text:focus,
+.btn.c2-text:active {
+    color: rgba($c2, 1);
+}
+
+html.no-touch a.c2-text:not(.btn):hover,
+a.c2-text:not(.btn):focus,
+a.c2-text:not(.btn):active {
+    color: darken($c2, 10%);
+}
+
+.c2-text.text-perc_90 {
+    color: rgba($c2, 0.9);
+}
+
+.c2-text.text-perc_80 {
+    color: rgba($c2, 0.8);
+}
+
+.c2-text.text-perc_70 {
+    color: rgba($c2, 0.7);
+}
+
+.c2-text.text-perc_60 {
+    color: rgba($c2, 0.6);
+}
+
+.c2-text.text-perc_50 {
+    color: rgba($c2, 0.5);
+}
+
+.c2-text.text-perc_40 {
+    color: rgba($c2, 0.4);
+}
+
+.c2-text.text-perc_30 {
+    color: rgba($c2, 0.3);
+}
+
+.c2-text.text-perc_20 {
+    color: rgba($c2, 0.2);
+}
+
+.c2-text.text-perc_10 {
+    color: rgba($c2, 0.1);
+}
+
+.c3-text,
+html.no-touch .btn.c3-text:hover,
+.btn.c3-text:focus,
+.btn.c3-text:active,
+blockquote {
+    color: rgba($c3, 1);
+}
+
+html.no-touch a.c3-text:not(.btn):hover,
+a.c3-text:not(.btn):focus,
+a.c3-text:not(.btn):active {
+    color: lighten($c3, 10%);
+}
+
+.c3-text.text-perc_90 {
+    color: rgba($c3, 0.9);
+}
+
+.c3-text.text-perc_80 {
+    color: rgba($c3, 0.8);
+}
+
+.c3-text.text-perc_70 {
+    color: rgba($c3, 0.7);
+}
+
+.c3-text.text-perc_60 {
+    color: rgba($c3, 0.6);
+}
+
+.c3-text.text-perc_50 {
+    color: rgba($c3, 0.5);
+}
+
+.c3-text.text-perc_40 {
+    color: rgba($c3, 0.4);
+}
+
+.c3-text.text-perc_30 {
+    color: rgba($c3, 0.3);
+}
+
+.c3-text.text-perc_20 {
+    color: rgba($c3, 0.2);
+}
+
+.c3-text.text-perc_10 {
+    color: rgba($c3, 0.1);
+}
+
+.c4-text,
+html.no-touch .btn.c4-text:hover,
+.btn.c4-text:focus,
+.btn.c4-text:active {
+    color: rgba($c4, 1);
+}
+
+html.no-touch a.c4-text:not(.btn):hover,
+a.c4-text:not(.btn):focus,
+a.c4-text:not(.btn):active {
+    color: darken($c4, 10%);
+}
+
+.c4-text.text-perc_90 {
+    color: rgba($c4, 0.9);
+}
+
+.c4-text.text-perc_80 {
+    color: rgba($c4, 0.8);
+}
+
+.c4-text.text-perc_70 {
+    color: rgba($c4, 0.7);
+}
+
+.c4-text.text-perc_60 {
+    color: rgba($c4, 0.6);
+}
+
+.c4-text.text-perc_50 {
+    color: rgba($c4, 0.5);
+}
+
+.c4-text.text-perc_40 {
+    color: rgba($c4, 0.4);
+}
+
+.c4-text.text-perc_30 {
+    color: rgba($c4, 0.3);
+}
+
+.c4-text.text-perc_20 {
+    color: rgba($c4, 0.2);
+}
+
+.c4-text.text-perc_10 {
+    color: rgba($c4, 0.1);
+}
+
+.c5-text,
+html.no-touch .btn.c5-text:hover,
+.btn.c5-text:focus,
+.btn.c5-text:active,
+.c1-bg:not(.ignore-bg) blockquote:not(.c1-text):not(.c2-text):not(.c3-text),
+.c2-bg:not(.ignore-bg) blockquote:not(.c1-text):not(.c2-text):not(.c3-text),
+.c3-bg:not(.ignore-bg) blockquote:not(.c1-text):not(.c2-text):not(.c3-text),
+.c1-bg:not(.ignore-bg) blockquote:not(.c1-text):not(.c2-text):not(.c3-text)::before {
+    color: rgba($c5, 1);
+}
+
+html.no-touch a.c5-text:not(.btn):hover,
+a.c5-text:not(.btn):focus,
+a.c5-text:not(.btn):active {
+    color: darken($c5, 10%);
+}
+
+.c5-text.text-perc_90 {
+    color: rgba($c5, 0.9);
+}
+
+.c5-text.text-perc_80 {
+    color: rgba($c5, 0.8);
+}
+
+.c5-text.text-perc_70 {
+    color: rgba($c5, 0.7);
+}
+
+.c5-text.text-perc_60 {
+    color: rgba($c5, 0.6);
+}
+
+.c5-text.text-perc_50 {
+    color: rgba($c5, 0.5);
+}
+
+.c5-text.text-perc_40 {
+    color: rgba($c5, 0.4);
+}
+
+.c5-text.text-perc_30 {
+    color: rgba($c5, 0.3);
+}
+
+.c5-text.text-perc_20 {
+    color: rgba($c5, 0.2);
+}
+
+.c5-text.text-perc_10 {
+    color: rgba($c5, 0.1);
+}
+
+.c6-text,
+html.no-touch .btn.c6-text:hover,
+.btn.c6-text:focus,
+.btn.c6-text:active {
+    color: rgba($c6, 1);
+}
+
+html.no-touch a.c6-text:not(.btn):hover,
+a.c6-text:not(.btn):focus,
+a.c6-text:not(.btn):active {
+    color: darken($c6, 10%);
+}
+
+.c6-text.text-perc_90 {
+    color: rgba($c6, 0.9);
+}
+
+.c6-text.text-perc_80 {
+    color: rgba($c6, 0.8);
+}
+
+.c6-text.text-perc_70 {
+    color: rgba($c6, 0.7);
+}
+
+.c6-text.text-perc_60 {
+    color: rgba($c6, 0.6);
+}
+
+.c6-text.text-perc_50 {
+    color: rgba($c6, 0.5);
+}
+
+.c6-text.text-perc_40 {
+    color: rgba($c6, 0.4);
+}
+
+.c6-text.text-perc_30 {
+    color: rgba($c6, 0.3);
+}
+
+.c6-text.text-perc_20 {
+    color: rgba($c6, 0.2);
+}
+
+.c6-text.text-perc_10 {
+    color: rgba($c6, 0.1);
+}
+
+
+/*	
+--------------------------------------------------
+3.0 BORDERS
+-------------------------------------------------- 
+*/
+
+.c1-borders {
+    border-color: rgba($c1, 1);
+}
+
+.c1-borders.borders-perc_90 {
+    border-color: rgba($c1, 0.9);
+}
+
+.c1-borders.borders-perc_80 {
+    border-color: rgba($c1, 0.8);
+}
+
+.c1-borders.borders-perc_70 {
+    border-color: rgba($c1, 0.7);
+}
+
+.c1-borders.borders-perc_60 {
+    border-color: rgba($c1, 0.6);
+}
+
+.c1-borders.borders-perc_50 {
+    border-color: rgba($c1, 0.5);
+}
+
+.c1-borders.borders-perc_40 {
+    border-color: rgba($c1, 0.4);
+}
+
+.c1-borders.borders-perc_30 {
+    border-color: rgba($c1, 0.3);
+}
+
+.c1-borders.borders-perc_20 {
+    border-color: rgba($c1, 0.2);
+}
+
+.c1-borders.borders-perc_10 {
+    border-color: rgba($c1, 0.1);
+}
+
+.c2-borders {
+    border-color: rgba($c2, 1);
+}
+
+.c2-borders.borders-perc_90 {
+    border-color: rgba($c2, 0.9);
+}
+
+.c2-borders.borders-perc_80 {
+    border-color: rgba($c2, 0.8);
+}
+
+.c2-borders.borders-perc_70 {
+    border-color: rgba($c2, 0.7);
+}
+
+.c2-borders.borders-perc_60 {
+    border-color: rgba($c2, 0.6);
+}
+
+.c2-borders.borders-perc_50 {
+    border-color: rgba($c2, 0.5);
+}
+
+.c2-borders.borders-perc_40 {
+    border-color: rgba($c2, 0.4);
+}
+
+.c2-borders.borders-perc_30 {
+    border-color: rgba($c2, 0.3);
+}
+
+.c2-borders.borders-perc_20 {
+    border-color: rgba($c2, 0.2);
+}
+
+.c2-borders.borders-perc_10 {
+    border-color: rgba($c2, 0.1);
+}
+
+.c3-borders {
+    border-color: rgba($c3, 1);
+}
+
+.c3-borders.borders-perc_90 {
+    border-color: rgba($c3, 0.9);
+}
+
+.c3-borders.borders-perc_80 {
+    border-color: rgba($c3, 0.8);
+}
+
+.c3-borders.borders-perc_70 {
+    border-color: rgba($c3, 0.7);
+}
+
+.c3-borders.borders-perc_60 {
+    border-color: rgba($c3, 0.6);
+}
+
+.c3-borders.borders-perc_50 {
+    border-color: rgba($c3, 0.5);
+}
+
+.c3-borders.borders-perc_40 {
+    border-color: rgba($c3, 0.4);
+}
+
+.c3-borders.borders-perc_30 {
+    border-color: rgba($c3, 0.3);
+}
+
+.c3-borders.borders-perc_20 {
+    border-color: rgba($c3, 0.2);
+}
+
+.c3-borders.borders-perc_10 {
+    border-color: rgba($c3, 0.1);
+}
+
+.c4-borders {
+    border-color: rgba($c4, 1);
+}
+
+.c4-borders.borders-perc_90 {
+    border-color: rgba($c4, 0.9);
+}
+
+.c4-borders.borders-perc_80 {
+    border-color: rgba($c4, 0.8);
+}
+
+.c4-borders.borders-perc_70 {
+    border-color: rgba($c4, 0.7);
+}
+
+.c4-borders.borders-perc_60 {
+    border-color: rgba($c4, 0.6);
+}
+
+.c4-borders.borders-perc_50 {
+    border-color: rgba($c4, 0.5);
+}
+
+.c4-borders.borders-perc_40 {
+    border-color: rgba($c4, 0.4);
+}
+
+.c4-borders.borders-perc_30 {
+    border-color: rgba($c4, 0.3);
+}
+
+.c4-borders.borders-perc_20 {
+    border-color: rgba($c4, 0.2);
+}
+
+.c4-borders.borders-perc_10 {
+    border-color: rgba($c4, 0.1);
+}
+
+.c5-borders {
+    border-color: rgba($c5, 1);
+}
+
+.c5-borders.borders-perc_90 {
+    border-color: rgba($c5, 0.9);
+}
+
+.c5-borders.borders-perc_80 {
+    border-color: rgba($c5, 0.8);
+}
+
+.c5-borders.borders-perc_70 {
+    border-color: rgba($c5, 0.7);
+}
+
+.c5-borders.borders-perc_60 {
+    border-color: rgba($c5, 0.6);
+}
+
+.c5-borders.borders-perc_50 {
+    border-color: rgba($c5, 0.5);
+}
+
+.c5-borders.borders-perc_40 {
+    border-color: rgba($c5, 0.4);
+}
+
+.c5-borders.borders-perc_30 {
+    border-color: rgba($c5, 0.3);
+}
+
+.c5-borders.borders-perc_20 {
+    border-color: rgba($c5, 0.2);
+}
+
+.c5-borders.borders-perc_10 {
+    border-color: rgba($c5, 0.1);
+}
+
+.c6-borders {
+    border-color: rgba($c6, 1);
+}
+
+.c6-borders.borders-perc_90 {
+    border-color: rgba($c6, 0.9);
+}
+
+.c6-borders.borders-perc_80 {
+    border-color: rgba($c6, 0.8);
+}
+
+.c6-borders.borders-perc_70 {
+    border-color: rgba($c6, 0.7);
+}
+
+.c6-borders.borders-perc_60 {
+    border-color: rgba($c6, 0.6);
+}
+
+.c6-borders.borders-perc_50 {
+    border-color: rgba($c6, 0.5);
+}
+
+.c6-borders.borders-perc_40 {
+    border-color: rgba($c6, 0.4);
+}
+
+.c6-borders.borders-perc_30 {
+    border-color: rgba($c6, 0.3);
+}
+
+.c6-borders.borders-perc_20 {
+    border-color: rgba($c6, 0.2);
+}
+
+.c6-borders.borders-perc_10 {
+    border-color: rgba($c6, 0.1);
+}
+
+
+/*	
+-------------------------------------------------- 
+4.0 BUTTONS
+-------------------------------------------------- 
+*/
+
+.btn.no-bg,
+.btn.c1-borders,
+.btn.c2-borders,
+.btn.c3-borders,
+.btn.c4-borders,
+.btn.c5-borders,
+.btn.c6-borders {
+    background: none;
+}
+
+html.no-touch .btn.c1-borders:hover,
+.btn.c1-borders:active,
+.btn.c1-borders:focus {
+    color: rgba($c5, 1);
+    background-color: rgba($c1, 1);
+}
+
+html.no-touch .btn.c2-borders:hover,
+.btn.c2-borders:active,
+.btn.c2-borders:focus {
+    color: rgba($c5, 1);
+    background-color: rgba($c2, 1);
+}
+
+html.no-touch .btn.c3-borders:hover,
+.btn.c3-borders:active,
+.btn.c3-borders:focus {
+    color: rgba($c5, 1);
+    background-color: rgba($c3, 1);
+}
+
+html.no-touch .btn.c4-borders:hover,
+.btn.c4-borders:active,
+.btn.c4-borders:focus {
+    color: rgba($c1, 1);
+    background-color: rgba($c4, 1);
+}
+
+html.no-touch .btn.c5-borders:hover,
+.btn.c5-borders:active,
+.btn.c5-borders:focus {
+    color: rgba($c1, 1);
+    background-color: rgba($c5, 1);
+}
+
+html.no-touch .btn.c6-borders:hover,
+.btn.c6-borders:active,
+.btn.c6-borders:focus {
+    color: rgba($c1, 1);
+    background-color: rgba($c6, 1);
+}
+
+
+/*	
+--------------------------------------------------
+5.0 LINKS
+-------------------------------------------------- 
+*/
+
+html.no-touch .link.text-uppercase .c1-borders:hover,
+.link.text-uppercase .btn.c1-borders:active,
+.link.text-uppercase .btn.c1-borders:focus,
+html.no-touch .link.text-uppercase .c2-borders:hover,
+.link.text-uppercase .btn.c2-borders:active,
+.link.text-uppercase .btn.c2-borders:focus,
+html.no-touch .link.text-uppercase .c4-borders:hover,
+.link.text-uppercase .btn.c4-borders:active,
+.link.text-uppercase .btn.c4-borders:focus,
+html.no-touch .link.text-uppercase .c5-borders:hover,
+.link.text-uppercase .btn.c5-borders:active,
+.link.text-uppercase .btn.c5-borders:focus {
+    border-color: rgba($c3, 1);
+}
+
+html.no-touch .link.text-uppercase .c3-borders:hover,
+.link.text-uppercase .btn.c3-borders:active,
+.link.text-uppercase .btn.c3-borders:focus {
+    border-color: rgba($c3, 1);
+}
+
+
+/*	
+-------------------------------------------------- 
+END
+-------------------------------------------------- 
+*/

@@ -1,0 +1,100 @@
+﻿@inherits UmbracoViewPage<IPublishedContent>
+
+@{
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+    bool addPodContainer = Convert.ToBoolean(ViewData["addPodContainer"]);
+    string itemsPerRow = ViewData["itemsPerRow"] != null ? ViewData["itemsPerRow"].ToString() : "items-3";
+
+    switch (Model.DocumentTypeAlias)
+    {
+        case Usn_Swp_GeneralPod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_GeneralPod", (Usn_Swp_GeneralPod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_ImagePod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_ImagePod", (Usn_Swp_ImagePod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_VideoPod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_VideoPod", (Usn_Swp_VideoPod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_CodePod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_CodePod", (Usn_Swp_CodePod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_ListingPod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_ListingPod", (Usn_Swp_ListingPod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_BlockquotePod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_BlockquotePod", (Usn_Swp_BlockquotePod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_FormPod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+                @Html.Partial("USNSiteWidePods/USN_SWP_FormPod", (Usn_Swp_FormPod)Model, new ViewDataDictionary { { "globalSettingsID", globalSettingsId } })
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+        case Usn_Swp_RelatedContentPod.ModelTypeAlias:
+            if (addPodContainer)
+            {
+                @:<div class="item @itemsPerRow col-xs-12">
+            }
+            @Html.Partial("USNSiteWidePods/USN_SWP_RelatedContentPod", (Usn_Swp_RelatedContentPod)Model)
+            if (addPodContainer)
+            {
+                @:</div>
+            }
+            break;
+    }
+}
+

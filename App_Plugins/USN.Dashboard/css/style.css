@@ -1,0 +1,313 @@
+﻿.usn-cms-dashboard *,
+.usn-cms-dashboard ::after,
+.usn-cms-dashboard ::before {
+    box-sizing: border-box;
+}
+
+.usn-cms-dashboard {
+    position: relative;
+    padding: 0 0 120px;
+    font-family: 'Lato', sans-serif;
+}
+
+.usn-cms-dashboard .container-fluid {}
+
+.usn-cms-dashboard .row {
+    margin: 0;
+}
+
+.usn-cms-dashboard .col-xs-12 {
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.usn-cms-dashboard .col-xs-12+.col-xs-12 {
+    padding-left: 15px;
+}
+
+@media (min-width:992px) {
+    .usn-cms-dashboard .col-md-6 {
+        float: left;
+        width: 50%;
+    }
+    .usn-cms-dashboard .col-md-4 {
+        float: left;
+        width: 33.3333333%;
+    }
+}
+
+@media (min-width:1100px) and (max-width:1199px) {
+    .usn-cms-dashboard .col-md-4 {
+        float: none;
+        width: 100%;
+    }
+}
+
+@media (min-width:1200px) {
+    .usn-cms-dashboard .col-lg-3 {
+        float: left;
+        width: 25%;
+    }
+}
+
+.usn-cms-dashboard p.heading {
+    display: block;
+    margin: 10px 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.usn-cms-dashboard p.heading.main {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+.usn-cms-dashboard .item hr {
+    margin: 8px 0;
+    border-color: rgba(65, 54, 89, 0.05);
+}
+
+.usn-cms-dashboard .item {
+    position: relative;
+    display: block;
+    padding: 15px;
+    margin: 0 0 15px 0;
+    background: #f3f3f5;
+    border-radius: 5px;
+    min-height: auto;
+}
+
+.usn-cms-dashboard .big-item {}
+
+.usn-cms-dashboard .your-details .item {
+    padding: 15px 0;
+    background: none;
+}
+
+.usn-cms-dashboard .item span.wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(0, 174, 162, 0);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0);
+    transition: border 0.3s ease-in-out 0s, box-shadow 0.3s ease-in-out 0s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.usn-cms-dashboard .item span.wrap:hover {
+    border-color: rgba(65, 54, 89, 0.25);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}
+
+.usn-cms-dashboard .item a {
+    display: block;
+    text-decoration: none!important;
+}
+
+.usn-cms-dashboard .item .inner {
+    display: block;
+    margin: 0 auto;
+}
+
+.usn-cms-dashboard .item .image img {
+    border-radius: 50%;
+}
+
+.usn-cms-dashboard .item.with-thumb {
+    text-align: center;
+}
+
+.usn-cms-dashboard .item .image {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    max-width: 40px;
+}
+
+.usn-cms-dashboard .item .date {
+    font-size: 11px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 3px;
+    opacity: 0.75;
+}
+
+.usn-cms-dashboard .item .node {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.usn-cms-dashboard .item .node i {
+    margin-right: 5px;
+}
+
+.usn-cms-dashboard .label {
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+    text-shadow: none;
+    display: inline;
+    padding: 2px 7px 3px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 3px;
+}
+
+.usn-cms-dashboard .label+br+.label {
+    position: relative;
+    top: -2px;
+}
+
+
+/*
+.usn-cms-dashboard .item:not(.big-item) .label {
+    border-radius: 0 0 5px 5px;
+}
+
+.usn-cms-dashboard .item {
+    padding-bottom: 30px;
+}
+
+.usn-cms-dashboard .item:not(.big-item) .label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+*/
+
+.usn-cms-dashboard a.label:hover,
+.usn-cms-dashboard a.label:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.usn-cms-dashboard .label:empty {
+    display: none;
+}
+
+.usn-cms-dashboard .btn .label {
+    position: relative;
+    top: -1px;
+}
+
+.usn-cms-dashboard .label-default {
+    background-color: #777777;
+}
+
+.usn-cms-dashboard .label-default[href]:hover,
+.usn-cms-dashboard .label-default[href]:focus {
+    background-color: #5e5e5e;
+}
+
+.usn-cms-dashboard .label-primary {
+    background-color: #ed6d19;
+}
+
+.usn-cms-dashboard .label-primary[href]:hover,
+.usn-cms-dashboard .label-primary[href]:focus {
+    background-color: #083f6c;
+}
+
+.usn-cms-dashboard .label-success {
+    background-color: #5cb85c;
+}
+
+.usn-cms-dashboard .label-success[href]:hover,
+.usn-cms-dashboard .label-success[href]:focus {
+    background-color: #449d44;
+}
+
+.usn-cms-dashboard .label-info {
+    background-color: #5bc0de;
+}
+
+.usn-cms-dashboard .label-info[href]:hover,
+.usn-cms-dashboard .label-info[href]:focus {
+    background-color: #31b0d5;
+}
+
+.usn-cms-dashboard .label-warning {
+    background-color: #f0ad4e;
+}
+
+.usn-cms-dashboard .label-warning[href]:hover,
+.usn-cms-dashboard .label-warning[href]:focus {
+    background-color: #ec971f;
+}
+
+.usn-cms-dashboard .label-danger {
+    background-color: #d9534f;
+}
+
+.usn-cms-dashboard .label-danger[href]:hover,
+.usn-cms-dashboard .label-danger[href]:focus {
+    background-color: #c9302c;
+}
+
+.usn-cms-dashboard .item.big-item .label {
+    padding: 4px 6px 3px;
+    font-size: 14px;
+    letter-spacing: 0.075em;
+}
+
+.usn-cms-dashboard .your-details .item .button-line {
+    margin-top: 20px;
+}
+
+.usn-cms-dashboard .your-details .item .button-line .btn {
+    margin-right: 5px;
+}
+
+.usn-cms-dashboard .your-details .item .button-line .btn:last-child {
+    margin-right: 0;
+}
+.usn-cms-dashboard .activities .activity-wrap {
+    position:relative;
+    min-height:200px;
+}
+.usn-dashboard-loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.usn-dashboard-loading .loading {
+    margin: 0;
+    position: relative;
+    text-align: center;
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.usn-dashboard-loading .loading .message {
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    text-indent: -9999px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('/images/icons/loading-on-white.gif');
+}

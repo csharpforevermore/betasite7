@@ -1,0 +1,63 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@{
+    UsnstandardPageComponents pageComponentsNode = Model.Content.Children<UsnstandardPageComponents>().FirstOrDefault();
+
+    if (pageComponentsNode != null)
+    {
+        foreach (IPublishedContent component in pageComponentsNode.Children)
+        {
+            switch (component.DocumentTypeAlias)
+            {
+                case Usn_Sc_AccordionTab_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_AccordionTab", (Usn_Sc_AccordionTab_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Resources_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Resources", (Usn_Sc_Resources_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Text_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Text", (Usn_Sc_Text_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Alert_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Alert", (Usn_Sc_Alert_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Links_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Links", (Usn_Sc_Links_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Gallery_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Gallery", (Usn_Sc_Gallery_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Quotes_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Quotes", (Usn_Sc_Quotes_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Code_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Code", (Usn_Sc_Code_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_PriceList_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_PriceList", (Usn_Sc_PriceList_AN) component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_Form_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Form", (Usn_Sc_Form_AN)component, new ViewDataDictionary { { "pageType", "standard" }, { "globalSettingsID", Model.GlobalSettings.Id } })
+                    break;
+                case Usn_Sc_GridLayout_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/Usn_SC_GridLayout", (Usn_Sc_GridLayout_AN)component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_SubpageListing_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/Usn_SC_SubpageListing", (Usn_Sc_SubpageListing_AN)component, new ViewDataDictionary { { "pageType", "standard" }, { "globalSettingsID", Model.GlobalSettings.Id } })
+                    break;
+                case Usn_Sc_Pods_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Pods", (Usn_Sc_Pods_AN)component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+                case Usn_Sc_ReusablePods_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_ReusablePods", (Usn_Sc_ReusablePods_AN)component, new ViewDataDictionary { { "pageType", "standard" }, { "globalSettingsID", Model.GlobalSettings.Id } })
+                    break;
+                case Usn_Sc_RelatedContent_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_RelatedContent", (Usn_Sc_RelatedContent_AN)component, new ViewDataDictionary { { "pageType", "standard" }, { "globalSettingsID", Model.GlobalSettings.Id } })
+                    break;
+                case Usn_Sc_Sitemap_AN.ModelTypeAlias:
+                    @Html.Partial("USNStandardPageComponents/USN_SC_Sitemap", (Usn_Sc_Sitemap_AN)component, new ViewDataDictionary { { "pageType", "standard" } })
+                    break;
+            }
+        }
+    }
+}

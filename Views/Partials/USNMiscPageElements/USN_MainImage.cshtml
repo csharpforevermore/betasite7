@@ -1,0 +1,54 @@
+﻿@inherits UmbracoViewPage<IUsn_Cmp_Sp_Content>
+
+@using USNStarterKit.USNHelpers;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{    
+    if (Model.MainImage != null)
+    {
+        int imageWidthSmall = 8;
+        int imageHeightSmall = 6;
+        string cropAlias = "Landscape";
+        string circleClass = String.Empty;
+
+        switch (Model.ImageStyle)
+        {
+            case USNOptions.ImageStyle_Square:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                break;
+            case USNOptions.ImageStyle_Landscape:
+                imageWidthSmall = 8;
+                imageHeightSmall = 6;
+                cropAlias = "Landscape";
+                break;
+            case USNOptions.ImageStyle_Portrait:
+                imageWidthSmall = 6;
+                imageHeightSmall = 8;
+                cropAlias = "Portrait";
+                break;
+            case USNOptions.ImageStyle_Circle:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                circleClass = "img-circle";
+                break;
+            case USNOptions.ImageStyle_Wide:
+                imageWidthSmall = 120;
+                imageHeightSmall = 63;
+                cropAlias = "Wide";
+                break;
+        }
+
+        <div class="spc image @circleClass">
+            <img class="lazyload @circleClass" src="@Model.MainImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall)" data-src="@Model.MainImage.GetCropUrl(cropAlias: cropAlias)" alt="@Model.MainImageAltText" />
+			
+		@if (Model.MainImageCaption.HasValue())
+        {
+            <div class="caption">@Model.MainImageCaption</div>
+        }
+		</div>           
+    }
+}

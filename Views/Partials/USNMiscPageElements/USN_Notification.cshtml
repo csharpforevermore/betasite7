@@ -1,0 +1,34 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNStarterKit.USNHelpers;
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings) Model.GlobalSettings;
+
+    if (globalSettings.Enable)
+    {
+        <!-- COOKIE NOTICE -->
+        <div class="cookie-notice c4-bg closed">
+            <div class="inner">
+                @if (globalSettings.NotificationSecondaryHeading.HasValue())
+                {
+                    <p class="secondary-heading c1-text">@globalSettings.NotificationSecondaryHeading</p>
+                }
+
+                @if (globalSettings.NotificationHeading.HasValue())
+                {
+                    <p class="heading c3-text">@globalSettings.NotificationHeading</p>
+                }
+
+                @if (globalSettings.NotificationText.HasValue())
+                {
+                    <div class="text base-text">
+                        @Html.Raw(globalSettings.NotificationText)
+                    </div>
+                }
+                <p class="link"><a class="btn c1-borders c1-text accept-cookies" href="#">@globalSettings.AcceptNotificationButtonText</a></p>
+            </div>
+        </div>
+        <!--// COOKIE NOTICE -->
+    }
+}

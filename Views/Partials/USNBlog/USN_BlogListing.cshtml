@@ -1,0 +1,201 @@
+﻿@inherits UmbracoViewPage<USNStarterKit.USNModels.USNBlogListingViewModel>
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    int summaryTextLength = Model.BlogLandingPage.HasValue("blogSummaryTextCharacterCount") ? Model.BlogLandingPage.GetPropertyValue<int>("blogSummaryTextCharacterCount") : 0;
+
+    string itemsPerRowStyle = String.Empty;
+
+    switch (Model.BlogLandingPage.GetPropertyValue<USNOptions>("itemsPerRow"))
+    {
+        case USNOptions.ItemsPerRow_1:
+            itemsPerRowStyle = "items-1";
+            break;
+        case USNOptions.ItemsPerRow_2:
+            itemsPerRowStyle = "items-2";
+            break;
+        case USNOptions.ItemsPerRow_3:
+            itemsPerRowStyle = "items-3";
+            break;
+        case USNOptions.ItemsPerRow_4:
+            itemsPerRowStyle = "items-4";
+            break;
+        default:
+            itemsPerRowStyle = "items-1";
+            break;
+    }
+        
+    //Only display blog page content on first page
+    if (Model.SearchResults.Paging.CurrentPage == 1 && Model.SelectedYear == -1)
+    {
+        <!-- IMAGE -->
+        @Html.Partial("USNMiscPageElements/USN_MainImage", (IUsn_Cmp_Sp_Content) Model.CurrentPage)
+        <!--// IMAGE -->
+        @Umbraco.Field("bodyText")
+    }
+        
+    if (!Model.SearchResults.BlogPostsList.Any())
+    {
+        <p>@umbraco.library.GetDictionaryItem("USN Blog Nothing Found")</p>
+    }
+    else
+    {
+        int imageWidthSmall = 8;
+        int imageHeightSmall = 6;
+        string cropAlias = "Landscape";
+        string circleClass = String.Empty;
+
+        switch (Model.BlogLandingPage.GetPropertyValue<USNOptions>("listingImageStyle"))
+        {
+            case USNOptions.ImageStyle_Square:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                break;
+            case USNOptions.ImageStyle_Landscape:
+                imageWidthSmall = 8;
+                imageHeightSmall = 6;
+                cropAlias = "Landscape";
+                break;
+            case USNOptions.ImageStyle_Portrait:
+                imageWidthSmall = 6;
+                imageHeightSmall = 8;
+                cropAlias = "Portrait";
+                break;
+            case USNOptions.ImageStyle_Circle:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                circleClass = "img-circle";
+                break;
+            case USNOptions.ImageStyle_Wide:
+                imageWidthSmall = 120;
+                imageHeightSmall = 63;
+                cropAlias = "Wide";
+                break;
+        }
+
+        string textAlignment;
+
+        switch (Model.BlogLandingPage.GetPropertyValue<USNOptions>("itemTextAlignment"))
+        {
+            case USNOptions.TextAlignment_Left:
+                textAlignment = "text-left";
+                break;
+            case USNOptions.TextAlignment_Center:
+                textAlignment = "text-center";
+                break;
+            case USNOptions.TextAlignment_Right:
+                textAlignment = "text-right";
+                break;
+            default:
+                textAlignment = "text-left";
+                break;
+        }
+
+        <!-- LISTING -->
+        <div class="listing blog">
+            <div class="row @textAlignment">
+                @{
+                    foreach (IPublishedContent item in Model.SearchResults.BlogPostsList)
+                    {
+                        Boolean displaySummaryText = false;
+                        string introText = String.Empty;
+
+                        if (item.HasValue("pageSummary"))
+                        {
+                            introText = item.GetPropertyValue<string>("pageSummary");
+                            displaySummaryText = true;
+                        }
+                        else
+                        {
+                            if (summaryTextLength > 0 && item.HasProperty("bodyText"))
+                            {
+                                introText = item.GetPropertyValue<string>("bodyText").StripHtml().Trim();
+
+                                displaySummaryText = true;
+
+                                if (introText.Length >= summaryTextLength)
+                                {
+                                    introText = introText.Substring(0, summaryTextLength);
+                                }
+
+                                if (introText.Length > 0)
+                                {
+                                    introText = "<p>" + introText + " ...</p>";
+                                }
+                            }
+                        }
+
+
+                        string postName = item.HasValue("onPageTitle") ? item.GetPropertyValue<string>("onPageTitle") : item.Name;
+
+                        if (Model.BlogLandingPage.GetPropertyValue<USNOptions>("blogListingLayout") != USNOptions.ListingStyle_Grid)
+                        {
+                            string textClass = String.Empty;
+
+                            <div class="item @circleClass @itemsPerRowStyle col-xs-12">
+                                <div class="row">
+                                    @if (item.HasValue("pageListingImage") && item.GetPropertyValue<IPublishedContent>("pageListingImage") != null)
+                                    {
+                                        textClass = "col-sm-7 pull-left";
+
+                                        <div class="col-sm-4 pull-right col-xs-12 text-right">
+                                            <div class="image @circleClass">
+                                                <a href="@item.Url">
+                                                    <img class="@circleClass lazyload" src="@(item.GetPropertyValue<Image>("pageListingImage").GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall))" data-src="@(item.GetPropertyValue<Image>("pageListingImage").GetCropUrl(cropAlias: cropAlias))" alt="@(item.GetPropertyValue<string>("pageListingImageAltText"))">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="info @textClass col-xs-12">
+                                        <a href="@item.Url"><p class="heading">@Html.Raw(postName)</p></a>
+                                        @if (displaySummaryText && introText != String.Empty)
+                                        {
+                                            <div class="text">@Html.Raw(introText)</div>
+                                        }
+
+                                        @Html.Partial("USNBlog/USN_BlogMeta", item, new ViewDataDictionary { { "globalSettingsID", Model.GlobalSettingsID } })
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div class="item @circleClass @itemsPerRowStyle col-xs-12">
+                                <a href="@item.Url">
+                                    @if (item.HasValue("pageListingImage") && item.GetPropertyValue<IPublishedContent>("pageListingImage") != null)
+                                    {
+                                        <div class="image @circleClass">
+                                            <img class="@circleClass lazyload" src="@(item.GetPropertyValue<Image>("pageListingImage").GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall))" data-src="@(item.GetPropertyValue<Image>("pageListingImage").GetCropUrl(cropAlias: cropAlias))" alt="@(item.GetPropertyValue<string>("pageListingImageAltText"))">
+                                        </div>
+                                    }
+                                    <p class="heading">@Html.Raw(postName)</p>
+                                </a>
+                                @if (displaySummaryText && introText != String.Empty)
+                                {
+                                    <div class="text">@Html.Raw(introText)</div>
+                                }
+
+                                @Html.Partial("USNBlog/USN_BlogMeta", item, new ViewDataDictionary { { "globalSettingsID", Model.GlobalSettingsID } })
+                            </div>
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+        <!--// LISTING -->
+
+        if (Model.SearchResults.Paging.TotalPageCount > 1)
+        {
+            <!-- PAGINATION -->
+            @Html.Partial("USNMiscPageElements/USN_Paging", new ViewDataDictionary { { "totalPageCount", Model.SearchResults.Paging.TotalPageCount } })
+            <!--// PAGINATION -->
+        }
+    }
+
+}

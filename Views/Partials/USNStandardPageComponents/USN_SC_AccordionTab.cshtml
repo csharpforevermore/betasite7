@@ -1,0 +1,134 @@
+﻿@inherits UmbracoViewPage<Usn_Sc_AccordionTab_AN>
+
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    string anchorId = String.Empty;
+    string customComponentClasses = String.Empty;
+
+    int tabHeadingCount = 1;
+    int tabContentCount = 1;
+    int accordionCount = 1;
+
+    USNTemplateStyleSettings settings;
+    string animateClass = String.Empty;
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    string pageType = ViewData["pageType"] != null ? ViewData["pageType"].ToString() : "standard";
+
+    if(pageType == "standard")
+    {
+        settings = USNViewTemplateHelper.GetDefaultTemplateStyleSettings();
+    }
+    else
+    {
+        settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+    }
+
+    @* Add div for column width on Advanced Pages *@
+    if (pageType == "advanced")
+    {
+        if (Model.Width == USNOptions.ComponentWidth_Center)
+        {
+            @:<div class="container"><div class="row"><div class="mid-col col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        }
+        else if(Model.Width == USNOptions.ComponentWidth_Full)
+        {
+            @:<div class="container-fluid"><div class="row"><div class="wide-col col-xs-12">
+        }
+        else
+        {
+            @:<div class="container"><div class="row"><div class="wide-col col-xs-12">
+        }
+        
+    }
+    else
+    {
+        anchorId = "id=\"pos_" + Model.Id + "\" ";
+        customComponentClasses = Model.CustomComponentClasses;
+    }
+
+    if (Model.RepeaterStyle == USNOptions.RepeatableLayout_Tabbed)
+    {
+		<!-- PAGE COMPONENT TABBED -->
+        <div class="spc tabbed @animateClass @customComponentClasses" data-os-animation="fadeIn" data-os-animation-delay="0s" role="tabpanel" @Html.Raw(anchorId)>
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentIntro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle }})
+
+            @if (Model.AccordianTabs != null)
+            {
+
+                <nav class="tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                        @foreach (Usn_Sc_AccordionTabItem item in Model.AccordianTabs)
+                        {
+                            <li role="presentation" @if (tabHeadingCount == 1)
+                            { @Html.Raw("class=\"active\"") }><a href="#tabname-@Model.Id-@tabHeadingCount" aria-controls="tabname-@Model.Id-@tabHeadingCount" role="tab" data-toggle="tab">@item.ItemHeading</a></li>
+                            tabHeadingCount += 1;
+                        }
+                    </ul>
+                </nav>
+
+                <div class="tab-content base-text">
+                    @foreach (Usn_Sc_AccordionTabItem item in Model.AccordianTabs)
+                    {
+                        <div id="tabname-@Model.Id-@tabContentCount" role="tabpanel" class="tab-pane  @if (tabContentCount == 1)
+                        {@Html.Raw("active")}">
+                            @Html.Raw(item.RepeaterText)
+                        </div>
+
+                        tabContentCount += 1;
+                    }
+                </div>
+
+            }
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentOutro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle }})
+
+        </div>
+		<!--// PAGE COMPONENT TABBED -->
+    }
+    else
+    {
+    	<!-- PAGE COMPONENT ACCORDION -->
+        <div class="spc accordion" @Html.Raw(anchorId)>
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentIntro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle }})
+
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            @foreach (Usn_Sc_AccordionTabItem item in Model.AccordianTabs)
+            {   
+                <div role="tab" id="heading-@accordionCount">
+                    <p class="heading">
+                        <a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapse-@Model.Id-@accordionCount" aria-expanded="true" aria-controls="collapse-@Model.Id-@accordionCount">
+                            @item.ItemHeading<i class="ion-minus"></i><i class="ion-plus"></i>
+                        </a>
+                    </p>
+                </div>
+                <div id="collapse-@Model.Id-@accordionCount" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-@Model.Id-@accordionCount">
+                    <div class="panel-body base-text">
+                        @Html.Raw(item.RepeaterText)
+                    </div>
+                </div>       
+                accordionCount += 1;
+            }
+            </div>
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentOutro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle }})
+
+        </div>
+		<!--// PAGE COMPONENT ACCORDION -->
+    }
+
+    @* Close div for column width on Advanced Pages *@
+    if (!Model.Parent.Parent.IsDocumentType(UsnstandardPage.ModelTypeAlias) && !Model.Parent.Parent.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+    {
+        @:</div></div></div>
+    }
+}

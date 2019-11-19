@@ -1,0 +1,76 @@
+﻿@inherits UmbracoViewPage
+
+@using USNStarterKit.USNBlog;
+@using System.Globalization;
+
+@{
+    UsnblogLandingPage landing = (UsnblogLandingPage)Model.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+
+    int currentYear = -1;
+    int currentMonth = -1;
+
+    int selectedYear = -1;
+    int selectedMonth = -1;
+
+    if (!String.IsNullOrEmpty(Request.QueryString["year"]))
+    {
+        selectedYear = Convert.ToInt32(Request.QueryString["year"]);
+    }
+
+    if (!String.IsNullOrEmpty(Request.QueryString["month"]))
+    {
+        selectedMonth = Convert.ToInt32(Request.QueryString["month"]);
+    }
+
+    List<KeyValuePair<int, string>> yearNavigation = USNBlogPostService.Instance.GetBlogYearsNavigation(landing);
+
+
+    if (yearNavigation.Any())
+    {
+        <!-- SUB - FILTER -->
+        <nav class="sub filter has-borders c6-borders">
+            <p class="heading inner"><a href="@landing.Url">@umbraco.library.GetDictionaryItem("USN Blog All Posts")</a>
+            </p>
+            <div class="inner">
+                <ul>
+                    @foreach (var yearNav in yearNavigation)
+                    {
+                        currentYear = yearNav.Key;
+
+                        var yearClass = currentYear == selectedYear ? "active" : String.Empty;
+
+                        <li class="@yearClass">
+                            <a href="@landing.Url?year=@yearNav.Key" rel="NOINDEX, FOLLOW">@yearNav.Value</a>
+                            @if (selectedYear == currentYear)
+                            {
+                                List<KeyValuePair<int, string>> monthNavigation = USNBlogPostService.Instance.GetBlogMonthsNavigation(landing, selectedYear);
+
+                                <ul>
+                                    @foreach (var monthNav in monthNavigation)
+                                    {
+                                        currentMonth = monthNav.Key;
+
+                                        string monthClass;
+
+                                        if (currentMonth == selectedMonth && currentYear == selectedYear)
+                                        {
+                                            monthClass = "active";
+                                        }
+                                        else
+                                        {
+                                            monthClass = String.Empty;
+                                        }
+                                        <li class="@monthClass">
+                                            <a href="@landing.Url?year=@currentYear&month=@currentMonth" rel="NOINDEX, FOLLOW">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+        <!--// SUB - FILTER -->
+    }
+}

@@ -1,0 +1,93 @@
+﻿@inherits UmbracoViewPage<Usn_SitemapXml>
+
+@using USNStarterKit.USNHelpers;
+@using USNOptions = USNStarterKit.USNEnums.Options;
+@{
+    Layout = null;
+
+    Response.AddHeader("Content-Type", "text/xml");
+    const string DATE_TIME_FORMAT = "yyyy-MM-dd";
+
+    Usnhomepage homePage = (Usnhomepage)Model.AncestorOrSelf(1);
+}
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>@homePage.UrlWithDomain()</loc>
+        <lastmod>@homePage.UpdateDate.ToString(DATE_TIME_FORMAT)</lastmod>
+        @if (homePage.SitemapXmlpriority.HasValue() && homePage.SitemapXmlpriority != 0)
+        {
+            <priority>@homePage.SitemapXmlpriority.ToString("0.0")</priority>
+        }
+        @if (homePage.SitemapXmlchangeFrequency != USNOptions.EMPTY)
+        {
+            <changefreq>@homePage.SitemapXmlchangeFrequency.ToString().Remove(0,8).ToLower()</changefreq>
+        }
+    </url>
+    @Traverse(homePage, DATE_TIME_FORMAT)
+</urlset>
+
+@helper Traverse(IPublishedContent node, string DATE_TIME_FORMAT)
+{
+var items = node.Children.Where(x => (x.IsDocumentType(UsnstandardPage.ModelTypeAlias) || x.IsDocumentType(UsnadvancedPage.ModelTypeAlias) || x.IsDocumentType(UsnblogLandingPage.ModelTypeAlias) || x.IsDocumentType(UsnloginPage.ModelTypeAlias) || x.IsDocumentType(UsnsearchResultsPage.ModelTypeAlias)) && !x.GetPropertyValue<bool>("hideFromSearchEngines") && !library.IsProtected(x.Id, x.Url));
+
+if (items.Any())
+{
+    foreach (var item in items)
+    {
+            <url>
+                <loc>@item.UrlAbsolute()</loc>
+                <lastmod>@item.UpdateDate.ToString(DATE_TIME_FORMAT)</lastmod>
+                @if (item.HasValue("updateFrequency"))
+                {
+                    <changefreq>@item.GetPropertyValue("updateFrequency")</changefreq>
+                }
+                @if (item.HasValue("sitemapXmlpriority") && item.GetPropertyValue<decimal>("sitemapXmlpriority") != 0)
+                {
+                    <priority>@(item.GetPropertyValue<decimal>("sitemapXmlpriority").ToString("0.0"))</priority>
+                }
+                @if (item.GetPropertyValue<USNOptions>("sitemapXmlchangeFrequency") != USNOptions.EMPTY)
+                {
+                    <changefreq>@(item.GetPropertyValue<string>("sitemapXmlchangeFrequency").Remove(0, 8).ToLower())</changefreq>
+                }
+            </url>
+            @Traverse(item, DATE_TIME_FORMAT)
+        }
+    }
+
+    var catFolder = node.Children.FirstOrDefault(x => x.IsDocumentType(UsnblogCategories.ModelTypeAlias)  && !library.IsProtected(x.Id,x.Url));
+
+    if (catFolder != null)
+    {
+        @TraverseCategories(catFolder, DATE_TIME_FORMAT)
+    }
+}
+
+@helper TraverseCategories(IPublishedContent catFolder, string DATE_TIME_FORMAT)
+{
+    var items = catFolder.Children.Where(x => x.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias) && !x.GetPropertyValue<bool>("hideFromSearchEngines"));
+
+    if (items.Any())
+    {
+        foreach (var item in items)
+        {
+            <url>
+                <loc>@item.UrlAbsolute()</loc>
+                <lastmod>@item.UpdateDate.ToString(DATE_TIME_FORMAT)</lastmod>
+                @if (item.HasValue("updateFrequency"))
+                {
+                    <changefreq>@item.GetPropertyValue("updateFrequency")</changefreq>
+                }
+                @if (item.HasValue("sitemapXmlpriority") && item.GetPropertyValue<decimal>("sitemapXmlpriority") != 0)
+                {
+                    <priority>@(item.GetPropertyValue<decimal>("sitemapXmlpriority").ToString("0.0"))</priority>
+                }
+                @if (item.GetPropertyValue<USNOptions>("sitemapXmlchangeFrequency") != USNOptions.EMPTY)
+                {
+                    <changefreq>@(item.GetPropertyValue<string>("sitemapXmlchangeFrequency").Remove(0, 8).ToLower())</changefreq>
+                }
+            </url>
+            @TraverseCategories(item, DATE_TIME_FORMAT)
+        }
+    }
+}

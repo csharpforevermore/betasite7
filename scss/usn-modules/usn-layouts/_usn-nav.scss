@@ -1,0 +1,1195 @@
+/*  
+--------------------------------------------------
+5.0 NAVIGATION             
+-------------------------------------------------- 
+*/
+
+@media (min-width:0) and (max-width:991px) {
+    html.reveal-out {
+        overflow: hidden;
+    }
+    html.reveal-out #site {
+        height: 100vh;
+    }
+    html.reveal-out .content {
+        position: relative;
+        z-index: -5;
+    }
+    .navigation {
+        position: relative;
+        z-index: 5;
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(.10, .20, .10, .5) 0.1s, opacity 0.5s cubic-bezier(.10, .20, .10, .5) 0.1s;
+    }
+    html.reveal-out .navigation {
+        overflow: auto;
+        width: 100%;
+        height: 100vh;
+        opacity: 1;
+    }
+    .navigation .reveal {
+        visibility: hidden;
+        width: 100%;
+        max-width: 100%;
+        padding: $base-header-height 0;
+    }
+    html.reveal-out .navigation .reveal {
+        visibility: visible;
+    }
+    header a.expand {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 300;
+        width: $base-header-height;
+        height: $base-header-height;
+        display: block;
+        text-indent: -9999px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    header a.expand span:before,
+    header a.expand span,
+    header a.expand span:after {
+        content: "";
+        display: block;
+        width: 30px;
+        height: 3px;
+        position: absolute;
+        right: 15px;
+        background-color: rgba($c5, 1);
+        opacity: 1;
+        transition: transform 0.4s ease-in-out 0s, left 0.4s ease-in-out 0s, top 0.4s ease-in-out 0s, width 0.3s ease-in-out 0s;
+    }
+    header a.expand span {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    header a.expand span:before,
+    header a.expand span:after {
+        right: 0;
+    }
+    header a.expand span:before {
+        top: -8px;
+    }
+    header a.expand span:after {
+        top: 8px;
+    }
+    header a.expand.active span {
+        width: 0;
+    }
+    header a.expand.active span:before,
+    header a.expand.active span:after {
+        top: 0;
+    }
+    header a.expand.active span::before {
+        transform: rotate(-45deg);
+    }
+    header a.expand.active span::after {
+        transform: rotate(45deg);
+    }
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {
+    header a.expand {
+        display: none;
+    }
+}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.1 MAIN NAV             
+-------------------------------------------------- 
+*/
+
+.navigation nav.main {
+    font-weight: 600;
+}
+
+.navigation nav.main ul li span {
+    position: relative;
+    display: block;
+}
+
+.navigation nav.main ul li span i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 60px;
+    height: 100%;
+    margin: 0;
+    padding-top: 22px;
+    text-align: center;
+    color: rgba($c5, 1);
+    font-size: 20px;
+}
+
+.navigation nav.main ul li span i {
+    z-index: 99;
+}
+
+html.touch .navigation nav.main ul li span i {
+    z-index: 101;
+    background-color: rgba($c5, 0.1);
+}
+
+.navigation nav.main ul li a {
+    display: block;
+    font-weight: 600;
+}
+
+.navigation nav.main ul li span a {
+    position: relative;
+    min-height: 60px;
+    padding: 22px 15px;
+    color: rgba($c5, 1);
+}
+
+.navigation nav.main ul li span a {
+    z-index: 101;
+}
+
+html.touch .navigation nav.main>ul>li>span a {
+    z-index: 99;
+}
+
+.navigation nav.main ul li span.active,
+html.touch .navigation nav.main ul li.open,
+html.no-touch .navigation nav.main ul li:hover {
+    background-color: rgba($c1, 1);
+}
+
+.navigation nav.main ul li:focus-within {
+    background-color: rgba($c1, 1);
+}
+
+.navigation nav.main ul li span.active a,
+html.touch .navigation nav.main ul li.open span a,
+html.no-touch .navigation nav.main ul li:hover span a {
+    color: rgba($c5, 1);
+}
+
+.navigation nav.main ul li:focus-within span a {
+    color: rgba($c5, 1);
+}
+
+.navigation nav.main ul li.has-child ul li span a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+}
+
+.navigation nav.main ul li.has-child ul li span a::before {
+    background-color: rgba($c5, 0.1);
+}
+
+html.no-touch .navigation nav.main ul li.has-child ul li span a:hover::before {
+    background-color: rgba($c5, 1);
+}
+
+html.no-touch .navigation nav.main ul li.has-child ul li span.active a:hover::before,
+.navigation nav.main ul li.has-child ul li span.active a::before {
+    background-color: rgba($c3, 1);
+}
+
+@media (min-width:0) and (max-width:991px) {
+    .navigation nav.main {
+        padding-bottom: $base-spacing;
+    }
+    .navigation nav.main ul li {
+        position: relative;
+        margin-bottom: $base-border-width;
+    }
+    .navigation nav.main ul li ul li::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        background-color: rgba($c5, 0.1);
+    }
+    .navigation nav.main ul li.has-child ul {
+        display: none;
+    }
+    .navigation nav.main ul li.has-child.open-mobile>ul {
+        display: block;
+    }
+    .navigation nav.main>ul>li>span a {
+        z-index: 99;
+    }
+    .navigation nav.main ul li span i {
+        z-index: 101;
+        background-color: rgba($c5, 0.1);
+    }
+    .navigation nav.main ul li.has-child.open>span i::before {
+        transform: rotate(180deg);
+    }
+}
+
+@media (min-width:768px) and (max-width:991px) {
+    .navigation nav.main {
+        font-size: 15px;
+    }
+    .navigation nav.main>ul>li>span {
+        font-size: 25px;
+    }
+}
+
+@media (min-width:992px) {
+    .navigation,
+    .navigation nav.main,
+    .navigation nav.main ul {
+        z-index: 500;
+        position: relative;
+        overflow: visible;
+    }
+    .navigation nav.main {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .navigation nav.main ul {
+        font-size: 15px;
+    }
+    .navigation nav.main>ul>li {
+        float: left;
+        display: inline;
+        height: $base-header-height_sm;
+    }
+    .navigation nav.main>ul>li>span>a {
+        height: $base-header-height_sm;
+        padding-top: 32px;
+    }
+    .navigation nav.main>ul>li.has-child>span>a {
+        padding-right: 30px;
+    }
+    html.touch .navigation nav.main>ul>li.has-child>span>a {
+        padding-right: 40px;
+    }
+    .navigation nav.main>ul>li>span>i {
+        width: 25px;
+        right: 0;
+        padding-top: 35px;
+        font-size: 10px;
+    }
+    /* DROPDOWN NAVIGATION */
+    .navigation nav.main>ul>li.has-child {
+        position: relative;
+    }
+    .navigation nav.main>ul>li.has-child ul {
+        position: absolute;
+        top: $base-nav-main-height_sm;
+        left: -999em;
+        z-index: 2000;
+        width: $base-nav-main-dropdown-width_sm;
+        height: auto;
+        padding: 0;
+        text-align: left;
+        box-shadow: 5px 5px 5px rgba($true-black, 0.05);
+        background-color: rgba($c1, 1);
+    }
+    .navigation nav.main>ul>li.has-child ul li {
+        position: relative;
+    }
+    .navigation nav.main ul li.has-child ul li span a {
+        display: block;
+        float: none;
+        height: auto;
+    }
+    html.touch .navigation nav.main>ul>li.has-child>ul>li.has-child>span a {
+        padding-right: 40px;
+    }
+    .navigation nav.main ul li.has-child ul li span i {
+        top: 0;
+        bottom: 0;
+        font-size: 10px;
+        padding-top: 24px;
+        width: 30px;
+        height: 100%;
+    }
+    html.touch .navigation nav.main ul li.has-child.open ul,
+    html.no-touch .navigation nav.main ul li.has-child:hover ul {
+        left: 0;
+    }
+    .navigation nav.main ul li.has-child:focus-within ul {
+        left: 0;
+    }
+    html.touch .navigation nav.main ul li.has-child.open ul ul,
+    html.no-touch .navigation nav.main ul li.has-child:hover ul ul {
+        top: 0;
+        left: -999em;
+    }
+    .navigation nav.main ul li.has-child:focus-within ul ul {
+        top: 0;
+        left: -999em;
+    }
+    html.touch .navigation nav.main ul li ul li.has-child.open ul,
+    html.no-touch .navigation nav.main ul li ul li.has-child:hover ul {
+        left: $base-nav-main-dropdown-width_sm;
+    }
+    .navigation nav.main ul li ul li.has-child:focus-within ul {
+        left: $base-nav-main-dropdown-width_sm;
+    }
+    /* LAST CHILD & MORE DROPDOWN */
+    html.touch .navigation nav.main>ul>li.has-child.open:last-of-type ul,
+    html.no-touch .navigation nav.main>ul>li.has-child:hover:last-of-type ul {
+        right: 0;
+        left: auto;
+    }
+    .navigation nav.main>ul>li.has-child:focus-within:last-of-type ul {
+        right: 0;
+        left: auto;
+    }
+    html.touch .navigation nav.main>ul>li.has-child.open:last-of-type ul ul,
+    html.no-touch .navigation nav.main>ul>li.has-child:hover:last-of-type ul ul {
+        left: -999em;
+    }
+    .navigation nav.main>ul>li.has-child:focus-within:last-of-type ul ul {
+        left: -999em;
+    }
+    html.touch .navigation nav.main>ul>li:last-of-type>ul>li.has-child.open ul,
+    html.no-touch .navigation nav.main>ul>li:last-of-type>ul>li.has-child:hover ul {
+        right: auto;
+        left: -$base-nav-main-dropdown-width_sm;
+    }
+    .navigation nav.main>ul>li:last-of-type>ul>li.has-child:focus-within ul {
+        right: auto;
+        left: -$base-nav-main-dropdown-width_sm;
+    }
+    .navigation nav.main ul li.more-children ul.more-dropdown ul,
+    .navigation nav.main ul li.more-children ul.more-dropdown i {
+        display: none!important;
+    }
+    /* MULTI COLUMN DROPDOWN FOR MORE THAN 8*/
+    .navigation nav.main>ul>li.has-child.multi-col>ul {
+        width: $base-nav-main-dropdown-width-wider_sm;
+    }
+    .navigation nav.main>ul>li.has-child.multi-col>ul>li {
+        float: left;
+        width: $base-nav-main-dropdown-width_sm;
+    }
+    .navigation nav.main>ul>li.has-child.multi-col>ul>li:nth-child(2n+1) {
+        clear: both;
+    }
+}
+
+@media (min-width:1200px) {
+    .navigation nav.main>ul>li>span>a {
+        padding: 32px 20px;
+    }
+    .navigation nav.main>ul>li.has-child>span>a {
+        padding-right: 30px;
+    }
+    html.touch .navigation nav.main>ul>li.has-child>span>a {
+        padding-right: 40px;
+    }
+}
+
+
+/*  
+--------------------------------------------------
+5.2 TOP NAVIGATION             
+-------------------------------------------------- 
+*/
+
+.navigation nav.top {
+    padding: $base-half-spacing 0 $base-spacing $base-half-spacing;
+}
+
+.navigation nav.top>ul,
+.navigation nav.top ul .dropdown-menu {
+    font-size: 16px;
+    border-radius: 0;
+}
+
+.navigation nav.top ul>li {
+    display: block;
+    margin: 15px 0;
+}
+
+.navigation nav.top li a {
+    color: rgba($c5, 1);
+}
+
+@media (min-width:0) and (max-width:767px) {
+    .navigation nav.top ul .dropdown-menu {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        float: none!important;
+        width: auto;
+        background: none;
+        border: 0 none;
+        box-shadow: none;
+    }
+    .navigation nav.top ul .dropdown-menu li a {
+        padding: 0;
+        background: none!important;
+    }
+}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.3 SUB NAVIGATION             
+-------------------------------------------------- 
+*/
+
+nav.sub {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    margin-bottom: $base-spacing;
+    background-color: rgba($c4, 1);
+}
+
+nav.sub .inner:not(.heading) {
+    padding: 0;
+}
+
+nav.sub p.heading {
+    margin: 0;
+}
+
+nav.sub.categories p.heading,
+nav.sub p.heading a {
+    display: block;
+    color: rgba($c3, 1);
+}
+
+nav.sub ul {
+    font-size: 16px;
+    margin: 0 0 $base-half-spacing;
+}
+
+nav.sub .inner>ul {
+    position: relative;
+    left: -2px;
+}
+
+nav.sub ul ul {
+    margin: 0!important;
+    font-size: 85%;
+}
+
+nav.sub ul li {
+    position: relative;
+}
+
+nav.sub ul ul li {}
+
+nav.sub ul li a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: rgba($c3, 1);
+    background: transparent;
+    transition: all 0.2s ease-in-out 0s;
+}
+
+html.no-touch nav.sub ul li:not(.active) a:hover {
+    padding-left: 18px;
+}
+
+nav.sub ul ul li a {
+    padding-left: 20px;
+}
+
+nav.sub ul ul ul li a {
+    padding-left: 25px;
+}
+
+nav.sub ul ul ul li a {
+    padding-left: 30px;
+}
+
+html.no-touch nav.sub ul ul li:not(.active) a:hover {
+    padding-left: 23px;
+}
+
+html.no-touch nav.sub ul ul ul li:not(.active) a:hover {
+    padding-left: 28px;
+}
+
+html.no-touch nav.sub ul ul ul ul li:not(.active) a:hover {
+    padding-left: 33px;
+}
+
+nav.sub ul li::before,
+nav.sub ul li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 5px;
+    height: 100%;
+    background-color: rgba($c6, 0);
+    transition: background-color 0.3s ease-in-out 0s;
+}
+
+nav.sub ul li.active::before {
+    background-color: rgba($c6, 1);
+}
+
+html.no-touch nav.sub ul>li:not(.active)>a:hover {
+    color: rgba($c1, 1);
+}
+
+html.no-touch nav.sub ul>li:not(.active)>a:hover::before {
+    background-color: rgba($c6, 1);
+}
+
+nav.sub ul>li.active>a {
+    color: rgba($c1, 1);
+    font-weight: 400;
+}
+
+nav.sub ul>li.active>a::before {
+    background-color: rgba($c1, 1);
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {
+    nav.sub ul {
+        margin: 0 0 20px;
+    }
+    nav.sub ul li a {
+        padding: 10px 20px;
+    }
+    html.no-touch nav.sub ul li:not(.active) a:hover {
+        padding-left: 23px;
+    }
+    nav.sub ul ul li a {
+        padding-left: 25px;
+    }
+    nav.sub ul ul ul li a {
+        padding-left: 30px;
+    }
+    nav.sub ul ul ul li a {
+        padding-left: 35px;
+    }
+    html.no-touch nav.sub ul ul li:not(.active) a:hover {
+        padding-left: 28px;
+    }
+    html.no-touch nav.sub ul ul ul li:not(.active) a:hover {
+        padding-left: 33px;
+    }
+    html.no-touch nav.sub ul ul ul ul li:not(.active) a:hover {
+        padding-left: 38px;
+    }
+}
+
+@media (min-width:1200px) {
+    nav.sub ul {
+        margin: 0 0 $base-spacing;
+    }
+    nav.sub ul li a {
+        padding: 10px 30px;
+    }
+    html.no-touch nav.sub ul li:not(.active) a:hover {
+        padding-left: 33px;
+    }
+    nav.sub ul ul li a {
+        padding-left: 35px;
+    }
+    nav.sub ul ul ul li a {
+        padding-left: 40px;
+    }
+    nav.sub ul ul ul li a {
+        padding-left: 45px;
+    }
+    html.no-touch nav.sub ul ul li:not(.active) a:hover {
+        padding-left: 38px;
+    }
+    html.no-touch nav.sub ul ul ul li:not(.active) a:hover {
+        padding-left: 43px;
+    }
+    html.no-touch nav.sub ul ul ul ul li:not(.active) a:hover {
+        padding-left: 48px;
+    }
+}
+
+
+/*  
+--------------------------------------------------
+5.4 BREADCRUMB NAVIGATION             
+-------------------------------------------------- 
+*/
+
+.breadcrumb-trail {
+    overflow: hidden;
+    height: 60px;
+    border-width: $base-border-width 0 0;
+    border-style: solid;
+    border-color: darken($c5, 5%);
+}
+
+.breadcrumb-trail ol {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    font-size: 14px;
+}
+
+.breadcrumb-trail ol li {
+    position: relative;
+    display: inline-block;
+}
+
+.breadcrumb-trail ol li.active {
+    color: lighten($base-text, 25%);
+}
+
+.breadcrumb-trail ol li a {
+    display: inline-block;
+    height: 60px;
+}
+
+.breadcrumb-trail ol li span {
+    padding: 23px 40px 0 10px;
+    display: block;
+    height: 60px;
+}
+
+.breadcrumb-trail ol li:first-child span {
+    padding-left: 0;
+}
+
+.breadcrumb-trail ol li::before,
+.breadcrumb-trail ol li::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 15px;
+    width: $base-border-width;
+    height: 40px;
+    background-color: darken($c5, 5%);
+    transform: rotate(-30deg);
+}
+
+.breadcrumb-trail ol li::after {
+    top: auto;
+    bottom: -7px;
+    transform: rotate(30deg);
+}
+
+.breadcrumb-trail ol li.active::before,
+.breadcrumb-trail ol li.active::after {
+    display: none;
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.5 PAGINATION NAVIGATION             
+-------------------------------------------------- 
+*/
+
+nav#pagination {
+    padding: $base-spacing 0;
+}
+
+nav#pagination.post {}
+
+nav#pagination .pagination {
+    position: relative;
+    overflow: hidden;
+    min-height: 50px;
+    margin: 0;
+    display: block;
+    font-size: 0;
+}
+
+.listing.shop nav#pagination {
+    margin: 0;
+}
+
+nav#pagination .pagination,
+nav#pagination .pagination li a,
+nav#pagination .pagination li a span {
+    border-radius: 0;
+}
+
+.listing.shop nav#pagination .pagination {
+    border: 0 none;
+}
+
+nav#pagination .pagination li {
+    border: 0 none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 2px;
+}
+
+nav#pagination .pagination li.prev,
+nav#pagination .pagination li.next {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+nav#pagination .pagination li.next {
+    right: 0;
+    left: auto;
+}
+
+nav#pagination .pagination li a {
+    border-width: $base-border-width;
+    border-style: solid;
+    border-color: rgba($c6, 1);
+    padding: 13px 20px;
+    color: rgba($c1, 1);
+}
+
+html.no-touch nav#pagination .pagination li:not(.active) a:hover {
+    color: rgba($c5, 1);
+    border-color: rgba($c1, 1);
+    background-color: rgba($c1, 1);
+}
+
+nav#pagination .pagination li.prev,
+nav#pagination .pagination li.next {
+    margin: 0;
+}
+
+nav#pagination .pagination li.active a {
+    font-weight: bold;
+    color: rgba($c5, 1);
+    border-color: rgba($c3, 1);
+    background-color: rgba($c3, 1);
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.6 SITEMAP NAVIGATION             
+-------------------------------------------------- 
+*/
+
+nav.sitemap {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+
+nav.sitemap ul {
+    margin: 0;
+    padding: 0 0 8px;
+}
+
+nav.sitemap ul li {
+    position: relative;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.c1-bg nav.sitemap ul li a {
+    color: rgba($true-white, 1);
+}
+
+html.no-touch .c1-bg nav.sitemap ul li a:hover {
+    background-color: lighten($c1, 10%);
+}
+
+html.no-touch .c2-bg nav.sitemap ul li a:hover {
+    background-color: lighten($c2, 5%);
+}
+
+html.no-touch .c3-bg nav.sitemap ul li a:hover {
+    background-color: lighten($c3, 10%);
+}
+
+nav.sitemap ul li::before,
+nav.sitemap ul li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    display: block;
+    background-color: rgba($base-borders, 1);
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.c1-bg nav.sitemap ul li::before,
+.c1-bg nav.sitemap ul li::after {
+    background-color: lighten($c1, 10%);
+}
+
+.c3-bg nav.sitemap ul li::before,
+.c3-bg nav.sitemap ul li::after {
+    background-color: lighten($c3, 20%);
+}
+
+nav.sitemap ul li::before {
+    top: 0;
+    bottom: 0;
+    width: $base-border-width;
+    height: 100%;
+}
+
+nav.sitemap ul li::after {
+    top: 16px;
+    width: 5px;
+    height: $base-border-width;
+}
+
+html.no-touch nav.sitemap ul li a:hover {
+    padding-left: 18px;
+}
+
+html.no-touch nav.sitemap ul li:hover::after {
+    width: 10px;
+    background-color: darken($base-borders, 5%);
+}
+
+html.no-touch .c1-bg nav.sitemap ul li:hover::after {
+    background-color: lighten($c1, 20%);
+}
+
+nav.sitemap ul ul {
+    margin-left: 16px;
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.7 SOCIAL NAVIGATION        
+-------------------------------------------------- 
+*/
+
+nav.social {
+    margin-bottom: $base-spacing;
+}
+
+nav.social ul {
+    line-height: 0;
+}
+
+nav.social ul li {
+    display: inline-block;
+    position: relative;
+    margin: 0 2px 5px 0;
+}
+
+nav.social ul li a {
+    position: relative;
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    transition: opacity 0.3s ease-in-out 0s;
+}
+
+nav.social ul li a img {
+    width: 40px;
+    height: 40px;
+}
+
+html.no-touch nav.social ul li a:hover {
+    opacity: 0.7;
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:1200px) {}
+
+
+/*  
+--------------------------------------------------
+5.8 QUICK LINKS           
+-------------------------------------------------- 
+*/
+
+.quick-links {}
+
+.quick-links ul {}
+
+.spc.quick-links ul li {
+    margin: 5px 0;
+}
+
+footer .quick-links ul li {
+    display: inline-block;
+    margin: 0 10px 15px;
+}
+
+.quick-links ul li a {
+    position: relative;
+    display: block;
+    font-weight: 600;
+}
+
+.spc.quick-links ul li a {
+    padding-left: 10px;
+}
+
+html.no-touch .spc.quick-links ul li a:hover {
+    padding-left: 13px;
+}
+
+.spc.quick-links ul li a::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 5px;
+    height: $base-border-width;
+    background-color: rgba($c6, 1);
+    transition: all 0.3s ease-in-out 0s;
+}
+
+html.no-touch .spc.quick-links ul li a:hover::before {
+    width: 8px;
+    background-color: darken($c6, 10%);
+}
+
+@media (min-width:992px) {}
+
+
+/*  
+--------------------------------------------------
+5.9 FOOTER NAVIGATION             
+-------------------------------------------------- 
+*/
+
+nav.footer {
+    padding: 80px 0 0;
+}
+
+footer nav.footer ul {
+    font-size: 13px!important;
+}
+
+nav.footer ul li {
+    display: block;
+    padding: 10px 0;
+}
+
+nav.footer ul li a,
+nav.footer ul li div {
+    display: inline;
+    padding: 0;
+}
+
+nav.footer ul li.site-credit a {}
+
+footer nav.footer ul li.site-credit a {
+    font-weight: 600;
+}
+
+@media (min-width:768px) {
+    nav.footer ul li {
+        margin: 0 8px 0 0;
+        padding: 0;
+        display: inline-block;
+    }
+    nav.footer ul li.site-credit {
+        clear: both;
+        display: block;
+        padding: 40px 0 0;
+    }
+}
+
+@media (min-width:768px) and (max-width:991px) {}
+
+@media (min-width:992px) {}
+
+
+/*  
+--------------------------------------------------
+5.10 SLICK CAROUSEL NAVIGATION            
+-------------------------------------------------- 
+*/
+
+.slick-prev,
+.slick-next {
+    display: table;
+}
+
+.slick-prev i,
+.slick-next i {
+    position: relative;
+    margin: 0!important;
+    display: block;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.slick-prev,
+.slick-next {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    z-index: 200;
+    background: none;
+    border: 0 none;
+    cursor: pointer;
+    color: rgba($c5, 1);
+    transform: translateY(-50%);
+}
+
+.slick-prev {
+    left: 0;
+}
+
+.spc.related-content .slick-prev,
+.spc.gallery .slick-prev {
+    left: $base-half-spacing;
+}
+
+.slick-next {
+    right: 0;
+}
+
+.spc.related-content .slick-next,
+.spc.gallery .slick-next {
+    right: $base-half-spacing;
+}
+
+html.no-touch .slick-prev:hover,
+html.no-touch .slick-next:hover {
+    opacity: 0.7;
+}
+
+.slick-prev i,
+.slick-next i {
+    font-size: 20px;
+}
+
+ul.slick-dots {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding-top: $base-half-spacing;
+    text-align: center;
+}
+
+.apc.banner ul.slick-dots,
+.apc.text-with-slideshow ul.slick-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    padding: 0;
+    width: auto;
+    transform: translateX(-50%);
+}
+
+.spc.gallery ul.slick-dots {
+    left: 13px;
+    height: 50px;
+}
+
+ul.slick-dots li {
+    margin: 0 5px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+}
+
+ul.slick-dots li button {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: rgba($c3, 0.4);
+    transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+}
+
+html.no-touch ul.slick-dots li:not(.slick-active) button:hover,
+ul.slick-dots li.slick-active button {
+    background-color: rgba($c1, 1);
+}
+
+.apc.banner ul.slick-dots li:not(.slick-active) button,
+.apc.text-with-slideshow ul.slick-dots li:not(.slick-active) button,
+.c1-bg ul.slick-dots li:not(.slick-active) button,
+.c2-bg ul.slick-dots li:not(.slick-active) button,
+.c3-bg ul.slick-dots li:not(.slick-active) button {
+    background-color: rgba($c5, 0.4);
+}
+
+html.no-touch .apc.banner ul.slick-dots li:not(.slick-active) button:hover,
+.apc.banner ul.slick-dots li.slick-active button,
+html.no-touch .apc.text-with-slideshow ul.slick-dots li:not(.slick-active) button:hover,
+.apc.text-with-slideshow ul.slick-dots li.slick-active button,
+html.no-touch .c2-bg ul.slick-dots li:not(.slick-active) button:hover,
+.c2-bg ul.slick-dots li.slick-active button,
+html.no-touch .c3-bg ul.slick-dots li:not(.slick-active) button:hover,
+.c3-bg ul.slick-dots li.slick-active button {
+    background-color: rgba($c1, 1);
+}
+
+html.no-touch .c1-bg ul.slick-dots li:not(.slick-active) button:hover,
+.c1-bg ul.slick-dots li.slick-active button {
+    background-color: rgba($c5, 1);
+}
+
+@media (min-width:0) and (max-width:767px) {
+    .apc.banner .slick-prev,
+    .apc.banner .slick-next {
+        top: auto;
+        bottom: 0;
+        transform: translateY(0)
+    }
+}
+
+@media (min-width:768px) {}
+
+@media (min-width:992px) {
+    .apc.banner .slick-prev,
+    .apc.banner .slick-next {
+        width: 50px;
+        height: 50px;
+    }
+    .apc.banner .slick-prev i,
+    .apc.banner .slick-next i {
+        font-size: 25px;
+    }
+}
+
+@media (min-width:1200px) {}

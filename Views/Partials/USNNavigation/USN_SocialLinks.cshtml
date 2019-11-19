@@ -1,0 +1,59 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    Usnnavigation navigation = (Usnnavigation)Model.Navigation;
+
+    if (navigation.SocialLinks != null && navigation.SocialLinks.Any())
+    {
+        string iconClass = String.Empty;
+
+        switch (navigation.IconShape)
+        {
+            case USNOptions.IconShape_Circle:
+                iconClass = "img-circle";
+                break;
+            case USNOptions.IconShape_Rounded:
+                iconClass = "img-rounded";
+                break;
+            case USNOptions.IconShape_Square:
+                iconClass = String.Empty;
+                break;
+            default:
+                iconClass = String.Empty;
+                break;
+        }
+
+        <nav class="social">
+            @if (navigation.SocialHeading.HasValue())
+            {
+                <p class="heading">@navigation.SocialHeading</p>
+            }
+
+            <ul>
+                @foreach (Usn_SocialLink socialLink in navigation.SocialLinks)
+                {
+                    USNLink link = USNUrlHelper.GetLinkFromRelatedLinks(socialLink.Link);
+
+                    if (link != null)
+                    {
+                        <li>
+                            <a href="@link.LinkURL" @Html.Raw(link.LinkTitle) @Html.Raw(link.LinkTarget)>
+                                @if (socialLink.Icon != null)
+                                {
+                                    <img class="lazyload @iconClass" src="@socialLink.Icon.GetCropUrl(cropAlias: "Icon", width: 4, height: 4)" data-src="@socialLink.Icon.GetCropUrl(cropAlias: "Icon", width: 40, height: 40)" alt="@socialLink.LinkName">
+                                }
+                                <span class="hidden">@socialLink.LinkName</span>
+                            </a>
+                        </li>
+                    }
+                }
+
+            </ul>
+        </nav>
+    }
+}

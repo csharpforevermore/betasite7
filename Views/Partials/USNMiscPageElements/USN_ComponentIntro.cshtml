@@ -1,0 +1,87 @@
+﻿@inherits UmbracoViewPage<IUsn_Cmp_IntroOutro>
+
+@using Umbraco.Web.Models;
+@using USNStarterKit.USNHelpers;
+@using USNStarterKit.USNModels;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{ 
+    RelatedLinks introLinks = Model.IntroductionLinks;
+
+    if (Model.IntroductionHeading != null || Model.IntroductionText.HasValue() || introLinks != null || Model.IntroductionSecondaryHeading.HasValue())
+    {
+        string animateClass = ViewData["animateClass"] != null ? ViewData["animateClass"].ToString() : String.Empty;
+        string headingStyle = ViewData["headingStyle"] != null ? ViewData["headingStyle"].ToString() : String.Empty;
+        string secondaryHeadingStyle = ViewData["secondaryHeadingStyle"] != null ? ViewData["secondaryHeadingStyle"].ToString() : String.Empty;
+        string textStyle = ViewData["textStyle"] != null ? ViewData["textStyle"].ToString() : String.Empty;
+        string buttonStyle = ViewData["buttonStyle"] != null ? ViewData["buttonStyle"].ToString() : String.Empty;
+        bool addContainer = ViewData["addContainer"] != null ? Convert.ToBoolean(ViewData["addContainer"]) : false;
+
+        string textAlignment;
+
+        switch (Model.IntroductionTextAlignment)
+        {
+            case USNOptions.TextAlignment_Left:
+                textAlignment = "text-left";
+                break;
+            case USNOptions.TextAlignment_Center:
+                textAlignment = "text-center";
+                break;
+            case USNOptions.TextAlignment_Right:
+                textAlignment = "text-right";
+                break;
+            default:
+                textAlignment = "text-left";
+                break;
+        }
+
+        if(addContainer)
+        {
+            @:<div class="container">
+        }
+
+        <!-- ROW - OVERVIEW -->
+        <div class="row overview @textAlignment @animateClass" data-os-animation="fadeIn" data-os-animation-delay="0s">
+            <div class="info col-md-8 col-xs-12">
+
+                @if (Model.IntroductionSecondaryHeading.HasValue())
+                {
+                    <p class="secondary-heading @secondaryHeadingStyle">@Model.IntroductionSecondaryHeading</p>
+                }
+                
+                @if (Model.IntroductionHeading != null)
+                {
+                    @Html.Raw(String.Format("<{0} class=\"heading main {1}\">{2}</{0}>", Model.IntroductionHeading.HeadingTag, headingStyle, Model.IntroductionHeading.Text))
+                }
+
+                @if (Model.IntroductionText.HasValue())
+                {
+                    <div class="text @textStyle">
+                        @Html.Raw(Model.IntroductionText)
+                    </div>
+                }
+                @if (introLinks != null)
+                {
+                    <p class="link">
+                        @foreach (RelatedLink link in introLinks)
+                        {
+                            USNLink introLink = USNUrlHelper.GetLinkFromRelatedLink(link);
+
+                            if (introLink != null)
+                            {
+                                <a role="button" class="btn @buttonStyle" href="@introLink.LinkURL" @Html.Raw(introLink.LinkTarget) @Html.Raw(introLink.LinkTitle)>@introLink.LinkCaption@Html.Raw(introLink.LinkIcon)</a>
+                            }
+                        }
+                    </p>
+                }
+            </div>
+        </div>
+        <!--// ROW - OVERVIEW -->
+
+        if (addContainer)
+        {
+            @:</div>
+        }
+    }
+}

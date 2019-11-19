@@ -1,0 +1,681 @@
+/* 	
+--------------------------------------------------
+uSkinned.net
+BASE
+-------------------------------------------------- */
+
+
+/* 	
+--------------------------------------------------
+TABLE OF CONTENTS 
+-------------------------------------------------- 
+
+1.0 LINKS
+2.0 LISTS
+3.0 MISC
+4.0 TYPOGRAPHY
+	
+*/
+
+
+/*
+	
+BOOTSTRAP BREAKPOINTS
+	
+.col-xs-	< 768px		(container width 100%)
+.col-sm-	> 768px		(container width 750px)
+.col-md-	> 992px		(container width 970px)
+.col-lg-	> 1200px	(container width 1170px)
+	
+*/
+
+
+/*	
+--------------------------------------------------
+1.0 LINKS
+-------------------------------------------------- 
+*/
+
+a,
+.btn,
+button,
+.slick-prev,
+.slick-next,
+.navigation nav.main ul li,
+li.has-child ul li span a::before,
+.promo-pods .item .info {
+    transition: all 0.2s ease-in-out 0s;
+}
+
+a,
+.btn {
+    outline: 0 none!important;
+}
+
+html.no-touch a:hover,
+html.touch a:hover,
+a:focus,
+a:active,
+a:visited {
+    text-decoration: none!important;
+}
+
+.btn {
+    border-width: $base-border-width;
+    border-radius: 0;
+    position: relative;
+    padding: 10px 15px 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn+.btn {
+    margin-left: 5px;
+}
+
+.text-center .btn+.btn {
+    margin-left: 5px;
+}
+
+.text-right .btn {
+    margin-left: 5px;
+}
+
+.btn-xs {
+    font-size: 12px;
+    padding: 6px 10px 8px;
+}
+
+.btn-sm {
+    font-size: 12px;
+    padding: 8px 15px 10px;
+}
+
+.btn-lg {
+    border-width: 3px;
+    padding: 10px 20px 12px;
+    font-size: 20px;
+}
+
+a.close-button {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    float: right;
+    margin: $base-half-spacing $base-half-spacing 0 0;
+    opacity: 1;
+    transition: all 0.2s ease-in-out 0s;
+}
+
+a.close-button em {
+    display: none;
+}
+
+a.close-button span {
+    display: block;
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+a.close-button span.top {
+    transform: rotate(45deg);
+}
+
+a.close-button span.bottom {
+    transform: rotate(-45deg);
+}
+
+.link {
+    margin: $base-spacing 0 0;
+}
+
+.link.text-uppercase a {
+    display: inline-block;
+    padding: 0 0 3px;
+    border-width: 0 0 2px;
+    border-style: solid;
+}
+
+#top-link-block {
+    z-index: 200;
+    position: relative;
+}
+
+#top-link-block a {
+    display: block;
+    margin: 0 auto;
+    padding: $base-half-spacing;
+    text-align: center;
+}
+
+@media (min-width:0) and (max-width:991px) {
+    #top-link-block a {
+        text-align: center;
+        border-radius: 0;
+        border: 0 none;
+        box-shadow: 0 none;
+    }
+}
+
+@media (min-width:992px) {
+    .btn-lg,
+    .apc.banner .btn,
+    .apc.cta-strip .btn {
+        border-width: 3px;
+        padding: 10px 20px 12px;
+        font-size: 20px;
+    }
+    html.no-touch .btn:hover {}
+    html.no-touch a.close-button:hover {
+        opacity: 0.6;
+    }
+    #top-link-block {
+        position: fixed;
+        bottom: -80px;
+        right: $base-half-spacing;
+        padding: 0;
+        opacity: 0;
+        transition: bottom 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
+    }
+    #top-link-block.affix.show {
+        bottom: $base-half-spacing;
+        opacity: 1;
+    }
+    #top-link-block.affix:not(.show) a {
+        box-shadow: 0 0 20px rgba($true-black, 0);
+        transition: box-shadow 0.2s ease-in-out 0s;
+    }
+    #top-link-block a {
+        padding-top: 13px;
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba($true-black, 0.1);
+    }
+}
+
+
+/*	
+--------------------------------------------------
+2.0 LISTS
+-------------------------------------------------- 
+*/
+
+ul,
+ol {
+    padding: 0;
+    margin: 0 0 $base-half-spacing;
+    line-height: 1.4;
+}
+
+ul {
+    margin-left: 20px;
+    list-style: disc outside;
+}
+
+ol {
+    margin-left: 20px;
+    list-style: decimal;
+}
+
+ul ul,
+ol ol {
+    padding: 4px 0 0 8px;
+}
+
+ul ul {
+    list-style: circle outside;
+}
+
+ol ol {
+    list-style: lower-roman;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+dl {}
+
+dl dt {
+    font-weight: bold;
+    padding-bottom: 2px;
+}
+
+dl dd {
+    padding-bottom: 4px;
+}
+
+ul.nav,
+ol.nav,
+nav ul,
+nav ol,
+ul.list,
+ol.list,
+nav ul li,
+nav ol li,
+ul.list li,
+ol.list li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    line-height: 1;
+}
+
+
+/* 	
+-------------------------------------------------- 
+3.0 MISC
+-------------------------------------------------- 
+*/
+
+.image {
+    position: relative;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    transform: scale(1);
+}
+
+.image img,
+.apc.banner .image,
+.apc.pod-windows .image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.15);
+    transition: transform 0.2s ease-in-out 0s, background-size 0.2s ease-in-out 0s;
+}
+
+.image img.lazyloaded,
+.apc.banner .image.lazyloaded,
+.apc.pod-windows .image.lazyloaded {
+    transform: scale(1);
+}
+
+
+/* IMAGE TRANSITIONS */
+
+.image,
+.image.video {
+    overflow: hidden;
+    padding: 0;
+}
+
+html.no-touch .image a:hover img,
+html.no-touch a:hover .image img,
+html.no-touch .apc.pod-windows .item a:hover .image {
+    transform: scale(1.05);
+}
+
+.ekko-lightbox img {
+    width: auto;
+    height: auto!important;
+    margin: 0 auto;
+}
+
+.image .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 101;
+    padding: 5px 10px 7px;
+    font-size: 85%;
+    font-style: italic;
+    opacity: 0.8;
+    color: rgba($true-white, 1);
+    background-color: rgba($true-black, 0.6);
+}
+
+.image.img-circle .caption {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/*
+.items-4 .image .caption {
+    position: relative;
+    padding: 5px 0;
+    color: rgba($base-text, 1);
+    background: none;
+}
+*/
+
+i.fa,
+i.before {
+    margin-right: 5px;
+}
+
+i.fa.after,
+i.after {
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+@media (max-width:767px) {}
+
+@media (min-width:992px) {}
+
+@media (min-width:1200px) {}
+
+
+/*	
+--------------------------------------------------
+4.0 TYPOGRAPHY
+-------------------------------------------------- 
+*/
+
+
+/*	
+--------------------------------------------------
+font-family: 	'Muli', sans-serif;
+font-weight:	300, 400, 600
+font-family: 	'Oswald', sans-serif;
+font-weight:	300, 400, 700
+-------------------------------------------------- 
+*/
+
+body {
+    font-family: 'Muli', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    -webkit-font-smoothing: antialiased;
+}
+
+input,
+select,
+textarea,
+button {
+    font-family: 'Muli', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p.heading,
+.btn,
+button,
+.tabs,
+thead,
+nav#pagination,
+.apc.pod-windows .item .link,
+blockquote {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.btn,
+button {
+    font-weight: 700;
+    letter-spacing: 0em;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h1.heading.main {
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5,
+p.heading {
+    font-size: 16px;
+}
+
+h6,
+table th,
+footer .heading {
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3 {
+    margin: $base-half-spacing 0;
+}
+
+#left-col h1:first-child,
+#right-col h1:first-child,
+#wide-col h1:first-child,
+#mid-col h1:first-child {
+    margin-top: 0;
+}
+
+h4,
+h5,
+h6,
+p.heading {
+    margin: 10px 0;
+}
+
+footer .heading {
+    margin-bottom: $base-half-spacing;
+}
+
+p {
+    margin: 8px 0 $base-half-spacing;
+}
+
+p,
+.text {
+    line-height: 1.4;
+}
+
+.secondary-heading {
+    margin: 0 0 5px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    font-size: 80%;
+}
+
+p.caption {
+    margin: 10px 0 0;
+    font-size: 90%;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.intro {
+    font-size: 130%;
+    letter-spacing: -0.025em
+}
+
+.banner .intro {
+    font-size: 140%;
+    font-weight: 300;
+}
+
+b,
+strong {
+    font-weight: 600;
+}
+
+address p {}
+
+table {
+    margin: 5px 0 $base-spacing;
+}
+
+blockquote {
+    position: relative;
+    padding: $base-spacing 0 $base-half-spacing;
+    margin: $base-half-spacing 0;
+    border: 0 none;
+    font-size: 150%;
+    font-style: italic;
+    font-weight: 600;
+}
+
+blockquote::before {
+    content: "\f347";
+    display: inline-block;
+    font-family: "Ionicons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+}
+
+blockquote::before {
+    top: -5px;
+    left: 0;
+    font-size: 30px;
+}
+
+.text-center blockquote::before {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.text-right blockquote::before {
+    right: 0;
+    left: auto;
+}
+
+blockquote p {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+blockquote cite {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.alert .info {}
+
+.alert .info :first-child {
+    margin-top: 0;
+}
+
+.alert .info :last-child {
+    margin-bottom: 0;
+}
+
+a.skip-to-content {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    z-index: -1;
+    width: auto;
+    height: auto;
+    font-size: 12px;
+    transform: translateX(-50%);
+}
+
+a.skip-to-content:focus {
+    z-index: 1001;
+    clip: auto;
+    padding: 0;
+    margin: 0;
+}
+
+@media (min-width:768px) {
+    h1 {
+        font-size: 35px;
+    }
+}
+
+@media (min-width:992px) {
+    h1 {
+        font-size: 40px;
+    }
+    h2 {
+        font-size: 32px;
+    }
+    h3 {
+        font-size: 28px;
+    }
+    h4 {
+        font-size: 26px;
+    }
+    h5,
+    p.heading {
+        font-size: 22px;
+    }
+    table th,
+    h6 {
+        font-size: 20px;
+    }
+    .intro {
+        font-size: 135%;
+    }
+    .banner .intro {
+        font-size: 150%;
+    }
+}
+
+@media (min-width:1200px) {
+    h1 {
+        font-size: 45px;
+    }
+    h2 {
+        font-size: 35px;
+    }
+    h3 {
+        font-size: 30px;
+    }
+    h4 {
+        font-size: 28px;
+    }
+    h5,
+    p.heading {
+        font-size: 26px;
+    }
+    table th,
+    h6 {
+        font-size: 22px;
+    }
+    .intro {
+        font-size: 140%;
+    }
+    .banner .intro {
+        font-size: 160%;
+    }
+}
+
+
+/*	
+--------------------------------------------------
+END
+-------------------------------------------------- 
+*/

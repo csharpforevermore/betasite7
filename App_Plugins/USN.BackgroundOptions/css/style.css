@@ -1,0 +1,271 @@
+﻿.usn-cms.backgrounds *,
+.usn-cms.backgrounds ::after,
+.usn-cms.backgrounds ::before {
+    box-sizing: border-box;
+}
+
+.usn-cms.backgrounds {
+    font-family: 'Lato', sans-serif;
+}
+
+.usn-cms.backgrounds p.heading {
+    margin-bottom: 30px;
+    display: block;
+    margin: 20px 0 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    clear: both;
+}
+
+.usn-cms.backgrounds .item {
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    height: 120px;
+    padding: 15px;
+    margin: 0 5px 5px 0;
+    cursor: pointer;
+    background: #f3f3f5;
+    border-radius: 5px;
+}
+
+.usn-cms.backgrounds .item input {
+    display: none;
+}
+
+.usn-cms.backgrounds .item span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(0, 174, 162, 0);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0);
+    transition: border 0.3s ease-in-out 0s, box-shadow 0.3s ease-in-out 0s;
+    border-radius: 5px;
+}
+
+.usn-cms.backgrounds .item span:hover {
+    border-color: rgba(65, 54, 89, 0.25);
+    box-shadow: 0 0 10px rgba(65, 54, 89, 0.1);
+}
+
+.usn-cms.backgrounds .item input[type="radio"]:checked+span,
+.usn-cms.backgrounds .item input[type="checkbox"]:checked+span {
+    border-color: rgba(0, 174, 162, 1);
+    box-shadow: 0 0 10px rgba(0, 174, 162, 0.1);
+    opacity: 1;
+}
+
+.usn-cms.backgrounds .item .inner {
+    position: relative;
+    width: 50px;
+    height: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.usn-cms.backgrounds .item .image {
+    width: 50px;
+    height: 40px;
+    border: 2px solid rgba(65, 54, 89, 1);
+    border-radius: 3px;
+}
+
+.usn-cms.backgrounds .item .heading {
+    width: 35px;
+    height: 2px;
+    margin-top: 5px;
+    background: rgba(65, 54, 89, 1);
+}
+
+.usn-cms.backgrounds .item .text {
+    position: relative;
+    overflow: visible;
+    width: 30px;
+    height: 2px;
+    margin-top: 3px;
+    background: rgba(65, 54, 89, 0.5);
+}
+
+.usn-cms.backgrounds .item .name {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    left: 0;
+    z-index: 12;
+    font-size: 10px;
+    line-height: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-align: center;
+    color: rgba(65, 54, 89, 1);
+}
+
+
+/* BACKGROUNDS */
+
+.usn-cms.backgrounds {
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+}
+
+.usn-cms.backgrounds::before {
+    margin-bottom: 5px;
+}
+
+.usn-cms.backgrounds .background-style,
+.usn-cms.backgrounds .background-position {
+    width: 100%;
+    display: block;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+@media (min-width:420px) {
+    .usn-cms.backgrounds .background-style,
+    .usn-cms.backgrounds .background-position {
+        width: 360px;
+        float: left;
+        clear: none;
+        padding: 0;
+        margin: 0;
+    }
+    .usn-cms.backgrounds .background-position {
+        width: 130px;
+    }
+    .usn-cms.backgrounds .background-style {}
+}
+
+
+/* BACKGROUND STYLE */
+
+.usn-cms.backgrounds .background-style .item {
+    width: 100%;
+    height: 40px;
+    float: left;
+    display: block;
+}
+
+@media (min-width:420px) {
+    .usn-cms.backgrounds .background-style .item {
+        width: 175px;
+    }
+}
+
+.usn-cms.backgrounds .background-style .item:nth-child(2n+1) {
+    clear: both;
+}
+
+.usn-cms.backgrounds .background-style .item .name {
+    position: relative;
+    top: 50%;
+    left: auto;
+    text-align: left;
+    transform: translateY(-50%);
+}
+
+.usn-cms.backgrounds .background-style .item svg {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%) scale(0.75);
+    transition: opacity 0.3s ease-in-out 0s;
+}
+
+.usn-cms.backgrounds .background-style input[type="radio"]:checked+span+svg,
+.usn-cms.backgrounds .background-style .item input[type="checkbox"]:checked+span+svg {
+    opacity: 1;
+}
+
+
+/* BACKGROUND POSITIONS */
+
+.usn-cms.backgrounds .background-position .item {
+    width: 40px;
+    height: 40px;
+    float: left;
+}
+
+.usn-cms.backgrounds .background-position .item:nth-child(3n) {
+    margin-right: 0;
+}
+
+.usn-cms.backgrounds .background-position .item:nth-child(3n+1) {
+    clear: both;
+}
+
+.usn-cms.backgrounds .background-position .item svg {
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+}
+
+.usn-cms.backgrounds .background-position .item .middle,
+.usn-cms.backgrounds .background-position .item .middle::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: 24px;
+    height: 0.5px;
+    background-color: #000000;
+    transform: translate(-50%, -50%);
+}
+
+.usn-cms.backgrounds .background-position .item .middle::before {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.usn-cms.backgrounds .background-position .item .middle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    width: 16px;
+    height: 12px;
+    border: 1px solid #000000;
+    background: #f3f3f5;
+    transform: translate(-50%, -50%);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-1 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(-45deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-3 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(45deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-4 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(-90deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-6 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(90deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-7 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(-130deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-8 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(180deg);
+}
+
+.usn-cms.backgrounds .background-position .item.layout-9 svg {
+    transform: translate(-50%, -50%) scale(0.4) rotate(130deg);
+}

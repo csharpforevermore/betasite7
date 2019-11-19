@@ -1,0 +1,53 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_FormPod>
+
+@using USNStarterKit.USNHelpers;
+
+@{
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+
+    <div class="item form-pod">
+        @switch (Model.FormType.ToString())
+        {
+            case "contactForm":
+                <div class="contact form ajax-wrap">
+                    <div class="inner c5-bg has-borders c6-borders">
+                        @Html.Action("Index", "USNContactFormSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "compact" })
+                    </div>
+                </div>
+                break;
+            case "newsletterForm":
+                <div class="newsletter form ajax-wrap">
+                    <div class="inner c4-bg has-borders c6-borders">
+                        @Html.Action("Index", "USNNewsletterSignupSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "compact" })
+                    </div>
+                </div>
+                break;
+            case "umbracoForm":
+                <div class="umbraco-forms form ajax-wrap">
+                    <div class="inner c5-bg has-borders c6-borders">
+                        @if (Model.UmbracoForm.HasValue())
+                        {
+                            var formGuid = Model.UmbracoForm;
+
+                            if (Model.SubmitViaAjax)
+                            {
+                                @:<div class="umbraco-ajax-form">
+                            }
+
+                            @Umbraco.RenderMacro("renderUmbracoForm", new { FormGuid = formGuid, FormTheme = "uSkinned", CurrentNodeID = Model.Id, ExcludeScripts = "0" })
+
+                            if (Model.SubmitViaAjax)
+                            {
+                                @:</div>
+                            }
+
+
+                        }
+
+
+                    </div>
+                </div>
+                break;
+        }
+    </div>
+}

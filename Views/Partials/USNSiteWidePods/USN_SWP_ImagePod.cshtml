@@ -1,0 +1,115 @@
+﻿@inherits UmbracoViewPage<Usn_Swp_ImagePod>
+
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    if (Model.LightWindowImage != null)
+    {
+        string lightWindow = String.Empty;
+        string title = String.Empty;
+        string footer = String.Empty;
+
+        if (!Model.DisableLightWindow)
+        {
+            lightWindow = " data-toggle=\"lightbox\" data-type=\"image\" ";
+
+            if (Model.LightWindowTitle.HasValue())
+            {
+                title = "data-title=\"" + Model.LightWindowTitle + "\"";
+            }
+
+            if (Model.LightWindowFooter.HasValue())
+            {
+                footer = "data-footer=\"" + Model.LightWindowFooter + "\"";
+            }
+        }
+
+        string linkUrl = String.Empty;
+        string linkTarget = String.Empty;
+
+        if (Model.DisableLightWindow && Model.ImageLink.HasValue())
+        {
+            USNLink imageLink = USNUrlHelper.GetLinkFromRelatedLinks(Model.ImageLink);
+
+            if(imageLink != null)
+            {
+                linkUrl = imageLink.LinkURL;
+                linkTarget = imageLink.LinkTarget;
+            }
+        }
+        else if (!Model.DisableLightWindow)
+        {
+            linkUrl = Model.LightWindowImage.Url;
+        }
+
+        int imageWidthSmall = 8;
+        int imageHeightSmall = 6;
+        string cropAlias = "Landscape";
+        string circleClass = String.Empty;
+
+        switch (Model.ImageStyle)
+        {
+            case USNOptions.ImageStyle_Square:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                break;
+            case USNOptions.ImageStyle_Landscape:
+                imageWidthSmall = 8;
+                imageHeightSmall = 6;
+                cropAlias = "Landscape";
+                break;
+            case USNOptions.ImageStyle_Portrait:
+                imageWidthSmall = 6;
+                imageHeightSmall = 8;
+                cropAlias = "Portrait";
+                break;
+            case USNOptions.ImageStyle_Circle:
+                imageWidthSmall = 8;
+                imageHeightSmall = 8;
+                cropAlias = "Square/Circle";
+                circleClass = "img-circle";
+                break;
+            case USNOptions.ImageStyle_Wide:
+                imageWidthSmall = 120;
+                imageHeightSmall = 63;
+                cropAlias = "Wide";
+                break;
+        }
+
+        <div class="item @circleClass image-pod">
+            <div class="image @circleClass">
+                @if (linkUrl != String.Empty)
+                {
+                    @:<a href="@linkUrl" @Html.Raw(title) @Html.Raw(footer) target="@linkTarget" @Html.Raw(lightWindow)>
+                }
+                <img class="@circleClass lazyload" src="@Model.LightWindowImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall)" data-src="@Model.LightWindowImage.GetCropUrl(cropAlias: cropAlias)" alt="@Model.ThumbnailImageAltText">
+                @if (lightWindow != String.Empty)
+                {
+                    <div class="overlayicon ion-arrow-expand c5-text"></div>
+                }
+                else if (linkUrl != String.Empty && linkTarget != String.Empty)
+                {
+                    <div class="overlayicon ion-android-open c5-text"></div>
+                }
+                else if (linkUrl != String.Empty && linkTarget == String.Empty)
+                {
+                    <div class="overlayicon ion-link c5-text"></div>
+                }
+                @if (linkUrl != String.Empty)
+                {
+                    @:</a>
+                }
+                @if (Model.ImageCaption.HasValue())
+                {
+                    <div class="caption">@Model.ImageCaption</div>
+                }
+            </div>
+        </div>
+
+    }
+
+}

@@ -1,0 +1,307 @@
+﻿@inherits UmbracoViewPage<Usn_Ac_TextSlideshow_AN>
+
+@using USNStarterKit.USNModels;
+@using USN.USNTemplate;
+@using USNStarterKit.USNHelpers;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    string firstDivClass = "col-md-5 col-xs-12 pull-right";
+    string secondDivClass = "col-md-6 col-xs-12 pull-left";
+
+    string animateClass = String.Empty;
+    string imageFadeInDirection = "fadeInRight";
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    bool addSpacing = false;
+    string wideClass = "wide";
+
+    if (Model.AddSpacingAroundImage)
+    {
+        addSpacing = true;
+        wideClass = String.Empty;
+    }
+
+    USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+
+    string backgroundImageStyle = USNViewTemplateHelper.GetBackgroundImageStyle(Model.BackgroundImage, Model.BackgroundImageOptions);
+
+    if (Model.TextPosition == USNOptions.TextPosition_After)
+    {
+        firstDivClass = "col-md-5 col-xs-12 pull-left";
+        secondDivClass = "col-md-6 col-xs-12 pull-right";
+        imageFadeInDirection = "fadeInLeft";
+    }
+
+    string textAlignment;
+
+    switch (Model.TextAlignment)
+    {
+        case USNOptions.TextAlignment_Left:
+            textAlignment = "text-left";
+            break;
+        case USNOptions.TextAlignment_Center:
+            textAlignment = "text-center";
+            break;
+        case USNOptions.TextAlignment_Right:
+            textAlignment = "text-right";
+            break;
+        default:
+            textAlignment = "text-left";
+            break;
+    }
+
+    int imageWidthSmall = 8;
+    int imageHeightSmall = 6;
+    string cropAlias = "Landscape";
+    string circleClass = String.Empty;
+
+    switch (Model.ImageStyle)
+    {
+        case USNOptions.ImageStyle_Square:
+            imageWidthSmall = 8;
+            imageHeightSmall = 8;
+            cropAlias = "Square/Circle";
+            break;
+        case USNOptions.ImageStyle_Landscape:
+            imageWidthSmall = 8;
+            imageHeightSmall = 6;
+            cropAlias = "Landscape";
+            break;
+        case USNOptions.ImageStyle_Portrait:
+            imageWidthSmall = 6;
+            imageHeightSmall = 8;
+            cropAlias = "Portrait";
+            break;
+        case USNOptions.ImageStyle_Circle:
+            imageWidthSmall = 8;
+            imageHeightSmall = 8;
+            cropAlias = "Square/Circle";
+            circleClass = "img-circle";
+            break;
+    }
+
+
+    @:<section class="content apc text-with-slideshow @wideClass @settings.BackGroundStyle @Model.CustomComponentClasses" @Html.Raw(backgroundImageStyle) id="pos_@Model.Id">
+
+        if (addSpacing)
+        {
+            @:<div class="container"><div class="row">
+        }
+
+        <div class="slides-side @firstDivClass @animateClass" data-os-animation="@imageFadeInDirection" data-os-animation-delay="0">
+            @if (Model.ImageVideo != null)
+            {
+                decimal autoRotateSpeed = 0;
+                string slickAttributes = "data-slick='{{{0}{1}{2}}}'";
+                string autoRotateAttribute = String.Empty;
+                string dotsAttribute = Model.ShowDots ? "\"dots\": true " : "\"dots\": false ";
+                string arrowsAttribute = Model.ShowArrows ? "\"arrows\": true " : "\"arrows\": false ";
+
+                if (Model.AutoRotateSpeed.HasValue())
+                {
+                    autoRotateSpeed = Model.AutoRotateSpeed;
+                    if (autoRotateSpeed > 0)
+                    {
+                        autoRotateSpeed = autoRotateSpeed * 1000;
+                        autoRotateAttribute = "\"autoplay\": true, \"autoplaySpeed\": " + Convert.ToInt32(autoRotateSpeed);
+                    }
+                }
+
+                //Add commas
+                dotsAttribute = autoRotateAttribute != String.Empty ? dotsAttribute = "," + dotsAttribute : dotsAttribute;
+                arrowsAttribute = autoRotateAttribute != String.Empty || dotsAttribute != String.Empty ? "," + arrowsAttribute : arrowsAttribute;
+
+                slickAttributes = String.Format(slickAttributes, autoRotateAttribute, dotsAttribute, arrowsAttribute);
+
+                <div class="slides" @Html.Raw(slickAttributes)>
+                    @foreach (IPublishedContent galleryItem in Model.ImageVideo)
+                    {
+                        string lightWindow = String.Empty;
+                        string title = String.Empty;
+                        string footer = String.Empty;
+
+                        if (galleryItem.IsDocumentType(Usn_Sc_GalleryImage.ModelTypeAlias))
+                        {
+                            Usn_Sc_GalleryImage galleryImage = (Usn_Sc_GalleryImage)galleryItem;
+
+                            if (!galleryImage.DisableLightWindow)
+                            {
+                                lightWindow = " data-toggle=\"lightbox\" data-type=\"image\" data-gallery=\"galleryname-" + Model.Id + "\"";
+
+                                if (galleryImage.LightWindowTitle.HasValue())
+                                {
+                                    title = "data-title=\"" + galleryImage.LightWindowTitle + "\"";
+                                }
+
+                                if (galleryImage.LightWindowFooter.HasValue())
+                                {
+                                    footer = "data-footer=\"" + galleryImage.LightWindowFooter + "\"";
+                                }
+                            }
+
+                            if (galleryImage.LightWindowImage != null)
+                            {
+
+                                string linkUrl = String.Empty;
+                                string linkTarget = String.Empty;
+
+                                if (galleryImage.DisableLightWindow && galleryImage.ImageLink.HasValue())
+                                {
+
+                                    USNLink imageLink = USNUrlHelper.GetLinkFromRelatedLinks(galleryImage.ImageLink);
+
+                                    if (imageLink != null)
+                                    {
+                                        linkUrl = imageLink.LinkURL;
+                                        linkTarget = imageLink.LinkTarget;
+                                    }
+                                }
+                                else if (galleryImage.DisableLightWindow && !galleryImage.ImageLink.HasValue())
+                                {
+                                    linkUrl = String.Empty;
+                                }
+                                else
+                                {
+                                    linkUrl = galleryImage.LightWindowImage.Url;
+                                }
+
+                                string imageSrc = galleryImage.LightWindowImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall);
+                                string imageDataSrc = galleryImage.LightWindowImage.GetCropUrl(cropAlias: cropAlias);
+
+                                <div class="item image @circleClass">
+                                    @if (linkUrl != String.Empty)
+                                    {
+                                        @:<a href="@linkUrl" @Html.Raw(title) @Html.Raw(footer) target="@linkTarget" @Html.Raw(lightWindow)>
+                                    }
+
+                                    <img class="@circleClass lazyload" src="@imageSrc" data-src="@imageDataSrc" alt="@galleryImage.ThumbnailImageAltText">
+
+                                    @if (lightWindow != String.Empty)
+                                    {
+                                        <div class="@circleClass overlayicon ion-arrow-expand c5-text"></div>
+                                    }
+                                    else if (linkUrl != String.Empty && linkTarget != String.Empty)
+                                    {
+                                        <div class="@circleClass overlayicon ion-android-open c5-text"></div>
+                                    }
+                                    else if (linkUrl != String.Empty && linkTarget == String.Empty)
+                                    {
+                                        <div class="@circleClass overlayicon ion-link c5-text"></div>
+                                    }
+
+                                    @if (linkUrl != String.Empty)
+                                    {
+                                        @:</a>
+                                    }
+
+                                    @if (galleryImage.ImageCaption.HasValue())
+                                    {
+                                        <div class="caption">@galleryImage.ImageCaption</div>
+                                    }
+                                </div>
+
+                            }
+                        }
+
+                        else
+                        {
+                            Usn_Sc_GalleryVideo galleryVideo = (Usn_Sc_GalleryVideo)galleryItem;
+
+                            if (galleryVideo.GalleryVideo.HasValue())
+                            {
+                                string videoUrlOriginal = galleryVideo.GalleryVideo;
+
+                                USNVideo video = USNVideoHelper.GetVideoInfo(videoUrlOriginal);
+
+                                string videoImageSrc = galleryVideo.GalleryThumbnailImage != null ? galleryVideo.GalleryThumbnailImage.GetCropUrl(cropAlias: cropAlias, width: imageWidthSmall, height: imageHeightSmall) : video.VideoImage;
+                                string videoImageDataSrc = galleryVideo.GalleryThumbnailImage != null ? galleryVideo.GalleryThumbnailImage.GetCropUrl(cropAlias: cropAlias) : video.VideoImage;
+
+                                <div class="item image video">
+                                    @if (galleryVideo.DisableLightWindow && video.VideoIFrame != String.Empty)
+                                    {
+                                        <div class="embed-responsive embed-responsive-4by3 @settings.BackGroundStyle">
+                                            @Html.Raw(video.VideoIFrame)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (galleryVideo.LightWindowTitle.HasValue())
+                                        {
+                                            title = "data-title=\"" + galleryVideo.LightWindowTitle + "\"";
+                                        }
+
+                                        if (galleryVideo.LightWindowFooter.HasValue())
+                                        {
+                                            footer = "data-footer=\"" + galleryVideo.LightWindowFooter + "\"";
+                                        }
+
+                                        <a href="@video.VideoURLModified" @Html.Raw(title) @Html.Raw(footer) data-toggle="lightbox" @Html.Raw(video.VideoDataRemote) data-gallery="galleryname-@Model.Id">
+                                            <img class="lazyload" src="@videoImageSrc" data-src="@videoImageDataSrc" alt="@galleryVideo.ThumbnailImageAltText">
+                                            <div class="overlayicon ion-ios-play c5-text"></div>
+                                        </a>
+
+                                    }
+                                    @if (galleryVideo.VideoCaption.HasValue())
+                                    {
+                                        <div class="caption">@galleryVideo.VideoCaption</div>
+                                    }
+                                </div>
+                            }
+
+                        }
+
+                    }
+                </div>
+            }
+        </div>
+
+        if (!addSpacing)
+        {
+            @:<div class="container"><div class="row">
+        }
+
+        <div class="text-side @secondDivClass @animateClass" data-os-animation="fadeIn" data-os-animation-delay="0">
+            <!-- INFO -->
+            <div class="info @textAlignment">
+
+                @if (Model.SecondaryHeading.HasValue())
+                {
+                    <p class="secondary-heading @settings.SecondaryHeadingStyle">@Model.SecondaryHeading</p>
+                }
+
+                @if (Model.Heading != null)
+                {
+                    @Html.Raw(String.Format("<{0} class=\"heading main {1}\">{2}</{0}>", Model.Heading.HeadingTag, settings.HeadingStyle, Model.Heading.Text))
+                }
+
+                @if (Model.Text.HasValue())
+                {
+                    <div class="text @settings.TextStyle">
+                        @Html.Raw(Model.Text)
+                    </div>
+                }
+                @{
+                    USNLink link = USNUrlHelper.GetLinkFromRelatedLinks(Model.Link);
+
+                    if (link != null)
+                    {
+                        <p class="link"><a class="btn @settings.ButtonStyle" href="@link.LinkURL" @Html.Raw(link.LinkTarget) @Html.Raw(link.LinkTitle)>@link.LinkCaption@Html.Raw(link.LinkIcon)</a></p>
+                    }
+                }
+
+            </div>
+            <!--// INFO -->
+        </div>
+
+        @:</div></div>
+
+
+    @:</section>
+
+}

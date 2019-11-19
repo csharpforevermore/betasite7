@@ -1,0 +1,40 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+    USNOptions pageLayout;
+
+    //If page is a blog category, need to get layout from blog landing page
+    if (Model.Content.IsDocumentType(UsnblogCategoryPage.ModelTypeAlias)){
+        IPublishedContent blogLandingPage = Model.Content.AncestorOrSelf(UsnblogLandingPage.ModelTypeAlias);
+        pageLayout = !blogLandingPage.HasValue("pageLayout") ? globalSettings.DefaultPageLayout : blogLandingPage.GetPropertyValue<USNOptions>("pageLayout");
+    }
+    else
+    {
+        pageLayout = !Model.Content.HasValue("pageLayout") ? globalSettings.DefaultPageLayout : Model.Content.GetPropertyValue<USNOptions>("pageLayout");
+    }
+
+    switch (pageLayout)
+    {
+        case USNOptions.PageLayout_Left:
+			@Html.Raw(" class=\"left-col col-md-8 col-xs-12\"")
+			break;
+		case USNOptions.PageLayout_Right:
+			@Html.Raw("class=\"right-col col-md-8 col-xs-12 pull-right\"")
+			break;
+		case USNOptions.PageLayout_CenterAlt:
+			@Html.Raw("class=\"mid-col col-md-6 col-md-push-3 col-xs-12\"")
+			break;
+		case USNOptions.PageLayout_Center:
+			@Html.Raw("class=\"mid-col col-md-6 col-md-push-3 col-xs-12\"")
+			break;
+        case USNOptions.PageLayout_Wide:
+			@Html.Raw("class=\"wide-col col-xs-12\"")
+            break;
+        default:
+			@Html.Raw("class=\"left-col col-md-8 col-xs-12\"")
+			break;	
+	}	
+}

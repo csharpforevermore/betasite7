@@ -1,0 +1,97 @@
+﻿@inherits UmbracoViewPage<Usn_Sc_Form_AN>
+
+@using USNStarterKit.USNHelpers;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    string anchorId = String.Empty;
+    string customComponentClasses = String.Empty;
+
+    int globalSettingsId = Convert.ToInt32(ViewData["globalSettingsID"]);
+    string pageType = ViewData["pageType"] != null ? ViewData["pageType"].ToString() : "standard";
+
+    string animateClass = String.Empty;
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    @* Add div for column width on Advanced Pages *@
+if (pageType == "advanced")
+{
+    if (Model.Width == USNOptions.ComponentWidth_Center)
+    {
+            @:<div class="container"><div class="row"><div class="mid-col col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        }
+        else if(Model.Width == USNOptions.ComponentWidth_Full)
+        {
+            @:<div class="container-fluid"><div class="row"><div class="wide-col col-xs-12">
+        }
+        else
+        {
+            @:<div class="container"><div class="row"><div class="wide-col col-xs-12">
+        }
+        
+    }
+    else
+    {
+        anchorId = "id=\"pos_" + Model.Id + "\" ";
+        customComponentClasses = Model.CustomComponentClasses;
+    }
+
+    <!-- PAGE COMPONENT FORMS -->
+    <div class="spc forms @animateClass @customComponentClasses" data-os-animation="fadeIn" data-os-animation-delay="0s" @Html.Raw(anchorId)>
+
+        @switch (Model.FormType)
+        {
+            case "contactForm":
+                <div class="contact form ajax-wrap">
+                    <div class="inner c5-bg base-text has-borders c6-borders">
+                        @Html.Action("Index", "USNContactFormSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "normal" })
+                    </div>
+                </div>
+                break;
+            case "newsletterForm":
+                <div class="newsletter form ajax-wrap">
+                    <div class="inner c4-bg base-text has-borders c6-borders">
+                        @Html.Action("Index", "USNNewsletterSignupSurface", new { NodeID = Model.Id, GlobalSettingsID = globalSettingsId, DataSize = "normal" })
+                    </div>
+                </div>
+                break;
+            case "umbracoForm":
+                <div class="umbraco-forms form ajax-wrap">
+                    <div class="inner c5-bg base-text has-borders c6-borders">
+                        @if (Model.UmbracoForm.HasValue())
+                        {
+                            var formGuid = Model.UmbracoForm;
+
+                            if (Model.SubmitViaAjax)
+                            {
+                                @:<div class="umbraco-ajax-form">
+                            }
+
+                            @Umbraco.RenderMacro("renderUmbracoForm", new { FormGuid = formGuid, FormTheme = "uSkinned", CurrentNodeID = Model.Id, ExcludeScripts = "0" })
+
+                            if (Model.SubmitViaAjax)
+                            {
+                                @:</div>
+                            }
+
+
+                        }
+                    </div>
+                </div>
+                break;
+        }
+        </div>
+        <!-- PAGE COMPONENT FORMS -->
+
+    @* Close div for column width on Advanced Pages *@
+    if (pageType == "advanced")
+    { 
+        @:</div></div></div>
+    }
+}
+

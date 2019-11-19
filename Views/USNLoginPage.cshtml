@@ -1,0 +1,126 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNStarterKit.USNHelpers;
+
+@{
+    Layout = "USNMaster.cshtml";
+
+    if (!String.IsNullOrEmpty(Request.QueryString["signout"]))
+    {
+        FormsAuthentication.SignOut();
+        Context.Response.Redirect(Model.Content.Url, true);
+    }
+}
+
+@Html.Partial("USNMiscPageElements/USN_StandardPageBannerSection", Model)
+
+<!-- CONTENT -->
+<section class="content">
+
+    <!-- CONTAINER -->
+    <div class="container">
+				
+                @Html.Partial("USNMiscPageElements/USN_StandardPageTitle", Model)
+	
+	    <!-- ROW -->
+	    <div class="row">
+			
+		    <!-- CONTENT COL -->
+		    <div @Html.Partial("USNLayout/USN_ContentColumnStyle", Model)>
+		
+			    <!-- IMAGE -->
+			    @Html.Partial("USNMiscPageElements/USN_MainImage",Model)
+			    <!--// IMAGE -->
+	       
+			    @Umbraco.Field("bodyText")
+
+                <!-- FORM -->
+                @Html.Action("Index", "USNLoginFormSurface", new { LoginPage = Model })
+			    <!--// FORM -->
+				
+		    </div>
+		    <!--// CONTENT COL -->
+			
+		    @Html.Partial("USNLayout/USN_PodAndNavColumn", Model)
+		
+	    </div>
+	    <!--// ROW -->
+
+    </div>
+    <!--// CONTAINER -->
+
+</section>	
+<!--// CONTENT -->
+
+@Html.Partial("USNSiteWidePods/USN_SitewidePods", Model, new ViewDataDictionary { { "podstyle", "horizontal" } })
+
+@section BodyTag
+{
+    @{
+        string headerClass = String.Empty;
+
+        if (Model.Content.GetPropertyValue<bool>("hideWebsiteHeaderSection"))
+        {
+            headerClass = "no-header";
+        }
+
+        if (Model.Content.GetPropertyValue<bool>("hideWebsiteFooterSection"))
+        {
+            headerClass = headerClass + " no-footer";
+        }
+
+        UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+
+        string fixedWidth = String.Empty;
+
+        if (globalSettings.FixedWidth)
+        {
+            fixedWidth = "fixed-width";
+        }
+
+        string customBodyClass = String.Empty;
+
+        if (Model.Content.HasValue("customBodyClasses"))
+        {
+            customBodyClass = Model.Content.GetPropertyValue<string>("customBodyClasses");
+        }
+
+        string bannerClass = String.Empty;
+
+        IEnumerable<IPublishedContent> components = null;
+
+        if (Model.Content.GetPropertyValue<bool>("overrideDefaultTopComponents"))
+        {
+            if (Model.Content.HasValue("topComponents"))
+            {
+                components = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("topComponents");
+            }
+        }
+        else
+        {
+            if (globalSettings.DefaultTopComponents.HasValue())
+            {
+                components = globalSettings.DefaultTopComponents;
+            }
+        }
+
+        if (components != null && components.Any())
+        {
+            var publishedContents = components as IList<IPublishedContent> ?? components.ToList();
+
+            bannerClass = publishedContents.First().IsDocumentType(Usn_Ac_Banner_AN.ModelTypeAlias) ? "banner-top" : "";
+        }
+
+        //If no top components look at header image section
+        else if (components == null || !components.Any())
+        {
+            if (Model.Content.GetPropertyValue<bool>("displayHeaderImageSection"))
+            {
+                bannerClass = "banner-top";
+            }
+
+        }
+    }
+
+    @Html.Raw(" class=\"standard-page " + bannerClass + " " + headerClass + " " + fixedWidth + " " + customBodyClass + "\"")
+}

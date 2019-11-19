@@ -1,0 +1,38 @@
+﻿{
+    propertyEditors: [      
+        {
+			alias: 'USN.ShowHideTabs.OptionsController',
+			name: 'USN Show/Hide Tabs',
+			editor:{
+				valueType: "STRING",
+				view: '~/App_Plugins/USN.ShowHideTabs/PropertyEditors/Options/options.html',
+				hideLabel: false
+			},
+			prevalues : {
+				fields: [
+					{
+					    label: "Hide tabs",
+					    description: "Enter the tabs you would like hidden if nothing is selected.",
+					    key: "hideTabs",
+						view: "textstring"
+					},
+					{
+					    label: "Option values",
+					    description: "Add and remove values for the list.",
+					    key: "items",
+					    view: "~/App_Plugins/USN.ShowHideTabs/Prevalues/prevalues.html"
+					}         
+				]
+			}
+        }
+    ],
+    javascript: [
+		'~/App_Plugins/USN.ShowHideTabs/PropertyEditors/Options/optionscontroller.js',
+		'~/App_Plugins/USN.ShowHideTabs/Prevalues/prevaluescontroller.js'
+    ],
+
+    css: [
+		'~/App_Plugins/USN.ShowHideTabs/style.css'
+    ]
+
+}

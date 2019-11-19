@@ -1,0 +1,34 @@
+﻿{
+    propertyEditors:[
+        {
+            alias: "USN.Options",
+            name: "USN Options",
+			icon: "icon-list",
+			group: "lists",
+            editor: {
+                view: "~/App_Plugins/USN.Options/PropertyEditor/editor.html"
+            },
+			prevalues : {
+				fields: [
+					{
+					    label: "Select option type",
+					    key: "optionType",
+						view: "~/App_Plugins/USN.Options/Prevalues/prevalues.html",
+						validation: [
+							{
+								type: "Required" 
+							}                        
+						]
+					}     
+				]
+			}
+        }
+    ],
+	javascript: [
+		"~/App_Plugins/USN.Options/js/usn.options.js",
+		'~/App_Plugins/USN.Options/Prevalues/prevaluescontroller.js'
+	],
+    css: [
+        "~/App_Plugins/USN.Options/css/style.css?v=5.4"
+    ]
+}

@@ -1,0 +1,19 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+
+@using USNStarterKit.USNHelpers;
+
+@{
+    UsnglobalSettings globalSettings = (UsnglobalSettings)Model.GlobalSettings;
+
+    if (globalSettings.GoogleReCaptchasiteKey.HasValue() && globalSettings.GoogleReCaptchasecretKey.HasValue())
+    {
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+    }
+
+	@Html.Raw(globalSettings.HeaderScripts)
+
+    if(Model.Content.HasValue("pageHeaderScripts"))
+    {
+        @Html.Raw(Model.Content.GetPropertyValue<string>("pageHeaderScripts"))
+    }
+}

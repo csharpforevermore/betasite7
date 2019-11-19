@@ -1,0 +1,94 @@
+﻿@inherits UmbracoViewPage<Usn_Sc_Links_AN>
+
+@using Umbraco.Web.Models;
+@using USNStarterKit.USNModels;
+@using USNStarterKit.USNHelpers;
+@using USN.USNTemplate;
+
+@using USNOptions = USNStarterKit.USNEnums.Options;
+
+@{
+    string anchorId = String.Empty;
+    string customComponentClasses = String.Empty;
+
+    USNTemplateStyleSettings settings;
+    string animateClass = String.Empty;
+
+    if (Model.Animate)
+    {
+        animateClass = "os-animation";
+    }
+
+    string pageType = ViewData["pageType"] != null ? ViewData["pageType"].ToString() : "standard";
+
+    if (pageType == "standard")
+    {
+        settings = USNViewTemplateHelper.GetDefaultTemplateStyleSettings();
+    }
+    else
+    {
+        settings = USNViewTemplateHelper.GetTemplateStyleSettings(Model.BackgroundColor, Model.ButtonColor);
+    }
+
+    @* Add div for column width on Advanced Pages *@
+    if (pageType == "advanced")
+    {
+        if (Model.Width == USNOptions.ComponentWidth_Center)
+        {
+            @:<div class="container"><div class="row"><div class="mid-col col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        }
+        else if(Model.Width == USNOptions.ComponentWidth_Full)
+        {
+            @:<div class="container-fluid"><div class="row"><div class="wide-col col-xs-12">
+        }
+        else
+        {
+            @:<div class="container"><div class="row"><div class="wide-col col-xs-12">
+        }
+        
+    }
+    else
+    {
+        anchorId = "id=\"pos_" + Model.Id + "\" ";
+        customComponentClasses = Model.CustomComponentClasses;
+    }
+
+    RelatedLinks groupLinks = Model.GroupLinks;
+
+    <!-- PAGE COMPONENT QUICK LINKS -->
+    if (groupLinks != null)
+    {
+        <div class="spc quick-links @animateClass @customComponentClasses" data-os-animation="fadeIn" data-os-animation-delay="0s" @Html.Raw(anchorId)>
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentIntro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle } })
+
+            <div class="inner c5-bg has-borders c6-borders">
+                <nav>
+                    <ul class="row">
+                        @foreach (RelatedLink link in groupLinks)
+                        {
+                            USNLink groupLink = USNUrlHelper.GetLinkFromRelatedLink(link);
+
+                            if (groupLink != null && ((groupLink.InternalNode != null && groupLink.InternalNode.IsVisible()) || (!link.IsInternal && groupLink.LinkURL != String.Empty)))
+                            { 
+                                <li class="col-md-4 col-xs-6">
+                                    <a class="c1-text" href="@groupLink.LinkURL" @Html.Raw(groupLink.LinkTarget) @Html.Raw(groupLink.LinkTitle)>@groupLink.LinkCaption@Html.Raw(groupLink.LinkIcon)</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </nav>
+            </div>
+
+            @Html.Partial("USNMiscPageElements/USN_ComponentOutro", @Model as IUsn_Cmp_IntroOutro, new ViewDataDictionary { { "animateClass", animateClass }, { "headingStyle", settings.HeadingStyle }, { "secondaryHeadingStyle", settings.SecondaryHeadingStyle }, { "textStyle", settings.TextStyle }, { "buttonStyle", settings.ButtonStyle } })
+
+        </div>
+    }
+    <!--// PAGE COMPONENT QUICK LINKS -->
+
+    @* Close div for column width on Advanced Pages *@
+    if (!Model.Parent.Parent.IsDocumentType(UsnstandardPage.ModelTypeAlias) && !Model.Parent.Parent.IsDocumentType(UsnstandardPageBlogPost.ModelTypeAlias))
+    {
+        @:</div></div></div>
+    }
+}

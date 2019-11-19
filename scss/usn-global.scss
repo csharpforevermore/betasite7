@@ -1,0 +1,102 @@
+/* 	
+--------------------------------------------------
+uSkinned.net - Refresh theme - Gilfoyle
+GLOBAL
+-------------------------------------------------- 
+*/
+
+
+/* 	
+--------------------------------------------------
+TABLE OF CONTENTS
+-------------------------------------------------- 
+
+1.0 COLOURS
+2.0 SIZES	
+3.0 IMPORTS	
+	
+*/
+
+
+/* 	
+--------------------------------------------------
+1.0 COLOURS
+-------------------------------------------------- 
+*/
+
+
+/* THEME PALETTE */
+
+$c1:#ec1b47;
+$c2:#202020;
+$c3:#080808;
+$c4:#f7f7f7;
+$c5:#ffffff;
+$c6:#dfdbdc;
+
+/* BASE PALETTE */
+
+$true-black:#000000;
+$true-white:#ffffff;
+$base-heading:#080808;
+$base-text:#5e5e5e;
+$base-borders:#e1e1e1;
+$form-errors:#a94442;
+
+/* 	
+--------------------------------------------------
+2.0 SIZES
+-------------------------------------------------- 
+*/
+
+
+/* BASE */
+
+$base-spacing:30px;
+$base-half-spacing:15px;
+$base-header-height:60px;
+$base-header-height_sm:80px;
+$base-nav-main-height_sm:80px;
+$base-nav-main-dropdown-width_sm:240px;
+$base-nav-main-dropdown-width-wider_sm:480px;
+$base-border-width:2px;
+
+/* APC */
+
+$apc-spacing:15px;
+$apc-spacing_sm:30px;
+$apc-spacing_md:45px;
+$apc-spacing_lg:60px;
+
+/* ITEMS IN A ROW */
+
+$items-1:100%;
+$items-2:50%;
+$items-3:33.3333333%;
+$items-4:25%;
+
+/* BANNERS */
+
+$takeover-banner:calc(100vh - 0);
+$takeover-banner-ios:calc(100vh - 68px);
+$takeover-banner_sm: calc(100vh - 0);
+$takeover-banner-ios_sm: calc(100vh - 26px);
+$takeover-banner-ios-no-header: calc(100vh - 68px);
+$takeover-banner-ios-no-header_sm: calc(100vh - 26px);
+
+/* 	
+--------------------------------------------------
+3.0 IMPORTS
+-------------------------------------------------- 
+*/
+
+@import 'usn-modules/_usn-plugins.scss';
+@import 'usn-modules/_usn-base.scss';
+@import 'usn-modules/_usn-palette.scss';
+@import 'usn-modules/_usn-layout.scss';
+
+/*	
+--------------------------------------------------
+END
+-------------------------------------------------- 
+*/

@@ -1,0 +1,31 @@
+﻿@inherits UmbracoViewPage<USN.USNModels.USNBaseViewModel>
+	
+@using USNStarterKit.USNBackgroundOptions.Models
+@using USN.USNTemplate;
+
+@{
+
+    UsnadvancedPageComponents pageComponentsNode = Model.Content.Children<UsnadvancedPageComponents>().FirstOrDefault();
+
+    if (pageComponentsNode != null)
+    {
+        foreach (IPublishedContent component in pageComponentsNode.Children)
+        {
+            if (component != null)
+            {
+                USNTemplateStyleSettings settings = USNViewTemplateHelper.GetTemplateStyleSettings(component.GetPropertyValue<string>("backgroundColor"), component.GetPropertyValue<string>("buttonColor"));
+
+                string backgroundImageStyle = USNViewTemplateHelper.GetBackgroundImageStyle(component.GetPropertyValue<IPublishedContent>("backgroundImage"), component.GetPropertyValue<USNBackgroundOption>("backgroundImageOptions"));
+
+                string animateClass = String.Empty;
+
+                if (component.GetPropertyValue<bool>("animate"))
+                {
+                    animateClass = "os-animation";
+                }
+
+                @Html.Partial("USNAdvancedPageComponents/USN_ComponentsSwitch", component, new ViewDataDictionary { { "globalSettingsID", Model.GlobalSettings.Id }, { "backgroundImageStyle", backgroundImageStyle }, { "animateClass", animateClass }, { "backgroundStyle", settings.BackGroundStyle } })
+            }
+        }
+    }
+}
